@@ -1,0 +1,2 @@
+# smj.blog
+My blog
