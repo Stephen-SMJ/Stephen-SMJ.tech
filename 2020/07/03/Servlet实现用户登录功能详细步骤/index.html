@@ -25,18 +25,18 @@
 <meta property="og:site_name" content="小孙不够睡的博客">
 <meta property="og:description" content="需求：实现一个像这样的简易登录功能，需要从数据库中判断输入的用户名和密码是否正确，正确返回一个登录成功的页面，错误返回失败页面废话不多说，Let’s begin！  算法原理  数据库  项目分层  util层  bean层  Dao层  Service层  servlet层  view层  运行结果   算法原理  从网页上传入一个username和一个password，在数据库中查看是否对应，">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200703002701635.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200703003555925.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0Nzg1MzUx,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200703012436901.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200703012525241.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2020070301263426.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200703012619481.png">
+<meta property="og:image" content="http://101.43.11.242:8068/20200703002701635.png">
+<meta property="og:image" content="http://101.43.11.242:8068/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0Nzg1MzUx,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="http://101.43.11.242:8068/20200703012436901.png">
+<meta property="og:image" content="http://101.43.11.242:8068/20200703012525241.png">
+<meta property="og:image" content="http://101.43.11.242:8068/2020070301263426.png">
+<meta property="og:image" content="http://101.43.11.242:8068/20200703012619481.png">
 <meta property="article:published_time" content="2020-07-02T17:36:28.000Z">
-<meta property="article:modified_time" content="2023-03-03T07:30:59.133Z">
+<meta property="article:modified_time" content="2023-03-21T10:16:33.008Z">
 <meta property="article:author" content="Sun Maojun">
 <meta property="article:tag" content="Back-end">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200703002701635.png">
+<meta name="twitter:image" content="http://101.43.11.242:8068/20200703002701635.png">
   <!-- Canonical links -->
   <link rel="canonical" href="https://stephen-smj.tech/2020/07/03/Servlet%E5%AE%9E%E7%8E%B0%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E5%8A%9F%E8%83%BD%E8%AF%A6%E7%BB%86%E6%AD%A5%E9%AA%A4/index.html">
   
@@ -360,7 +360,7 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <p>需求：实现一个像这样的简易登录功能，需要从数据库中判断输入的用户名和密码是否正确，正确返回一个登录成功的页面，错误返回失败页面<br><img src="https://img-blog.csdnimg.cn/20200703002701635.png" alt="在这里插入图片描述"><br>废话不多说，Let’s begin！</p>
+        <p>需求：实现一个像这样的简易登录功能，需要从数据库中判断输入的用户名和密码是否正确，正确返回一个登录成功的页面，错误返回失败页面<br><img src="http://101.43.11.242:8068/20200703002701635.png" alt="在这里插入图片描述"><br>废话不多说，Let’s begin！</p>
 <ul>
 <li><p><a href="#1">算法原理</a></p>
 </li>
@@ -391,7 +391,7 @@
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> NAMES utf8;</span><br><span class="line"><span class="keyword">SET</span> FOREIGN_KEY_CHECKS <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Table structure for tb_user</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> IF <span class="keyword">EXISTS</span> `tb_user`;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `tb_user`  (</span><br><span class="line">  `id` <span class="type">int</span>(<span class="number">50</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  `username` <span class="type">varchar</span>(<span class="number">50</span>) <span class="type">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">COLLATE</span> utf8_general_ci <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `password` <span class="type">varchar</span>(<span class="number">50</span>) <span class="type">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">COLLATE</span> utf8_general_ci <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY <span class="keyword">USING</span> BTREE (`id`)</span><br><span class="line">) ENGINE <span class="operator">=</span> InnoDB AUTO_INCREMENT <span class="operator">=</span> <span class="number">100</span> <span class="type">CHARACTER</span> <span class="keyword">SET</span> <span class="operator">=</span> utf8 <span class="keyword">COLLATE</span> <span class="operator">=</span> utf8_general_ci ROW_FORMAT <span class="operator">=</span> Compact;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Records of tb_user</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `tb_user` <span class="keyword">VALUES</span> (<span class="number">1</span>, <span class="string">&#x27;smj&#x27;</span>, <span class="string">&#x27;123&#x27;</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `tb_user` <span class="keyword">VALUES</span> (<span class="number">2</span>, <span class="string">&#x27;whb&#x27;</span>, <span class="string">&#x27;456&#x27;</span>);</span><br></pre></td></tr></table></figure>
 <h2 id="1.2">项目分层<h2>
 
-<p>需要用到TomCat，请提前配置好<br><img src="https://img-blog.csdnimg.cn/20200703003555925.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0Nzg1MzUx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>需要用到TomCat，请提前配置好<br><img src="http://101.43.11.242:8068/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0Nzg1MzUx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <h2 id="1.3">util层<h2>
 
 <p>util层是用来配置数据库驱动，连接数据库以及关闭数据库引擎，直接封装在方法里的好处就是在Dao层中可以直接调用。</p>
@@ -424,8 +424,8 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="line">&lt;web-app xmlns=<span class="string">&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;</span></span><br><span class="line">         xmlns:xsi=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="line">         xsi:schemaLocation=<span class="string">&quot;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd&quot;</span></span><br><span class="line">         version=<span class="string">&quot;4.0&quot;</span>&gt;</span><br><span class="line">    &lt;servlet&gt;</span><br><span class="line">        &lt;!--      LoginServlet的路径--&gt;</span><br><span class="line">        &lt;servlet-name&gt;LoginServlet&lt;/servlet-name&gt;</span><br><span class="line">        &lt;servlet-class&gt;com.zr.servlet.LoginServlet&lt;/servlet-class&gt;</span><br><span class="line">    &lt;/servlet&gt;</span><br><span class="line">    &lt;servlet-mapping&gt;</span><br><span class="line">        &lt;!--    设置/login这个页面来向LoginServlet发送请求--&gt;</span><br><span class="line">        &lt;servlet-name&gt;LoginServlet&lt;/servlet-name&gt;</span><br><span class="line">        &lt;url-pattern&gt;/login&lt;/url-pattern&gt;</span><br><span class="line">    &lt;/servlet-mapping&gt;</span><br><span class="line">&lt;/web-app&gt;</span><br></pre></td></tr></table></figure>
 <h2 id="1.9">运行结果<h2>
 
-<p>用户名输入whb，密码输入456<img src="https://img-blog.csdnimg.cn/20200703012436901.png" alt="在这里插入图片描述"><br>登录成功<img src="https://img-blog.csdnimg.cn/20200703012525241.png" alt="在这里插入图片描述"></p>
-<p>用户名输入smj，密码输入456<br><img src="https://img-blog.csdnimg.cn/2020070301263426.png" alt="在这里插入图片描述"><br>登录失败<img src="https://img-blog.csdnimg.cn/20200703012619481.png" alt="在这里插入图片描述"><br>完成！</p>
+<p>用户名输入whb，密码输入456<img src="http://101.43.11.242:8068/20200703012436901.png" alt="在这里插入图片描述"><br>登录成功<img src="http://101.43.11.242:8068/20200703012525241.png" alt="在这里插入图片描述"></p>
+<p>用户名输入smj，密码输入456<br><img src="http://101.43.11.242:8068/2020070301263426.png" alt="在这里插入图片描述"><br>登录失败<img src="http://101.43.11.242:8068/20200703012619481.png" alt="在这里插入图片描述"><br>完成！</p>
 
       
     </div>

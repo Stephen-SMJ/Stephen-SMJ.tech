@@ -25,14 +25,14 @@
 <meta property="og:site_name" content="小孙不够睡的博客">
 <meta property="og:description" content="hibernate框架对JDBC进行了非常轻量级的对象封装，它将POJO与数据库表建立映射关系，是一个全自动的orm框架，它可以帮我们自动生成数据表，减少建库建表的工作。自动生成sql语句的方法非常简单，首先新建一个maven项目，然后导入写好的实体类。比如user 123456789101112131415161718192021222324252627282930313233343536373">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200707154739974.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0Nzg1MzUx,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200707154802378.png">
+<meta property="og:image" content="http://101.43.11.242:8068/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0Nzg1MzUx,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="http://101.43.11.242:8068/20200707154802378.png">
 <meta property="article:published_time" content="2020-07-07T07:49:26.000Z">
-<meta property="article:modified_time" content="2023-03-03T07:30:59.078Z">
+<meta property="article:modified_time" content="2023-03-21T10:16:33.011Z">
 <meta property="article:author" content="Sun Maojun">
 <meta property="article:tag" content="Back-end">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200707154739974.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0Nzg1MzUx,size_16,color_FFFFFF,t_70">
+<meta name="twitter:image" content="http://101.43.11.242:8068/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0Nzg1MzUx,size_16,color_FFFFFF,t_70">
   <!-- Canonical links -->
   <link rel="canonical" href="https://stephen-smj.tech/2020/07/07/%E4%BD%BF%E7%94%A8hibernate%E6%A1%86%E6%9E%B6%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E7%9A%84%E8%A1%A8/index.html">
   
@@ -361,7 +361,7 @@
 <p>接下里在yml文件中配置端口，数据库连接（注意要提前建好数据库），比如我这里是生成在一个叫springboot的数据库中，最后设置jpa。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">server:</span><br><span class="line">  port: <span class="number">8081</span></span><br><span class="line">spring:</span><br><span class="line">  datasource:</span><br><span class="line">    driver-class-name: com.mysql.jdbc.Driver</span><br><span class="line">    url: jdbc:mysql:<span class="comment">//localhost:3306/springboot?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=UTC</span></span><br><span class="line">    username: root</span><br><span class="line">    password: <span class="number">123456</span></span><br><span class="line">  thymeleaf:</span><br><span class="line">    mode: HTML</span><br><span class="line">    </span><br><span class="line"><span class="comment">//自动成数据表</span></span><br><span class="line">  jpa:</span><br><span class="line">    hibernate:</span><br><span class="line">      ddl-auto: update</span><br><span class="line">    show-sql: <span class="literal">true</span> <span class="comment">//在控制台中输出</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>然后运行application就行<br>正常启动的话会看到控制台输出了很多sql语句<br><img src="https://img-blog.csdnimg.cn/20200707154739974.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0Nzg1MzUx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>然后查看我们的数据库中是否已经生成了表<br><img src="https://img-blog.csdnimg.cn/20200707154802378.png" alt="在这里插入图片描述"><br>成功。</p>
+<p>然后运行application就行<br>正常启动的话会看到控制台输出了很多sql语句<br><img src="http://101.43.11.242:8068/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0Nzg1MzUx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>然后查看我们的数据库中是否已经生成了表<br><img src="http://101.43.11.242:8068/20200707154802378.png" alt="在这里插入图片描述"><br>成功。</p>
 
       
     </div>

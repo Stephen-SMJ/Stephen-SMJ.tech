@@ -25,13 +25,13 @@
 <meta property="og:site_name" content="小孙不够睡的博客">
 <meta property="og:description" content="今天使用hibernate创建数据库后对数据库进行添加的时候报了这样一个错误说是主键重复，但是我在数据库中的主键Id是自增的，为什么会重复呢，反复调试了几次，发现重复的数值会增长，第一次是1，第二次是2，第三次是3，到这里截图是4，我基本可以确定每执行一次添加它这个重复建都会加一，看了一下数据库，发现最大主键到5，我猜再执行两次应该就不会再重复了，果不其然，第六次就正常了。后来我就去找了下原因，大">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200708113110529.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0Nzg1MzUx,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="http://101.43.11.242:8068/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0Nzg1MzUx,size_16,color_FFFFFF,t_70">
 <meta property="article:published_time" content="2020-07-08T03:48:28.000Z">
-<meta property="article:modified_time" content="2023-03-03T07:30:59.102Z">
+<meta property="article:modified_time" content="2023-03-21T10:16:33.003Z">
 <meta property="article:author" content="Sun Maojun">
 <meta property="article:tag" content="Back-end">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200708113110529.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0Nzg1MzUx,size_16,color_FFFFFF,t_70">
+<meta name="twitter:image" content="http://101.43.11.242:8068/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0Nzg1MzUx,size_16,color_FFFFFF,t_70">
   <!-- Canonical links -->
   <link rel="canonical" href="https://stephen-smj.tech/2020/07/08/hibernate%E4%B8%BB%E9%94%AE%E5%86%B2%E7%AA%81%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/index.html">
   
@@ -355,7 +355,7 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <p>今天使用hibernate创建数据库后对数据库进行添加的时候报了这样一个错误<br>说是主键重复，但是我在数据库中的主键Id是自增的，为什么会重复呢，反复调试了几次，发现重复的数值会增长，第一次是1，第二次是2，第三次是3，到这里截图是4，我基本可以确定每执行一次添加它这个重复建都会加一，看了一下数据库，发现最大主键到5，我猜再执行两次应该就不会再重复了，果不其然，第六次就正常了。<img src="https://img-blog.csdnimg.cn/20200708113110529.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0Nzg1MzUx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>后来我就去找了下原因，大概是Hibernate框架在插入数据库之前就生成好了主键，即主键由Hibernate产生，而非数据库产生。<br>如果只是测试的话可以直接把数据库多出来的几个id删除然后用Hibernate插入，或者多运行几次让重复建的值大于数据库中的总id值就好了。</p>
+        <p>今天使用hibernate创建数据库后对数据库进行添加的时候报了这样一个错误<br>说是主键重复，但是我在数据库中的主键Id是自增的，为什么会重复呢，反复调试了几次，发现重复的数值会增长，第一次是1，第二次是2，第三次是3，到这里截图是4，我基本可以确定每执行一次添加它这个重复建都会加一，看了一下数据库，发现最大主键到5，我猜再执行两次应该就不会再重复了，果不其然，第六次就正常了。<img src="http://101.43.11.242:8068/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0Nzg1MzUx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>后来我就去找了下原因，大概是Hibernate框架在插入数据库之前就生成好了主键，即主键由Hibernate产生，而非数据库产生。<br>如果只是测试的话可以直接把数据库多出来的几个id删除然后用Hibernate插入，或者多运行几次让重复建的值大于数据库中的总id值就好了。</p>
 <p>还有一种方法我没试过：<br>在实体类上方添加注解<br>@GenericGenerator(name = “system-uuid”, strategy = “identity”)<br>然后重新运行生成表</p>
 
       
