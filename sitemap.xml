@@ -2,25 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://stephen-smj.tech/recommond/index.html</loc>
-    
-    <lastmod>2023-04-20</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://stephen-smj.tech/2023/03/03/Nginx%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E4%B8%AD%E7%9A%84%E6%B7%B1%E5%9D%91/</loc>
-    
-    <lastmod>2023-04-20</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://stephen-smj.tech/group/index.html</loc>
+    <loc>https://stephen-smj.tech/experience/index.html</loc>
     
     <lastmod>2023-04-20</lastmod>
     
@@ -38,6 +20,15 @@
   </url>
   
   <url>
+    <loc>https://stephen-smj.tech/recommond/index.html</loc>
+    
+    <lastmod>2023-04-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://stephen-smj.tech/about/index.html</loc>
     
     <lastmod>2023-04-20</lastmod>
@@ -47,9 +38,18 @@
   </url>
   
   <url>
-    <loc>https://stephen-smj.tech/experience/index.html</loc>
+    <loc>https://stephen-smj.tech/group/index.html</loc>
     
-    <lastmod>2023-04-19</lastmod>
+    <lastmod>2023-04-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://stephen-smj.tech/2023/03/03/Nginx%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E4%B8%AD%E7%9A%84%E6%B7%B1%E5%9D%91/</loc>
+    
+    <lastmod>2023-04-20</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -497,13 +497,6 @@
 
   
   <url>
-    <loc>https://stephen-smj.tech/tags/Deep-learning/</loc>
-    <lastmod>2023-04-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://stephen-smj.tech/tags/Back-end/</loc>
     <lastmod>2023-04-20</lastmod>
     <changefreq>weekly</changefreq>
@@ -511,7 +504,7 @@
   </url>
   
   <url>
-    <loc>https://stephen-smj.tech/tags/Git/</loc>
+    <loc>https://stephen-smj.tech/tags/Deep-learning/</loc>
     <lastmod>2023-04-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -519,6 +512,13 @@
   
   <url>
     <loc>https://stephen-smj.tech/tags/JAVA/</loc>
+    <lastmod>2023-04-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://stephen-smj.tech/tags/Git/</loc>
     <lastmod>2023-04-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
