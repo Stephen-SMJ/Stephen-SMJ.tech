@@ -39,18 +39,18 @@
   </entry>
   
   <entry>
-    <title>Nginx反向代理中的深坑</title>
+    <title>Nginx反向代理中的坑</title>
     <link href="https://stephen-smj.tech/2023/03/03/Nginx%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E4%B8%AD%E7%9A%84%E6%B7%B1%E5%9D%91/"/>
     <id>https://stephen-smj.tech/2023/03/03/Nginx%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E4%B8%AD%E7%9A%84%E6%B7%B1%E5%9D%91/</id>
     <published>2023-03-03T10:02:21.000Z</published>
-    <updated>2023-03-22T13:46:26.550Z</updated>
+    <updated>2023-04-20T03:39:45.793Z</updated>
     
-    <content type="html"><![CDATA[<p>今天完成了一个人脸识别系统的开发，在开发环境中调试好之后打算部署到服务器上。由于系统需要调用用户摄像头，只能使用https协议访。而我自己的域名没有在公安局备份（人在境外，比较麻烦），没办法申请SSL证书。于是我借了朋友的一台备案过的服务器，在他的服务器上用Nginx帮我转发一下。但是我在我部署好后端项目之后发现系统功能报错，但是同样的代码在开发环境中完全没有问题，经过排查之后发现是用户Token丢失。于是乎想到了肯定是Nginx的锅，搜索了一些资料和文档后，才知道Nginx进行代理时，有一个默认的参数：<strong>underscores_in_headers</strong>，这个参数的作用是是否转发header，默认为false。因此如果不带上的话，在转发之后header会被去掉。</p><p>重新配置Nginx：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">  ...</span><br><span class="line">  underscores_in_headers on;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>完全解决！</p>]]></content>
+    <content type="html"><![CDATA[<p>今天完成了一个人脸识别系统的开发，在开发环境中调试好之后打算部署到服务器上。由于系统需要调用用户摄像头需要使用https协议访问。而我自己的域名没有在公安局备份，没办法申请SSL证书。于是我借了朋友的一个域名，用Nginx反向代理一下。但是我在生产环境中部署好后端项目之后发现系统无法通过登录验证，同样的代码在开发环境中完全没有问题，经过排查之后发现是用户Token丢失。于是乎想到了肯定是Nginx的锅，搜索了一些资料和文档后，才知道Nginx进行代理时，有一个默认的参数：<strong>underscores_in_headers</strong>，<br>这个参数默认为false。这个参数的作用是是否转发<strong>带下划线的header</strong>，而很多人并不知道header的命名规范是最好不要带下划线的。因此如果不把参数设置为True的话，在转发之后header会被去掉。</p><p>重新配置Nginx：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">  ...</span><br><span class="line">  underscores_in_headers on;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>完美解决！</p>]]></content>
     
     
       
       
-    <summary type="html">&lt;p&gt;今天完成了一个人脸识别系统的开发，在开发环境中调试好之后打算部署到服务器上。由于系统需要调用用户摄像头，只能使用https协议访。而我自己的域名没有在公安局备份（人在境外，比较麻烦），没办法申请SSL证书。于是我借了朋友的一台备案过的服务器，在他的服务器上用Nginx帮我转</summary>
+    <summary type="html">&lt;p&gt;今天完成了一个人脸识别系统的开发，在开发环境中调试好之后打算部署到服务器上。由于系统需要调用用户摄像头需要使用https协议访问。而我自己的域名没有在公安局备份，没办法申请SSL证书。于是我借了朋友的一个域名，用Nginx反向代理一下。但是我在生产环境中部署好后端项目之后发</summary>
       
     
     
