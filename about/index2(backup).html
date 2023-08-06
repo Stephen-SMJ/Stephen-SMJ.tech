@@ -17,23 +17,21 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>Hibernate主键冲突问题解决方法 | 小孙不够睡的Blog</title>
-  <meta name="description" content="今天使用hibernate创建数据库后对数据库进行添加的时候报了这样一个错误说是主键重复，但是我在数据库中的主键Id是自增的，为什么会重复呢，反复调试了几次，发现重复的数值会增长，第一次是1，第二次是2，第三次是3，到这里截图是4，我基本可以确定每执行一次添加它这个重复建都会加一，看了一下数据库，发现最大主键到5，我猜再执行两次应该就不会再重复了，果不其然，第六次就正常了。后来我就去找了下原因，大">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Hibernate主键冲突问题解决方法">
-<meta property="og:url" content="https://stephen-smj.tech/2020/07/08/hibernate%E4%B8%BB%E9%94%AE%E5%86%B2%E7%AA%81%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/index.html">
+  <title>关于我 | 小孙不够睡的Blog</title>
+  <meta name="description" content="走了点弯路，但还来得及">
+<meta property="og:type" content="website">
+<meta property="og:title" content="关于我">
+<meta property="og:url" content="https://stephen-smj.tech/about/index2(backup).html">
 <meta property="og:site_name" content="小孙不够睡的博客">
-<meta property="og:description" content="今天使用hibernate创建数据库后对数据库进行添加的时候报了这样一个错误说是主键重复，但是我在数据库中的主键Id是自增的，为什么会重复呢，反复调试了几次，发现重复的数值会增长，第一次是1，第二次是2，第三次是3，到这里截图是4，我基本可以确定每执行一次添加它这个重复建都会加一，看了一下数据库，发现最大主键到5，我猜再执行两次应该就不会再重复了，果不其然，第六次就正常了。后来我就去找了下原因，大">
+<meta property="og:description" content="走了点弯路，但还来得及">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://pdf.xuyijie.icu/blog_img/20200708113110529.png">
-<meta property="article:published_time" content="2020-07-08T03:48:28.000Z">
-<meta property="article:modified_time" content="2023-03-22T13:46:26.501Z">
+<meta property="article:published_time" content="2023-08-06T08:48:52.003Z">
+<meta property="article:modified_time" content="2023-07-29T12:24:46.175Z">
 <meta property="article:author" content="Sun Maojun">
-<meta property="article:tag" content="Back-end">
+<meta property="article:tag" content="Blog">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pdf.xuyijie.icu/blog_img/20200708113110529.png">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://stephen-smj.tech/2020/07/08/hibernate%E4%B8%BB%E9%94%AE%E5%86%B2%E7%AA%81%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/index.html">
+  <link rel="canonical" href="https://stephen-smj.tech/about/index2(backup).html">
   
     <link rel="alternate" href="/atom.xml" title="小孙不够睡的博客" type="application/atom+xml">
   
@@ -332,185 +330,160 @@
 </aside>
 
   
-  
+  <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+    <div class="widget">
+      <h3 class="widget-title">个人链接</h3>
+      <div class="widget-body">
+        <ul class="link-list lh-2x">
+          
+          <li>
+            Github:
+            
+              <a href="https://github.com/Stephen-SMJ" target="_blank">https://github.com/Stephen-SMJ</a>
+            
+          </li>
+          
+          <li>
+            CSDN:
+            
+              <a href="https://blog.csdn.net/qq_44785351" target="_blank">https://blog.csdn.net/qq_44785351</a>
+            
+          </li>
+          
+          <li>
+            Linkedin:
+            
+              <a href="https://www.linkedin.com/in/maojun-sun-736894248/" target="_blank">https://www.linkedin.com/in/maojun-sun-736894248/</a>
+            
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+    
+    
+    
+    <div class="widget">
+      <h3 class="widget-title">个人标签</h3>
+      <div class="widget-body">
+        
+        <span class="label label-default mb">Computer Vision</span>
+        
+        <span class="label label-default mb">NLP</span>
+        
+        <span class="label label-default mb">Back-end Development</span>
+        
+        <span class="label label-default mb">Front-end Development</span>
+        
+        <span class="label label-default mb">Data Analysis</span>
+        
+      </div>
+    </div>
+    
+    
+    
+  </div>
+</aside>
+
 <main class="main" role="main">
-  <div class="content">
-  <article id="post-hibernate主键冲突问题解决方法" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <article class="article archives-about article-type-normal" itemscope="">
+  <header class="article-header">
+    <h1 itemprop="title">关于我</h1>
     
-    <div class="article-header">
-      
-        
-  
-    <h1 class="article-title" itemprop="name">
-      Hibernate主键冲突问题解决方法
-    </h1>
-  
-
-      
-      <div class="article-meta">
-        <span class="article-date">
-    <i class="icon icon-calendar-check"></i>
-	<a href="/2020/07/08/hibernate%E4%B8%BB%E9%94%AE%E5%86%B2%E7%AA%81%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="article-date">
-	  <time datetime="2020-07-08T03:48:28.000Z" itemprop="datePublished">2020-07-08</time>
-	</a>
-</span>
-        
-        
-  <span class="article-tag">
-    <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/tags/Back-end/" rel="tag">Back-end</a>
-  </span>
-
-
-        
-	<span class="article-read hidden-xs">
-	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
-	    <span id="busuanzi_container_page_pv">
-			<span id="busuanzi_value_page_pv">0</span>
-		</span>
-	</span>
-
-
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/07/08/hibernate%E4%B8%BB%E9%94%AE%E5%86%B2%E7%AA%81%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/#comments" class="article-comment-link">评论</a></span>
-        
-	
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 300(字)</span>
-	
-	
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 1(分)</span>
-	
-
-      </div>
-    </div>
-    <div class="article-entry marked-body" itemprop="articleBody">
-      
-        <p>今天使用hibernate创建数据库后对数据库进行添加的时候报了这样一个错误<br>说是主键重复，但是我在数据库中的主键Id是自增的，为什么会重复呢，反复调试了几次，发现重复的数值会增长，第一次是1，第二次是2，第三次是3，到这里截图是4，我基本可以确定每执行一次添加它这个重复建都会加一，看了一下数据库，发现最大主键到5，我猜再执行两次应该就不会再重复了，果不其然，第六次就正常了。<img src="https://pdf.xuyijie.icu/blog_img/20200708113110529.png" alt="在这里插入图片描述"><br>后来我就去找了下原因，大概是Hibernate框架在插入数据库之前就生成好了主键，即主键由Hibernate产生，而非数据库产生。<br>如果只是测试的话可以直接把数据库多出来的几个id删除然后用Hibernate插入，或者多运行几次让重复建的值大于数据库中的总id值就好了。</p>
-<p>还有一种方法我没试过：<br>在实体类上方添加注解<br>@GenericGenerator(name = “system-uuid”, strategy = “identity”)<br>然后重新运行生成表</p>
-
-      
-    </div>
-    <div class="article-footer">
-      <blockquote class="mt-2x">
-  <ul class="post-copyright list-unstyled">
+    <p class="text-muted">走了点弯路，但还来得及</p>
     
-    <li class="post-copyright-link hidden-xs">
-      <strong>本文链接：</strong>
-      <a href="https://stephen-smj.tech/2020/07/08/hibernate%E4%B8%BB%E9%94%AE%E5%86%B2%E7%AA%81%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" title="Hibernate主键冲突问题解决方法" target="_blank" rel="external">https://stephen-smj.tech/2020/07/08/hibernate主键冲突问题解决方法/</a>
-    </li>
-    
-    <li class="post-copyright-license">
-      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
-    </li>
-  </ul>
-</blockquote>
+  </header>
+  <div class="article-body">
+    <p><em>Hi, I am <strong>Stephen</strong>, currently a student of Hong Kong Polytechnic University. Nice to meet you!</em></p>
+<p><strong>Master of Science in Data Science &amp; Analytics</strong>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <em>August 2022 — March 2024 (Expected)</em><br>GPA: 3.5/4.3 | Research Assistant | Contributor of RCQF | Administrator &amp; Contributor of DSA Lark platform<br><strong>Bachelor of Engineering in Computer Science &amp; Technology</strong>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <em>September 2018 — June 2022</em><br>GPA 93.5/100 (Top 1/131) | 国家奖学金 | 浙江省政府奖学金 | 精英奖学金 | 浙江省优秀毕业生 | 电脑医院协会科长</p>
+<p><strong>Interested fields</strong>:  Artificial Intelligence | Software&amp;Web development | Big Data | Web3 Development | Data Science.<br>If you are looking for someone who can do work in these fields, Welcome to contact me!</p>
+<hr>
+<h2 id="谷歌学术"><a href="#谷歌学术" class="headerlink" title="谷歌学术"></a>谷歌学术</h2><p>Google Scholar Profile: <a target="_blank" rel="noopener" href="https://scholar.google.com/citations?user=GewwudwAAAAJ&hl=zh-CN">‪Sun Maojun‬ - ‪Google 学术搜索‬</a><br>Publication</p>
+<ul>
+<li><strong>Data Enhancement for Melanoma Classification. (First author, IEEE Xplore, EI Index)</strong><br>M. Sun, A. Jiang and Z. Li, “Data Enhancement for Melanoma Classification,” 2021 2nd International Conference on Artificial Intelligence and Computer Engineering (ICAICE), Hangzhou, China, 2021, pp. 149-155, doi: 10.1109/ICAICE54393.2021.00037</li>
+</ul>
+<hr>
+<h2 id="我的技术栈"><a href="#我的技术栈" class="headerlink" title="我的技术栈"></a>我的技术栈</h2><table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Technical Stack</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Programming languages</td>
+<td>Python, Java, C, C++(beginner), PHP, JavaScript, GO(beginner)</td>
+</tr>
+<tr>
+<td>Database</td>
+<td>MySQL, SQLServer, Redis, MongoDB(beginner)</td>
+</tr>
+<tr>
+<td>Front-end development</td>
+<td>HTML, CSS, JS, Vue, BootStrap, Element-UI…</td>
+</tr>
+<tr>
+<td>Back-end development</td>
+<td>SSM, SpringBoot, SpringCloud, Flask, Node.js(beginner)</td>
+</tr>
+<tr>
+<td>Machine learning &amp; Deep learning framework</td>
+<td>Scikit-learn, PyTorch</td>
+</tr>
+<tr>
+<td>Big data</td>
+<td>Hadoop, Spark, RabbitMQ, Kafka(beginner), Flink(beginner)</td>
+</tr>
+<tr>
+<td>Tools</td>
+<td>Postman, Swagger, Docker, Git….</td>
+</tr>
+<tr>
+<td>Operating system</td>
+<td>Ubuntu, CentOS, Windows</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="主要获奖"><a href="#主要获奖" class="headerlink" title="主要获奖"></a>主要获奖<br></h2><ul>
+<li>国家奖学金（One quota in school）       </li>
+<li>浙江省政府奖学金 </li>
+<li>精英奖学金 × 2（校级最高荣誉奖学金）</li>
+<li>学业优秀一等奖学金 × 5（3%）</li>
+<li>浙江省优秀毕业生</li>
+<li>RoboMaster 2022无人飞行器智能感知技术竞赛优胜奖</li>
+<li>第三届”智未来杯”全国人工智能创新大赛二等奖</li>
+<li>全国大学生计算机技能应用大赛C语言组三等奖</li>
+<li>国家级大创立项奖</li>
+</ul>
+<hr>
+<h2 id="联系我"><a href="#联系我" class="headerlink" title="联系我"></a>联系我</h2><table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Item</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Email</td>
+<td><a href="mailto:&#x73;&#x32;&#51;&#x37;&#49;&#x31;&#x36;&#x30;&#49;&#x30;&#51;&#64;&#x31;&#54;&#x33;&#46;&#x63;&#x6f;&#x6d;">&#x73;&#x32;&#51;&#x37;&#49;&#x31;&#x36;&#x30;&#49;&#x30;&#51;&#64;&#x31;&#54;&#x33;&#46;&#x63;&#x6f;&#x6d;</a></td>
+</tr>
+<tr>
+<td>Wechat</td>
+<td>s66669998880</td>
+</tr>
+<tr>
+<td>WhatsApp</td>
+<td>+852 94205720</td>
+</tr>
+</tbody></table>
+<p>Please indicate your intention, Thx. </p>
 
-
-<div class="panel panel-default panel-badger">
-  <div class="panel-body">
-    <figure class="media">
-      <div class="media-left">
-        <a href="https://stephen-smj.tech/about/" target="_blank" class="img-burn thumb-sm visible-lg">
-          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
-        </a>
-      </div>
-      <div class="media-body">
-        <h3 class="media-heading"><a href="https://stephen-smj.tech/about/" target="_blank"><span class="text-dark">小孙不够睡</span><small class="ml-1x">AI Engineer &amp; Software Developer &amp; Big Data Scientist</small></a></h3>
-        <div>A student at Hong Kong Polytechnic University</div>
-      </div>
-    </figure>
   </div>
-</div>
-
-
-    </div>
-  </article>
-  
-    
-  <section id="comments">
-  	
-      <div id="vcomments"></div>
-    
-  </section>
-
+</article>
 
   
-</div>
-
-  <nav class="bar bar-footer clearfix" data-stick-bottom>
-  <div class="bar-inner">
-  
-  <ul class="pager pull-left">
-    
-    <li class="prev">
-      <a href="/2020/07/08/%E5%9F%BA%E4%BA%8ESSM%E6%A1%86%E6%9E%B6%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E7%94%A8%E6%88%B7%E7%B3%BB%E7%BB%9F%EF%BC%88%E7%99%BB%E5%BD%95%EF%BC%8C%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%EF%BC%8C%E5%88%86%E9%A1%B5%EF%BC%8C%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%EF%BC%8C%E7%94%A8%E6%88%B7%E8%A7%92%E8%89%B2%E7%AE%A1%E7%90%86%E5%8A%9F%E8%83%BD%EF%BC%89/" title="基于SSM框架实现一个用户系统（登录，用户列表，分页，增删改查，用户角色管理功能)"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
-    </li>
-    
-    
-    <li class="next">
-      <a href="/2020/07/08/SpringBoot%20@PathVariable%E6%B3%A8%E8%A7%A3%E7%9A%84%E4%BD%BF%E7%94%A8/" title="SpringBoot @PathVariable注解的使用"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
-    </li>
-    
-    
-  </ul>
-  
-  
-  <!-- Button trigger modal -->
-  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
-  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
-    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
-  </div> -->
-  
-  
-  <div class="bar-right">
-    
-    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
-    
-  </div>
-  </div>
-</nav>
-  
-<!-- Modal -->
-<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content donate">
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <div class="modal-body">
-        <div class="donate-box">
-          <div class="donate-head">
-            <p>感谢您的支持，我会继续努力的!</p>
-          </div>
-          <div class="tab-content">
-            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
-              <div class="donate-payimg">
-                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
-              </div>
-              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
-              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
-            </div>
-            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
-              <div class="donate-payimg">
-                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
-              </div>
-              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
-              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
-            </div>
-          </div>
-          <div class="donate-footer">
-            <ul class="nav nav-tabs nav-justified" role="tablist">
-              <li role="presentation" class="active">
-                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
-              </li>
-              <li role="presentation" class="">
-                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
 
 
 </main>
@@ -567,39 +540,6 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 
 
 
-
-   
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
-
-
-
-   
-    
-  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/valine"></script>
-  <script type="text/javascript">
-  var GUEST = ['nick', 'mail', 'link'];
-  var meta = 'nick,mail,link';
-  meta = meta.split(',').filter(function(item) {
-    return GUEST.indexOf(item) > -1;
-  });
-  new Valine({
-    el: '#vcomments',
-    verify: false,
-    notify: false,
-    appId: 'IOO8LG95uLVEj8pH7y8rEB3n-gzGzoHsz',
-    appKey: 'PCqPCzTR2b9ttcHbt6ZP3HId',
-    placeholder: 'Just go go',
-    avatar: 'mm',
-    meta: meta,
-    pageSize: '10' || 10,
-    visitor: false
-  });
-  </script>
-
-     
 
 
 
