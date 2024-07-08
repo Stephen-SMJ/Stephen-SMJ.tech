@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>浅谈ssm框架分层逻辑 | 小孙不够睡的Blog</title>
+  <meta name="description" content="第一次接触ssm的时候感觉自己就是个无情的码字机器，完全跟着老师敲，每一行代码在干嘛都不是很理解，也经常看到这样的哀嚎研究了一天后我也算是对这个框架有了一些浅薄的认识，这里我就完全用自己的理解来讲一下，如果说错欢迎指出。ssm（Spring+SpringMVC+MyBatis)是什么就不多说了，相信很多人都是用了它之后才知道它的好处 ssm项目分层目前所有企业基本都采用的这种分层标准，这种分层标准">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈ssm框架分层逻辑">
+<meta property="og:url" content="https://stephen-smj.tech/2020/07/04/%E6%B5%85%E8%B0%88ssm%E6%A1%86%E6%9E%B6%E5%88%86%E5%B1%82%E9%80%BB%E8%BE%91/index.html">
+<meta property="og:site_name" content="小孙不够睡的博客">
+<meta property="og:description" content="第一次接触ssm的时候感觉自己就是个无情的码字机器，完全跟着老师敲，每一行代码在干嘛都不是很理解，也经常看到这样的哀嚎研究了一天后我也算是对这个框架有了一些浅薄的认识，这里我就完全用自己的理解来讲一下，如果说错欢迎指出。ssm（Spring+SpringMVC+MyBatis)是什么就不多说了，相信很多人都是用了它之后才知道它的好处 ssm项目分层目前所有企业基本都采用的这种分层标准，这种分层标准">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gist.github.com/assets/67999981/48703fa6-66b9-4841-839d-751c1fbb5816">
+<meta property="og:image" content="https://gist.github.com/assets/67999981/4583c361-1089-4b2a-8977-1de435b4b208">
+<meta property="og:image" content="https://gist.github.com/assets/67999981/962abf60-d60f-48e6-8955-b920d76ad3e9">
+<meta property="article:published_time" content="2020-07-04T06:28:56.000Z">
+<meta property="article:modified_time" content="2024-07-07T08:40:08.000Z">
+<meta property="article:author" content="Sun Maojun">
+<meta property="article:tag" content="Back-end">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gist.github.com/assets/67999981/48703fa6-66b9-4841-839d-751c1fbb5816">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://stephen-smj.tech/2020/07/04/%E6%B5%85%E8%B0%88ssm%E6%A1%86%E6%9E%B6%E5%88%86%E5%B1%82%E9%80%BB%E8%BE%91/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="小孙不够睡的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://stephen-smj.tech/about/" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">小孙不够睡</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">AI Engineer &amp; Software Developer &amp; Big Data Scientist</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Hong Kong SAR</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Blog</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">Links</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-projects">
+          <a href="/experience">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">Projects</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-group">
+          <a href="/group">
+            
+            <i class="icon icon-wechat"></i>
+            
+            <span class="menu-title">Goups</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-recommond">
+          <a href="/recommond">
+            
+            <i class="icon icon-users"></i>
+            
+            <span class="menu-title">优单推荐</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Stephen-SMJ" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>1. To practice my English writing, I will write all blog in English later. If you want to see Chinese version, you can visit my CSDN. 2. I am happy to announce that I will pursue a PhD degree at Hong Kong Polytechnic University in September 2024. My research interests include Large Langauge Model, Multi-agent Collaboration, Diffusion Model, etc. Welcome like-minded friends for discussions.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/" rel="tag">Algorithms</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Back-end/" rel="tag">Back-end</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Deep-learning/" rel="tag">Deep learning</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Front-end/" rel="tag">Front-end</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/" rel="tag">Git</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-learning/" rel="tag">Machine learning</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Other/" rel="tag">Other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/" rel="tag">PHP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">7</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Algorithms/" style="font-size: 13px;">Algorithms</a> <a href="/tags/Back-end/" style="font-size: 14px;">Back-end</a> <a href="/tags/Deep-learning/" style="font-size: 13.5px;">Deep learning</a> <a href="/tags/Front-end/" style="font-size: 13.33px;">Front-end</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/JAVA/" style="font-size: 13.83px;">JAVA</a> <a href="/tags/Machine-learning/" style="font-size: 13.17px;">Machine learning</a> <a href="/tags/Other/" style="font-size: 13px;">Other</a> <a href="/tags/PHP/" style="font-size: 13px;">PHP</a> <a href="/tags/Python/" style="font-size: 13.67px;">Python</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">March 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">February 2023</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2023/03/21/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87%E8%A2%AB%E8%AE%BE%E7%BD%AE%E9%98%B2%E7%9B%97%E9%93%BE%E6%8E%A5%EF%BC%9F%E5%88%AB%E6%85%8C%EF%BC%8C%E6%88%91%E7%88%86%E8%82%9D%E4%B8%89%E6%99%9A%E5%86%99%E4%BA%86%E8%BF%99%E4%B8%AA%E6%89%B9%E9%87%8F%E5%9B%BE%E7%89%87%E7%AB%99%E7%82%B9%E8%BD%AC%E7%A7%BB%E8%84%9A%E6%9C%AC%EF%BC%88%E5%B7%B2%E5%BC%80%E6%BA%90%EF%BC%89/" class="title">博客图片被设置防盗链接？我爆肝三晚写了这个批量图片站点转移脚本（已开源）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-03-21T01:28:01.000Z" itemprop="datePublished">2023-03-21</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2023/03/03/Nginx%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E4%B8%AD%E7%9A%84%E6%B7%B1%E5%9D%91/" class="title">Nginx反向代理中的坑</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-03-03T10:02:21.000Z" itemprop="datePublished">2023-03-03</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2023/03/01/Git%20%E4%BC%81%E4%B8%9A%E7%BA%A7%E5%88%86%E6%94%AF%E6%8F%90%E4%BA%A4%E6%B5%81%E7%A8%8B/" class="title">Git企业级分支提交流程</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-03-01T10:02:21.000Z" itemprop="datePublished">2023-03-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2023/03/01/%E5%9C%A8%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E6%9F%A5%E6%89%BE%E6%95%B0%E5%AD%97I%E7%9A%84%E4%B8%AA%E6%95%B0/" class="title">剑指offer：在排序数组中查找数字I的个数</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-03-01T10:02:21.000Z" itemprop="datePublished">2023-03-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2023/02/28/Forward%20Propagation%20and%20Back%20Propagation/" class="title">手推神经网络前向与反向传播</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-02-28T10:02:21.000Z" itemprop="datePublished">2023-02-28</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-浅谈ssm框架分层逻辑" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      浅谈ssm框架分层逻辑
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2020/07/04/%E6%B5%85%E8%B0%88ssm%E6%A1%86%E6%9E%B6%E5%88%86%E5%B1%82%E9%80%BB%E8%BE%91/" class="article-date">
+	  <time datetime="2020-07-04T06:28:56.000Z" itemprop="datePublished">2020-07-04</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/Back-end/" rel="tag">Back-end</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/07/04/%E6%B5%85%E8%B0%88ssm%E6%A1%86%E6%9E%B6%E5%88%86%E5%B1%82%E9%80%BB%E8%BE%91/#comments" class="article-comment-link">Comments</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 1.4k(words)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 5(minutes)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>第一次接触ssm的时候感觉自己就是个无情的码字机器，完全跟着老师敲，每一行代码在干嘛都不是很理解，也经常看到这样的哀嚎<br><img src="https://gist.github.com/assets/67999981/48703fa6-66b9-4841-839d-751c1fbb5816" alt="20200704122914927"><br>研究了一天后我也算是对这个框架有了一些浅薄的认识，这里我就完全用自己的理解来讲一下，如果说错欢迎指出。<br>ssm（Spring+SpringMVC+MyBatis)是什么就不多说了，相信很多人都是用了它之后才知道它的好处</p>
+<h2 id="ssm项目分层"><a href="#ssm项目分层" class="headerlink" title="ssm项目分层"></a>ssm项目分层</h2><p>目前所有企业基本都采用的这种分层标准，这种分层标准的好处就是让项目看起来整齐划一，每层都负责做自己的事情，方便开发者对代码进行管理与调试，让代码的可读性更强。一般无论是在学校还是在培训班都会首先跟你讲分哪些层和每个层的作用，作为刚入门的初学在编写几个完整项目之前者确实很难理解，去网上搜的解释又都太官方难懂，同样作为初学者的我在编写了一个项目研究了一天之后对这个分层终于有了比较浅薄的理解。</p>
+<h2 id="bean层"><a href="#bean层" class="headerlink" title="bean层"></a>bean层</h2><p>bean层：存放数据表转化的类。<br>比如你数据库的表叫tb_user,那就在bean层下面创建一个User的类，把数据库中需要用到的字段全部写进去。<br>比如你数据库中字段是这样的：<br><img src="https://gist.github.com/assets/67999981/4583c361-1089-4b2a-8977-1de435b4b208" alt="20200704115755708"><br>那么你创建的User类就这样写（属性+get+set方法，构造方法和ToString也推荐写进去）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> id;</span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getId</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setId</span><span class="params">(<span class="type">int</span> id)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.id = id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getUsername</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> username;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setUsername</span><span class="params">(String username)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.username = username;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getPassword</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> password;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setPassword</span><span class="params">(String password)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.password = password;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">toString</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;User&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;id=&quot;</span> + id +</span><br><span class="line">                <span class="string">&quot;, username=&#x27;&quot;</span> + username + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&quot;, password=&#x27;&quot;</span> + password + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="dao层"><a href="#dao层" class="headerlink" title="dao层"></a>dao层</h2><p>持久层(Dao层)：主要负责与数据库进行交互，一般为接口，简单说就是对数据库进行增删改查。写好之后去Mapper.xml里配置和写sql语句。这个层最好理解，你需要数据库中的哪些功能就写哪些方法，而且先不需要去考虑去怎么实现，因为实现属于业务层的范畴了，这里只需无脑写方法就好了，这也体现出ssm框架分层的好处，东西先有，之后再实现。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">UserDao</span> &#123;</span><br><span class="line">    List&lt;User&gt; <span class="title function_">findAll</span><span class="params">(<span class="meta">@Param(&quot;start&quot;)</span> <span class="type">int</span> start, <span class="meta">@Param(&quot;username&quot;)</span> String username)</span>;</span><br><span class="line"></span><br><span class="line">    User <span class="title function_">findUserByUserName</span><span class="params">(String username)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">deleteById</span><span class="params">(<span class="type">int</span> id)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">add</span><span class="params">(User user)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">UserById</span><span class="params">(<span class="type">int</span> id)</span>;</span><br><span class="line"></span><br><span class="line">    User <span class="title function_">selectById</span><span class="params">(<span class="type">int</span> id)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">update</span><span class="params">(User user)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> <span class="title function_">getTotalCount</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">    List&lt;User&gt; <span class="title function_">fuzzyFindByUsername</span><span class="params">(<span class="meta">@Param(&quot;start&quot;)</span> <span class="type">int</span> start, <span class="meta">@Param(&quot;username&quot;)</span> String username)</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="service层"><a href="#service层" class="headerlink" title="service层"></a>service层</h2><p>业务层(service层)：这一层是最抽象的也是最难理解的，我对业务层的理解是它负责项目的核心业务，比如登录、注册、这些都是业务，通俗的说就是在业务层中把项目的核心方法都写出来，<strong>首先定义一个业务层的接口，然后用实现类去实现它，在这个实现类中调用DAO层的方法以对数据库进行增删改查，这样就直接把Spring模块和Mybatis模块串起来了</strong>，这样说是不是很明白了，举个简单的例子，现在要实现登录功能，那要在service的实现类里面首先写一个dao层的对象（以调用MYbatis模块，对数据库增删改查）。<br>然后在下面的登录方法中调用dao层，实际上就是调用到了数据库，判断用户是否存在，然后再对这个方法完善，判断密码是否正确，就用ssm实现了这样一个简单的登录逻辑。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> UserDao userDao;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">login</span><span class="params">(String username, String password)</span> &#123;</span><br><span class="line">    <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> userDao.findUserByUserName(username);<span class="comment">//调用MYbatis模块</span></span><br><span class="line">    <span class="keyword">if</span> (user != <span class="literal">null</span> &amp;&amp; user.getPassword().equals(password)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Controller层"><a href="#Controller层" class="headerlink" title="Controller层"></a>Controller层</h2><p>前面两个模块都已经写好了，那现在差的就是再网页中如何把我们的刚才的登录信息显示出来，这里就用到了控制层(controller层)：属于springMVC模块，控制web访问，这一层也不难理解，它要与视图层联系起来，即前端页面发送请求，控制层接收请求并处理，最后返回数据到前端。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> IUserService userService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/login.do&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> ModelAndView <span class="title function_">login</span><span class="params">(User user, HttpSession session)</span> &#123;</span><br><span class="line">        <span class="type">boolean</span> <span class="variable">flag</span> <span class="operator">=</span> userService.login(user.getUsername(), user.getPassword());</span><br><span class="line">        <span class="type">ModelAndView</span> <span class="variable">modelAndView</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ModelAndView</span>();</span><br><span class="line">        <span class="keyword">if</span> (flag) &#123;</span><br><span class="line">            session.setAttribute(<span class="string">&quot;user&quot;</span>, user);</span><br><span class="line">            modelAndView.setViewName(<span class="string">&quot;main&quot;</span>);<span class="comment">//登陆成功进入main.jsp</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            modelAndView.setViewName(<span class="string">&quot;../failer&quot;</span>);<span class="comment">//失败进入拦截器</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> modelAndView;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>视图层(view层)：view层不需要单独建一个叫view的package来单独存放，直接放在webapp下面，这个层最简单，其实就是存放前端的网页，一般为jsp，html格式。。</p>
+<h2 id="结构图"><a href="#结构图" class="headerlink" title="结构图"></a>结构图</h2><p>图片转自<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38685503/article/details/88022904![20200704143030291](https://gist.github.com/assets/67999981/1361dc9f-387d-432a-9d9a-2896a58183a6)">https://blog.csdn.net/qq_38685503/article/details/88022904![20200704143030291](https://gist.github.com/assets/67999981/1361dc9f-387d-432a-9d9a-2896a58183a6)</a></p>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><p><img src="https://gist.github.com/assets/67999981/962abf60-d60f-48e6-8955-b920d76ad3e9" alt="20200704142029799"><br>当然，这只是最基础的分层，实际项目中往往还需要拦截器（filter层)等等按需求增加分层就好，总之记住一点，初学者可以先按照这个分层去写，哪怕不理解也要把每一层是干什么的，有哪些东西都要记住，写多了就对这些了如指掌了。</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://stephen-smj.tech/2020/07/04/%E6%B5%85%E8%B0%88ssm%E6%A1%86%E6%9E%B6%E5%88%86%E5%B1%82%E9%80%BB%E8%BE%91/" title="浅谈ssm框架分层逻辑" target="_blank" rel="external">https://stephen-smj.tech/2020/07/04/浅谈ssm框架分层逻辑/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://stephen-smj.tech/about/" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://stephen-smj.tech/about/" target="_blank"><span class="text-dark">小孙不够睡</span><small class="ml-1x">AI Engineer &amp; Software Developer &amp; Big Data Scientist</small></a></h3>
+        <div>A student at Hong Kong Polytechnic University</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2020/07/07/%E4%BD%BF%E7%94%A8hibernate%E6%A1%86%E6%9E%B6%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E7%9A%84%E8%A1%A8/" title="使用hibernate框架自动生成数据库中的表"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2020/07/03/Servlet%E5%AE%9E%E7%8E%B0%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E5%8A%9F%E8%83%BD%E8%AF%A6%E7%BB%86%E6%AD%A5%E9%AA%A4/" title="Servlet实现用户登录功能详细步骤"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>$</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>Maybe you could buy me a cup of coffee.</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open alipay app scan this qrcode, buy me a coffee!</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open wechat app scan this qrcode, buy me a coffee!</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> alipay</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> wechat payment</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Stephen-SMJ" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2024 Sun Maojun
+        
+<!--        <div class="publishby">-->
+<!--        	copyright.theme_by <a href="https://github.com/cofess" target="_blank"> cofess </a>copyright.base_on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.-->
+<!--        </div>-->
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: 'IOO8LG95uLVEj8pH7y8rEB3n-gzGzoHsz',
+    appKey: 'PCqPCzTR2b9ttcHbt6ZP3HId',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

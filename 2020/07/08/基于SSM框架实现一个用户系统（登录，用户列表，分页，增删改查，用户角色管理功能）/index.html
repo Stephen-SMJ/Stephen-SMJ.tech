@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>基于SSM框架实现一个用户系统（登录，用户列表，分页，增删改查，用户角色管理功能) | 小孙不够睡的Blog</title>
+  <meta name="description" content="首先搭建一个Maven工程，配置好Tomcat，mybatis等 数据库tb_roletb_useruser_role(这里只给了第一个用户管理员限权，可以对其他用户添加管理员，必须要用第一个用户登录) bean这三个就不用多说了，直接按照数据库字段的打。为了实现分页功能，我们需要引入一个类叫PageInfo，代码如下 123456789101112131415161718192021222324">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于SSM框架实现一个用户系统（登录，用户列表，分页，增删改查，用户角色管理功能)">
+<meta property="og:url" content="https://stephen-smj.tech/2020/07/08/%E5%9F%BA%E4%BA%8ESSM%E6%A1%86%E6%9E%B6%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E7%94%A8%E6%88%B7%E7%B3%BB%E7%BB%9F%EF%BC%88%E7%99%BB%E5%BD%95%EF%BC%8C%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%EF%BC%8C%E5%88%86%E9%A1%B5%EF%BC%8C%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%EF%BC%8C%E7%94%A8%E6%88%B7%E8%A7%92%E8%89%B2%E7%AE%A1%E7%90%86%E5%8A%9F%E8%83%BD%EF%BC%89/index.html">
+<meta property="og:site_name" content="小孙不够睡的博客">
+<meta property="og:description" content="首先搭建一个Maven工程，配置好Tomcat，mybatis等 数据库tb_roletb_useruser_role(这里只给了第一个用户管理员限权，可以对其他用户添加管理员，必须要用第一个用户登录) bean这三个就不用多说了，直接按照数据库字段的打。为了实现分页功能，我们需要引入一个类叫PageInfo，代码如下 123456789101112131415161718192021222324">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gist.github.com/assets/67999981/d6268a97-9373-439a-a396-9917a5f0ca04">
+<meta property="og:image" content="https://gist.github.com/assets/67999981/706404dd-7e8c-4310-a306-c50a94abe5a6">
+<meta property="og:image" content="https://gist.github.com/assets/67999981/0f6b84e6-4e5c-42b0-9761-2587b28e3b32">
+<meta property="og:image" content="https://gist.github.com/assets/67999981/2620c7a6-8c72-4480-9d34-c4d686ea495b">
+<meta property="og:image" content="https://gist.github.com/assets/67999981/e9207f49-150a-4752-821e-d036523a895c">
+<meta property="og:image" content="https://gist.github.com/assets/67999981/23639a9b-4a48-4ab0-bdba-db1e9bda89e0">
+<meta property="article:published_time" content="2020-07-08T07:43:17.000Z">
+<meta property="article:modified_time" content="2024-07-07T08:33:04.000Z">
+<meta property="article:author" content="Sun Maojun">
+<meta property="article:tag" content="Back-end">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gist.github.com/assets/67999981/d6268a97-9373-439a-a396-9917a5f0ca04">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://stephen-smj.tech/2020/07/08/%E5%9F%BA%E4%BA%8ESSM%E6%A1%86%E6%9E%B6%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E7%94%A8%E6%88%B7%E7%B3%BB%E7%BB%9F%EF%BC%88%E7%99%BB%E5%BD%95%EF%BC%8C%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%EF%BC%8C%E5%88%86%E9%A1%B5%EF%BC%8C%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%EF%BC%8C%E7%94%A8%E6%88%B7%E8%A7%92%E8%89%B2%E7%AE%A1%E7%90%86%E5%8A%9F%E8%83%BD%EF%BC%89/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="小孙不够睡的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://stephen-smj.tech/about/" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">小孙不够睡</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">AI Engineer &amp; Software Developer &amp; Big Data Scientist</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Hong Kong SAR</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Blog</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">Links</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-projects">
+          <a href="/experience">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">Projects</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-group">
+          <a href="/group">
+            
+            <i class="icon icon-wechat"></i>
+            
+            <span class="menu-title">Goups</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-recommond">
+          <a href="/recommond">
+            
+            <i class="icon icon-users"></i>
+            
+            <span class="menu-title">优单推荐</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Stephen-SMJ" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>1. To practice my English writing, I will write all blog in English later. If you want to see Chinese version, you can visit my CSDN. 2. I am happy to announce that I will pursue a PhD degree at Hong Kong Polytechnic University in September 2024. My research interests include Large Langauge Model, Multi-agent Collaboration, Diffusion Model, etc. Welcome like-minded friends for discussions.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/" rel="tag">Algorithms</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Back-end/" rel="tag">Back-end</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Deep-learning/" rel="tag">Deep learning</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Front-end/" rel="tag">Front-end</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/" rel="tag">Git</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-learning/" rel="tag">Machine learning</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Other/" rel="tag">Other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/" rel="tag">PHP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">7</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Algorithms/" style="font-size: 13px;">Algorithms</a> <a href="/tags/Back-end/" style="font-size: 14px;">Back-end</a> <a href="/tags/Deep-learning/" style="font-size: 13.5px;">Deep learning</a> <a href="/tags/Front-end/" style="font-size: 13.33px;">Front-end</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/JAVA/" style="font-size: 13.83px;">JAVA</a> <a href="/tags/Machine-learning/" style="font-size: 13.17px;">Machine learning</a> <a href="/tags/Other/" style="font-size: 13px;">Other</a> <a href="/tags/PHP/" style="font-size: 13px;">PHP</a> <a href="/tags/Python/" style="font-size: 13.67px;">Python</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">March 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">February 2023</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2023/03/21/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87%E8%A2%AB%E8%AE%BE%E7%BD%AE%E9%98%B2%E7%9B%97%E9%93%BE%E6%8E%A5%EF%BC%9F%E5%88%AB%E6%85%8C%EF%BC%8C%E6%88%91%E7%88%86%E8%82%9D%E4%B8%89%E6%99%9A%E5%86%99%E4%BA%86%E8%BF%99%E4%B8%AA%E6%89%B9%E9%87%8F%E5%9B%BE%E7%89%87%E7%AB%99%E7%82%B9%E8%BD%AC%E7%A7%BB%E8%84%9A%E6%9C%AC%EF%BC%88%E5%B7%B2%E5%BC%80%E6%BA%90%EF%BC%89/" class="title">博客图片被设置防盗链接？我爆肝三晚写了这个批量图片站点转移脚本（已开源）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-03-21T01:28:01.000Z" itemprop="datePublished">2023-03-21</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2023/03/03/Nginx%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E4%B8%AD%E7%9A%84%E6%B7%B1%E5%9D%91/" class="title">Nginx反向代理中的坑</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-03-03T10:02:21.000Z" itemprop="datePublished">2023-03-03</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2023/03/01/Git%20%E4%BC%81%E4%B8%9A%E7%BA%A7%E5%88%86%E6%94%AF%E6%8F%90%E4%BA%A4%E6%B5%81%E7%A8%8B/" class="title">Git企业级分支提交流程</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-03-01T10:02:21.000Z" itemprop="datePublished">2023-03-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2023/03/01/%E5%9C%A8%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E6%9F%A5%E6%89%BE%E6%95%B0%E5%AD%97I%E7%9A%84%E4%B8%AA%E6%95%B0/" class="title">剑指offer：在排序数组中查找数字I的个数</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-03-01T10:02:21.000Z" itemprop="datePublished">2023-03-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2023/02/28/Forward%20Propagation%20and%20Back%20Propagation/" class="title">手推神经网络前向与反向传播</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-02-28T10:02:21.000Z" itemprop="datePublished">2023-02-28</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-基于SSM框架实现一个用户系统（登录，用户列表，分页，增删改查，用户角色管理功能）" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      基于SSM框架实现一个用户系统（登录，用户列表，分页，增删改查，用户角色管理功能)
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2020/07/08/%E5%9F%BA%E4%BA%8ESSM%E6%A1%86%E6%9E%B6%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E7%94%A8%E6%88%B7%E7%B3%BB%E7%BB%9F%EF%BC%88%E7%99%BB%E5%BD%95%EF%BC%8C%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%EF%BC%8C%E5%88%86%E9%A1%B5%EF%BC%8C%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%EF%BC%8C%E7%94%A8%E6%88%B7%E8%A7%92%E8%89%B2%E7%AE%A1%E7%90%86%E5%8A%9F%E8%83%BD%EF%BC%89/" class="article-date">
+	  <time datetime="2020-07-08T07:43:17.000Z" itemprop="datePublished">2020-07-08</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/Back-end/" rel="tag">Back-end</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/07/08/%E5%9F%BA%E4%BA%8ESSM%E6%A1%86%E6%9E%B6%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E7%94%A8%E6%88%B7%E7%B3%BB%E7%BB%9F%EF%BC%88%E7%99%BB%E5%BD%95%EF%BC%8C%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%EF%BC%8C%E5%88%86%E9%A1%B5%EF%BC%8C%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%EF%BC%8C%E7%94%A8%E6%88%B7%E8%A7%92%E8%89%B2%E7%AE%A1%E7%90%86%E5%8A%9F%E8%83%BD%EF%BC%89/#comments" class="article-comment-link">Comments</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 2.1k(words)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 12(minutes)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p><img src="https://gist.github.com/assets/67999981/d6268a97-9373-439a-a396-9917a5f0ca04" alt="20200708153122672"><br><img src="https://gist.github.com/assets/67999981/706404dd-7e8c-4310-a306-c50a94abe5a6" alt="20200708153059979"><br>首先搭建一个Maven工程，配置好Tomcat，mybatis等</p>
+<h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><p>tb_role<br><img src="https://gist.github.com/assets/67999981/0f6b84e6-4e5c-42b0-9761-2587b28e3b32" alt="20200707195234376"><br>tb_user<br><img src="https://gist.github.com/assets/67999981/2620c7a6-8c72-4480-9d34-c4d686ea495b" alt="2020070719531376"><br>user_role(这里只给了第一个用户管理员限权，可以对其他用户添加管理员，必须要用第一个用户登录)<br><img src="https://gist.github.com/assets/67999981/e9207f49-150a-4752-821e-d036523a895c" alt="20200707195331722"></p>
+<h2 id="bean"><a href="#bean" class="headerlink" title="bean"></a>bean</h2><p>这三个就不用多说了，直接按照数据库字段的打。<br><img src="https://gist.github.com/assets/67999981/23639a9b-4a48-4ab0-bdba-db1e9bda89e0" alt="20200707195532175"><br>为了实现分页功能，我们需要引入一个类叫PageInfo，代码如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">package com.zhongruan.bean;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PageInfo</span>&lt;T&gt; &#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;T&gt; list;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> totalPage;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> size;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> totalCount;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> currentPage;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;T&gt; <span class="title">getList</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="type">void</span> <span class="title">setList</span><span class="params">(List&lt;T&gt; list)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.list = list;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="type">int</span> <span class="title">getTotalPage</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> totalPage;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="type">void</span> <span class="title">setTotalPage</span><span class="params">(<span class="type">int</span> totalPage)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.totalPage = totalPage;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="type">int</span> <span class="title">getSize</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> size;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="type">void</span> <span class="title">setSize</span><span class="params">(<span class="type">int</span> size)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.size = size;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="type">int</span> <span class="title">getTotalCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> totalCount;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="type">void</span> <span class="title">setTotalCount</span><span class="params">(<span class="type">int</span> totalCount)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.totalCount = totalCount;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="type">int</span> <span class="title">getCurrentPage</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> currentPage;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="type">void</span> <span class="title">setCurrentPage</span><span class="params">(<span class="type">int</span> currentPage)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.currentPage = currentPage;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @<span class="function">Override</span></span><br><span class="line"><span class="function">    <span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;PageInfo&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;list=&quot;</span> + list +</span><br><span class="line">                <span class="string">&quot;, totalPage=&quot;</span> + totalPage +</span><br><span class="line">                <span class="string">&quot;, size=&quot;</span> + size +</span><br><span class="line">                <span class="string">&quot;, totalCount=&quot;</span> + totalCount +</span><br><span class="line">                <span class="string">&quot;, currentPage=&quot;</span> + currentPage +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="dao"><a href="#dao" class="headerlink" title="dao"></a>dao</h2><p>我们需要用到两个Dao，一个是用于用户表的增删改查，另外一个是用于角色表的增删改查</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">package com.zhongruan.dao;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.zhongruan.bean.Role;</span><br><span class="line"><span class="keyword">import</span> com.zhongruan.bean.UserRole;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> interface RoleDao &#123;</span><br><span class="line">    <span class="function">List&lt;Integer&gt; <span class="title">findRoleIdByUserId</span><span class="params">(<span class="type">int</span> userId)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">List&lt;Role&gt; <span class="title">findRoleByUserId</span><span class="params">(<span class="type">int</span> id)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">addRole</span><span class="params">(UserRole userRole)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">package com.zhongruan.dao;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.zhongruan.bean.User;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.annotations.Param;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> interface UserDao &#123;</span><br><span class="line">    <span class="function">User <span class="title">findUserByUserName</span><span class="params">(String username)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">List&lt;User&gt; <span class="title">findAll</span><span class="params">(@Param(<span class="string">&quot;start&quot;</span>) <span class="type">int</span> start,@Param(<span class="string">&quot;username&quot;</span>) String username)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">deleteById</span><span class="params">(<span class="type">int</span> id)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(User user)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">User <span class="title">selectById</span><span class="params">(<span class="type">int</span> id)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">update</span><span class="params">(User user)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getTotalCount</span><span class="params">(@Param(<span class="string">&quot;username&quot;</span>)String username)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">deleteAll</span><span class="params">(@Param(<span class="string">&quot;ids&quot;</span>) List&lt;Integer&gt; ids)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h2><p>同样两个service接口和两个实现类<br>接口：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">package com.zhongruan.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.zhongruan.bean.Role;</span><br><span class="line"><span class="keyword">import</span> com.zhongruan.bean.UserRole;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> interface IRoleService &#123;</span><br><span class="line">    <span class="function">List&lt;Integer&gt; <span class="title">findRoleId</span><span class="params">(<span class="type">int</span> userId)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">List&lt;Role&gt; <span class="title">findRoleByUserId</span><span class="params">(<span class="type">int</span> id)</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(List&lt;Integer&gt; ids, String userId)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">package com.zhongruan.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.zhongruan.bean.PageInfo;</span><br><span class="line"><span class="keyword">import</span> com.zhongruan.bean.User;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> interface IUserService &#123;</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">login</span><span class="params">(String username,String password)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">PageInfo&lt;User&gt; <span class="title">findAll</span><span class="params">(<span class="type">int</span> currentPage,String username)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">deleteById</span><span class="params">(<span class="type">int</span> id)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(User user)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">User <span class="title">selectUserById</span><span class="params">(<span class="type">int</span> id)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">update</span><span class="params">(User user)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">deleteAll</span><span class="params">(List&lt;Integer&gt; ids)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>实现类：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">package com.zhongruan.service.impl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.zhongruan.bean.Role;</span><br><span class="line"><span class="keyword">import</span> com.zhongruan.bean.UserRole;</span><br><span class="line"><span class="keyword">import</span> com.zhongruan.dao.RoleDao;</span><br><span class="line"><span class="keyword">import</span> com.zhongruan.service.IRoleService;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line">@Service</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RoleService</span> implements IRoleService &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    <span class="keyword">private</span> RoleDao roleDao;</span><br><span class="line"></span><br><span class="line">    @<span class="function">Override</span></span><br><span class="line"><span class="function">    <span class="keyword">public</span> List&lt;Integer&gt; <span class="title">findRoleId</span><span class="params">(<span class="type">int</span> userId)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> roleDao.<span class="built_in">findRoleIdByUserId</span>(userId);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @<span class="function">Override</span></span><br><span class="line"><span class="function">    <span class="keyword">public</span> List&lt;Role&gt; <span class="title">findRoleByUserId</span><span class="params">(<span class="type">int</span> id)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> roleDao.<span class="built_in">findRoleByUserId</span>(id);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @<span class="function">Override</span></span><br><span class="line"><span class="function">    <span class="keyword">public</span> <span class="type">void</span> <span class="title">add</span><span class="params">(List&lt;Integer&gt; ids, String userId)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> roleId:ids)&#123;</span><br><span class="line">            UserRole userRole=<span class="keyword">new</span> <span class="built_in">UserRole</span>();</span><br><span class="line">            userRole.<span class="built_in">setUserId</span>(Integer.<span class="built_in">parseInt</span>(userId));</span><br><span class="line">            userRole.<span class="built_in">setRoleId</span>(roleId);</span><br><span class="line">            roleDao.<span class="built_in">addRole</span>(userRole);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">package com.zhongruan.service.impl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.zhongruan.bean.PageInfo;</span><br><span class="line"><span class="keyword">import</span> com.zhongruan.bean.User;</span><br><span class="line"><span class="keyword">import</span> com.zhongruan.dao.UserDao;</span><br><span class="line"><span class="keyword">import</span> com.zhongruan.service.IUserService;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"><span class="keyword">import</span> org.springframework.transaction.annotation.Transactional;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line">@Service</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserService</span> implements IUserService &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    <span class="keyword">private</span> UserDao userDao;</span><br><span class="line"></span><br><span class="line">    @<span class="function">Override</span></span><br><span class="line"><span class="function">    <span class="keyword">public</span> <span class="type">int</span> <span class="title">login</span><span class="params">(String username, String password)</span> </span>&#123;</span><br><span class="line">        User user = userDao.<span class="built_in">findUserByUserName</span>(username);</span><br><span class="line">        <span class="keyword">if</span> (user!=null &amp;&amp; user.<span class="built_in">getPassword</span>().<span class="built_in">equals</span>(password))&#123;</span><br><span class="line">            <span class="keyword">return</span> user.<span class="built_in">getId</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @<span class="function">Override</span></span><br><span class="line"><span class="function">    <span class="keyword">public</span> PageInfo&lt;User&gt; <span class="title">findAll</span><span class="params">(<span class="type">int</span> currentPage,String username)</span> </span>&#123;</span><br><span class="line">        PageInfo&lt;User&gt; pageInfo=<span class="keyword">new</span> PageInfo&lt;&gt;();</span><br><span class="line">        pageInfo.<span class="built_in">setSize</span>(<span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> tc=userDao.<span class="built_in">getTotalCount</span>(username);</span><br><span class="line">        pageInfo.<span class="built_in">setTotalCount</span>(tc);</span><br><span class="line">        <span class="type">int</span> tp=(<span class="type">int</span>)Math.<span class="built_in">ceil</span>(tc/<span class="number">5.0</span>);</span><br><span class="line">        pageInfo.<span class="built_in">setTotalPage</span>(tp);</span><br><span class="line">        <span class="keyword">if</span>(currentPage&lt;<span class="number">1</span>)&#123;</span><br><span class="line">            pageInfo.<span class="built_in">setCurrentPage</span>(<span class="number">1</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(currentPage&gt;tp)&#123;</span><br><span class="line">            pageInfo.<span class="built_in">setCurrentPage</span>(tp);</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            pageInfo.<span class="built_in">setCurrentPage</span>(currentPage);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//0,5,10</span></span><br><span class="line">        <span class="type">int</span> start=(pageInfo.<span class="built_in">getCurrentPage</span>()<span class="number">-1</span>)*<span class="number">5</span>;</span><br><span class="line">        List&lt;User&gt; userList = userDao.<span class="built_in">findAll</span>(start,username);</span><br><span class="line">        pageInfo.<span class="built_in">setList</span>(userList);</span><br><span class="line">        <span class="keyword">return</span> pageInfo;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*@Override</span></span><br><span class="line"><span class="comment">    public List&lt;User&gt; findAll() &#123;</span></span><br><span class="line"><span class="comment">        return userDao.findAll();</span></span><br><span class="line"><span class="comment">    &#125;*/</span></span><br><span class="line"></span><br><span class="line">    @<span class="function">Override</span></span><br><span class="line"><span class="function">    <span class="keyword">public</span> <span class="type">void</span> <span class="title">deleteById</span><span class="params">(<span class="type">int</span> id)</span> </span>&#123;</span><br><span class="line">        userDao.<span class="built_in">deleteById</span>(id);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @<span class="function">Override</span></span><br><span class="line"><span class="function">    <span class="keyword">public</span> <span class="type">void</span> <span class="title">add</span><span class="params">(User user)</span> </span>&#123;</span><br><span class="line">        userDao.<span class="built_in">add</span>(user);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @<span class="function">Override</span></span><br><span class="line"><span class="function">    <span class="keyword">public</span> User <span class="title">selectUserById</span><span class="params">(<span class="type">int</span> id)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> userDao.<span class="built_in">selectById</span>(id);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @<span class="function">Override</span></span><br><span class="line"><span class="function">    <span class="keyword">public</span> <span class="type">void</span> <span class="title">update</span><span class="params">(User user)</span> </span>&#123;</span><br><span class="line">        userDao.<span class="built_in">update</span>(user);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @<span class="function">Override</span></span><br><span class="line"><span class="function">    <span class="keyword">public</span> <span class="type">void</span> <span class="title">deleteAll</span><span class="params">(List&lt;Integer&gt; ids)</span> </span>&#123;</span><br><span class="line">        userDao.<span class="built_in">deleteAll</span>(ids);</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="controller"><a href="#controller" class="headerlink" title="controller"></a>controller</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zhongruan.controller;</span><br><span class="line"><span class="keyword">import</span> com.zhongruan.bean.PageInfo;</span><br><span class="line"><span class="keyword">import</span> com.zhongruan.bean.Role;</span><br><span class="line"><span class="keyword">import</span> com.zhongruan.bean.User;</span><br><span class="line"><span class="keyword">import</span> com.zhongruan.service.IRoleService;</span><br><span class="line"><span class="keyword">import</span> com.zhongruan.service.IUserService;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestParam;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.ResponseBody;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.ModelAndView;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpSession;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/user&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> IUserService userService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> IRoleService roleService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/login.do&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> ModelAndView <span class="title function_">login</span><span class="params">(User user, HttpSession session)</span>&#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">id</span> <span class="operator">=</span> userService.login(user.getUsername(), user.getPassword());</span><br><span class="line">        ModelAndView modelAndView=<span class="keyword">new</span> <span class="title class_">ModelAndView</span>();</span><br><span class="line">        <span class="keyword">if</span>(id!=-<span class="number">1</span>)&#123;</span><br><span class="line">            List&lt;Integer&gt; roleIds = roleService.findRoleId(id);</span><br><span class="line">            session.setAttribute(<span class="string">&quot;roleIds&quot;</span>,roleIds);</span><br><span class="line">            session.setAttribute(<span class="string">&quot;user&quot;</span>,user);</span><br><span class="line">            modelAndView.setViewName(<span class="string">&quot;main&quot;</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            modelAndView.setViewName(<span class="string">&quot;../failer&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">       <span class="keyword">return</span> modelAndView;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/findAll.do&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> ModelAndView <span class="title function_">findAll</span><span class="params">(<span class="meta">@RequestParam(defaultValue = &quot;1&quot;)</span> <span class="type">int</span> currentPage,String username,<span class="meta">@RequestParam(defaultValue = &quot;0&quot;)</span><span class="type">int</span> type,HttpSession session)</span>&#123;</span><br><span class="line">        <span class="comment">//当搜索的时候</span></span><br><span class="line">      <span class="comment">/*  if(username!=null &amp;&amp; username!=&quot;&quot;)&#123;</span></span><br><span class="line"><span class="comment">            session.setAttribute(&quot;searchname&quot;,username);</span></span><br><span class="line"><span class="comment">        &#125;else if(type==0) &#123;</span></span><br><span class="line"><span class="comment">            username= (String) session.getAttribute(&quot;searchname&quot;);</span></span><br><span class="line"><span class="comment">        &#125;*/</span></span><br><span class="line">        <span class="keyword">if</span>(type==<span class="number">1</span>)&#123;</span><br><span class="line">            session.setAttribute(<span class="string">&quot;searchname&quot;</span>,username);</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            username= (String) session.getAttribute(<span class="string">&quot;searchname&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        PageInfo&lt;User&gt; pageInfo=userService.findAll(currentPage,username);</span><br><span class="line">        ModelAndView modelAndView=<span class="keyword">new</span> <span class="title class_">ModelAndView</span>();</span><br><span class="line">        modelAndView.addObject(<span class="string">&quot;pageInfo&quot;</span>,pageInfo);</span><br><span class="line">        modelAndView.setViewName(<span class="string">&quot;user-list&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> modelAndView;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/deleteById.do&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">delete</span><span class="params">(<span class="type">int</span> id)</span>&#123;</span><br><span class="line">        userService.deleteById(id);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;redirect:findAll.do&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/add.do&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">add</span><span class="params">(User user)</span>&#123;</span><br><span class="line">        userService.add(user);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;redirect:findAll.do&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;toUpdate.do&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> ModelAndView <span class="title function_">toUpdate</span><span class="params">(<span class="type">int</span> id)</span>&#123;</span><br><span class="line">        User user=userService.selectUserById(id);</span><br><span class="line">        ModelAndView modelAndView=<span class="keyword">new</span> <span class="title class_">ModelAndView</span>();</span><br><span class="line">        modelAndView.setViewName(<span class="string">&quot;user-update&quot;</span>);</span><br><span class="line">        modelAndView.addObject(<span class="string">&quot;user&quot;</span>,user);</span><br><span class="line">        <span class="keyword">return</span> modelAndView;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/update.do&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">update</span><span class="params">(User user)</span>&#123;</span><br><span class="line">        userService.update(user);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;redirect:findAll.do&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;deleteAll.do&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">deleteAll</span><span class="params">(String userList)</span>&#123;</span><br><span class="line">        String[] strs = userList.split(<span class="string">&quot;,&quot;</span>);</span><br><span class="line">        List&lt;Integer&gt; ids=<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span>(String s:strs)&#123;</span><br><span class="line">            ids.add(Integer.parseInt(s));</span><br><span class="line">        &#125;</span><br><span class="line">        userService.deleteAll(ids);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;redirect:findAll.do&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;toAddRole.do&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> ModelAndView <span class="title function_">toAddRole</span><span class="params">(<span class="type">int</span> id)</span>&#123;</span><br><span class="line">        List&lt;Role&gt; roleList=roleService.findRoleByUserId(id);</span><br><span class="line">        ModelAndView mv=<span class="keyword">new</span> <span class="title class_">ModelAndView</span>();</span><br><span class="line">        mv.addObject(<span class="string">&quot;roles&quot;</span>,roleList);</span><br><span class="line">        mv.addObject(<span class="string">&quot;id&quot;</span>,id);</span><br><span class="line">        mv.setViewName(<span class="string">&quot;user-role-add&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> mv;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;addRole.do&quot;)</span></span><br><span class="line">    <span class="meta">@ResponseBody</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">add</span><span class="params">(String roleList,String userId)</span>&#123;</span><br><span class="line">        String[] strs = roleList.split(<span class="string">&quot;,&quot;</span>);</span><br><span class="line">        List&lt;Integer&gt; ids=<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span>(String s:strs)&#123;</span><br><span class="line">            ids.add(Integer.parseInt(s));</span><br><span class="line">        &#125;</span><br><span class="line">        roleService.add(ids,userId);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="filter-拦截器"><a href="#filter-拦截器" class="headerlink" title="filter(拦截器)"></a>filter(拦截器)</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zhongruan.filter;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.zhongruan.bean.User;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.*;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpSession;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LoginFilter</span> <span class="keyword">implements</span> <span class="title class_">Filter</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">init</span><span class="params">(FilterConfig filterConfig)</span> <span class="keyword">throws</span> ServletException &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doFilter</span><span class="params">(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)</span> <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">        HttpServletRequest request= (HttpServletRequest) servletRequest;</span><br><span class="line">        HttpServletResponse response= (HttpServletResponse) servletResponse;</span><br><span class="line">        <span class="type">HttpSession</span> <span class="variable">session</span> <span class="operator">=</span> request.getSession();</span><br><span class="line">        User user= (User) session.getAttribute(<span class="string">&quot;user&quot;</span>);</span><br><span class="line">        String uri=request.getRequestURI();</span><br><span class="line">        <span class="keyword">if</span>(user==<span class="literal">null</span> &amp;&amp; uri.indexOf(<span class="string">&quot;login.do&quot;</span>)==-<span class="number">1</span>)&#123;</span><br><span class="line">            response.sendRedirect(request.getContextPath()+<span class="string">&quot;../login.jsp&quot;</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            filterChain.doFilter(request,response);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">destroy</span><span class="params">()</span> &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="mapper文件"><a href="#mapper文件" class="headerlink" title="mapper文件"></a>mapper文件</h2><p>UserMapper.xml</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span> ?&gt;</span><br><span class="line">&lt;!DOCTYPE mapper PUBLIC <span class="string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span> <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span> &gt;</span><br><span class="line">&lt;mapper namespace=<span class="string">&quot;com.zhongruan.dao.UserDao&quot;</span> &gt;</span><br><span class="line">    &lt;select id=<span class="string">&quot;findUserByUserName&quot;</span> parameterType=<span class="string">&quot;String&quot;</span> resultType=<span class="string">&quot;user&quot;</span>&gt;</span><br><span class="line">        select * from tb_user where username=#&#123;username&#125;</span><br><span class="line">    &lt;/select&gt;</span><br><span class="line"></span><br><span class="line">    &lt;select id=<span class="string">&quot;findAll&quot;</span>  resultType=<span class="string">&quot;user&quot;</span> &gt;</span><br><span class="line">        select * from tb_user</span><br><span class="line">        &lt;<span class="keyword">if</span> test=<span class="string">&quot;username!=null and username!=&#x27;&#x27;&quot;</span>&gt;</span><br><span class="line">            WHERE username LIKE <span class="title function_">concat</span><span class="params">(<span class="string">&quot;%&quot;</span>,#&#123;username&#125;,<span class="string">&quot;%&quot;</span>)</span></span><br><span class="line">        &lt;/<span class="keyword">if</span>&gt;</span><br><span class="line">        limit #&#123;start&#125;,<span class="number">5</span></span><br><span class="line">    &lt;/select&gt;</span><br><span class="line"></span><br><span class="line">    &lt;delete id=<span class="string">&quot;deleteById&quot;</span> parameterType=<span class="string">&quot;int&quot;</span>&gt;</span><br><span class="line">        delete from tb_user <span class="type">where</span> <span class="variable">id</span> <span class="operator">=</span> #&#123;id&#125;</span><br><span class="line">    &lt;/delete&gt;</span><br><span class="line"></span><br><span class="line">    &lt;insert id=<span class="string">&quot;add&quot;</span> parameterType=<span class="string">&quot;user&quot;</span>&gt;</span><br><span class="line">        insert into <span class="title function_">tb_user</span> <span class="params">(username,password)</span> values (#&#123;username&#125;,#&#123;password&#125;)</span><br><span class="line">    &lt;/insert&gt;</span><br><span class="line"></span><br><span class="line">    &lt;select id=<span class="string">&quot;selectById&quot;</span> parameterType=<span class="string">&quot;int&quot;</span> resultType=<span class="string">&quot;user&quot;</span>&gt;</span><br><span class="line">        select * from tb_user where  id=#&#123;id&#125;</span><br><span class="line">    &lt;/select&gt;</span><br><span class="line"></span><br><span class="line">    &lt;update id=<span class="string">&quot;update&quot;</span> parameterType=<span class="string">&quot;user&quot;</span>&gt;</span><br><span class="line">        update tb_user set username=#&#123;username&#125;,password=#&#123;password&#125; where id=#&#123;id&#125;</span><br><span class="line">    &lt;/update&gt;</span><br><span class="line"></span><br><span class="line">    &lt;select id=<span class="string">&quot;getTotalCount&quot;</span> resultType=<span class="string">&quot;int&quot;</span>&gt;</span><br><span class="line">        select <span class="title function_">count</span><span class="params">(*)</span> from tb_user</span><br><span class="line">        &lt;<span class="keyword">if</span> test=<span class="string">&quot;username!=null and username!=&#x27;&#x27;&quot;</span>&gt;</span><br><span class="line">            WHERE username LIKE <span class="title function_">concat</span><span class="params">(<span class="string">&quot;%&quot;</span>,#&#123;username&#125;,<span class="string">&quot;%&quot;</span>)</span></span><br><span class="line">        &lt;/<span class="keyword">if</span>&gt;</span><br><span class="line">    &lt;/select&gt;</span><br><span class="line"></span><br><span class="line">    &lt;delete id=<span class="string">&quot;deleteAll&quot;</span> parameterType=<span class="string">&quot;list&quot;</span>&gt;</span><br><span class="line">        delete from tb_user where id in</span><br><span class="line">        &lt;foreach collection=<span class="string">&quot;ids&quot;</span> item=<span class="string">&quot;id&quot;</span> open=<span class="string">&quot;(&quot;</span> close=<span class="string">&quot;)&quot;</span> separator=<span class="string">&quot;,&quot;</span>&gt;</span><br><span class="line">            #&#123;id&#125;</span><br><span class="line">        &lt;/foreach&gt;</span><br><span class="line">    &lt;/delete&gt;</span><br><span class="line"></span><br><span class="line">&lt;/mapper&gt;</span><br></pre></td></tr></table></figure>
+<p>RoleMapper.xml</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span> ?&gt;</span><br><span class="line">&lt;!DOCTYPE mapper PUBLIC <span class="string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span> <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span> &gt;</span><br><span class="line">&lt;mapper namespace=<span class="string">&quot;com.zhongruan.dao.RoleDao&quot;</span> &gt;</span><br><span class="line">    &lt;select id=<span class="string">&quot;findRoleIdByUserId&quot;</span> parameterType=<span class="string">&quot;int&quot;</span> resultType=<span class="string">&quot;int&quot;</span>&gt;</span><br><span class="line">        select roleId from user_role where userId=#&#123;userId&#125;</span><br><span class="line">    &lt;/select&gt;</span><br><span class="line"></span><br><span class="line">    &lt;select id=<span class="string">&quot;findRoleByUserId&quot;</span> parameterType=<span class="string">&quot;int&quot;</span> resultType=<span class="string">&quot;role&quot;</span>&gt;</span><br><span class="line">        SELECT * FROM tb_role WHERE  id NOT <span class="title function_">IN</span> <span class="params">(SELECT roleId FROM user_role WHERE userId=#&#123;id&#125;)</span></span><br><span class="line">    &lt;/select&gt;</span><br><span class="line"></span><br><span class="line">    &lt;insert id=<span class="string">&quot;addRole&quot;</span> parameterType=<span class="string">&quot;userRole&quot;</span>&gt;</span><br><span class="line">        insert into <span class="title function_">user_role</span> <span class="params">(userId,roleId)</span> values (#&#123;userId&#125;,#&#123;roleId&#125;)</span><br><span class="line">    &lt;/insert&gt;</span><br><span class="line">&lt;/mapper&gt;</span><br></pre></td></tr></table></figure>
+<p>jsp，完整项目可以从网盘下载：<br>链接: <a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1Lse-D_KcDgMFow9nfYZVzA?pwd=zwhe">https://pan.baidu.com/s/1Lse-D_KcDgMFow9nfYZVzA?pwd=zwhe</a><br>提取码: zwhe 复制这段内容后打开百度网盘手机App，操作更方便哦</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://stephen-smj.tech/2020/07/08/%E5%9F%BA%E4%BA%8ESSM%E6%A1%86%E6%9E%B6%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E7%94%A8%E6%88%B7%E7%B3%BB%E7%BB%9F%EF%BC%88%E7%99%BB%E5%BD%95%EF%BC%8C%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%EF%BC%8C%E5%88%86%E9%A1%B5%EF%BC%8C%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%EF%BC%8C%E7%94%A8%E6%88%B7%E8%A7%92%E8%89%B2%E7%AE%A1%E7%90%86%E5%8A%9F%E8%83%BD%EF%BC%89/" title="基于SSM框架实现一个用户系统（登录，用户列表，分页，增删改查，用户角色管理功能)" target="_blank" rel="external">https://stephen-smj.tech/2020/07/08/基于SSM框架实现一个用户系统（登录，用户列表，分页，增删改查，用户角色管理功能）/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://stephen-smj.tech/about/" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://stephen-smj.tech/about/" target="_blank"><span class="text-dark">小孙不够睡</span><small class="ml-1x">AI Engineer &amp; Software Developer &amp; Big Data Scientist</small></a></h3>
+        <div>A student at Hong Kong Polytechnic University</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2020/07/12/JAVA%20%E8%BF%90%E7%AE%97%E7%AC%A6%E4%BC%98%E5%85%88%E7%BA%A7%E6%80%BB%E7%BB%93/" title="JAVA中运算符优先级总结"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2020/07/08/hibernate%E4%B8%BB%E9%94%AE%E5%86%B2%E7%AA%81%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" title="Hibernate主键冲突问题解决方法"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>$</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>Maybe you could buy me a cup of coffee.</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open alipay app scan this qrcode, buy me a coffee!</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open wechat app scan this qrcode, buy me a coffee!</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> alipay</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> wechat payment</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Stephen-SMJ" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2024 Sun Maojun
+        
+<!--        <div class="publishby">-->
+<!--        	copyright.theme_by <a href="https://github.com/cofess" target="_blank"> cofess </a>copyright.base_on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.-->
+<!--        </div>-->
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: 'IOO8LG95uLVEj8pH7y8rEB3n-gzGzoHsz',
+    appKey: 'PCqPCzTR2b9ttcHbt6ZP3HId',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

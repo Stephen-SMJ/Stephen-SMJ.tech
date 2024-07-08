@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>手把手教你使用YOLOV5训练自己的目标检测数据集 | 小孙不够睡的Blog</title>
+  <meta name="description" content="YOLOV5介绍YOLOV5是目前最火热的目标检测算法之一。YOLOV5为一阶段检测算法因此它的速度非常之快。可以在复杂场景中达到60祯的实时检测频率。 接下来本文将详细的讲述如何使用YOLOV5去训练自己的数据集 一、下载YOLOv5开源代码123$ git clone https:&#x2F;&#x2F;github.com&#x2F;ultralytics&#x2F;yolov5.git$ cd yolov5$ pip insta">
+<meta property="og:type" content="article">
+<meta property="og:title" content="手把手教你使用YOLOV5训练自己的目标检测数据集">
+<meta property="og:url" content="https://stephen-smj.tech/2022/10/22/%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8YOLOV5%E8%AE%AD%E7%BB%83%E8%87%AA%E5%B7%B1%E7%9A%84%E6%95%B0%E6%8D%AE%E9%9B%86/index.html">
+<meta property="og:site_name" content="小孙不够睡的博客">
+<meta property="og:description" content="YOLOV5介绍YOLOV5是目前最火热的目标检测算法之一。YOLOV5为一阶段检测算法因此它的速度非常之快。可以在复杂场景中达到60祯的实时检测频率。 接下来本文将详细的讲述如何使用YOLOV5去训练自己的数据集 一、下载YOLOv5开源代码123$ git clone https:&#x2F;&#x2F;github.com&#x2F;ultralytics&#x2F;yolov5.git$ cd yolov5$ pip insta">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gist.github.com/assets/67999981/f5bc1c7c-d7c3-4ee2-88e5-aa9bc06db4d5">
+<meta property="og:image" content="https://gist.github.com/assets/67999981/97f25b37-e6be-45b0-a35d-bef6d4f4f7bd">
+<meta property="og:image" content="https://gist.github.com/assets/67999981/3cf8ee6a-984d-4d2c-be8d-09f88a0b5689">
+<meta property="og:image" content="https://gist.github.com/assets/67999981/4f5603ba-20b5-44dd-9b15-7c4bf35c66e0">
+<meta property="og:image" content="https://gist.github.com/assets/67999981/a9df531b-6e4b-42c3-96ad-3afe9da732a6">
+<meta property="og:image" content="https://gist.github.com/assets/67999981/d78247c8-25f4-4b8c-8959-0e755a1bfe78">
+<meta property="og:image" content="https://gist.github.com/assets/67999981/16d78011-133d-44fc-873f-7215438a676f">
+<meta property="og:image" content="https://gist.github.com/assets/67999981/112ccbbf-75f4-47d6-b37d-793ef2ef52d7">
+<meta property="og:image" content="https://gist.github.com/assets/67999981/b812f3f0-a24d-40f7-86f9-f30a6a6d0c15">
+<meta property="og:image" content="https://gist.github.com/assets/67999981/0717586e-c156-42c8-85a1-9d8b1e7326b7">
+<meta property="og:image" content="https://gist.github.com/assets/67999981/3e5221f3-3aee-4d62-bad8-ee4b14cf36dd">
+<meta property="og:image" content="https://gist.github.com/assets/67999981/7ac8fa2c-433d-4308-a470-1a4dea4e490b">
+<meta property="og:image" content="https://gist.github.com/assets/67999981/2c178c84-0eb1-48c4-8a5e-13b0b8258471">
+<meta property="og:image" content="https://gist.github.com/assets/67999981/5a5ae0bd-4856-4970-a02c-20546711bb3c">
+<meta property="article:published_time" content="2022-10-22T11:13:50.000Z">
+<meta property="article:modified_time" content="2024-07-07T08:51:38.000Z">
+<meta property="article:author" content="Sun Maojun">
+<meta property="article:tag" content="Deep learning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gist.github.com/assets/67999981/f5bc1c7c-d7c3-4ee2-88e5-aa9bc06db4d5">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://stephen-smj.tech/2022/10/22/%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8YOLOV5%E8%AE%AD%E7%BB%83%E8%87%AA%E5%B7%B1%E7%9A%84%E6%95%B0%E6%8D%AE%E9%9B%86/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="小孙不够睡的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://stephen-smj.tech/about/" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">小孙不够睡</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">AI Engineer &amp; Software Developer &amp; Big Data Scientist</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Hong Kong SAR</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Blog</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">Links</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-projects">
+          <a href="/experience">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">Projects</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-group">
+          <a href="/group">
+            
+            <i class="icon icon-wechat"></i>
+            
+            <span class="menu-title">Goups</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-recommond">
+          <a href="/recommond">
+            
+            <i class="icon icon-users"></i>
+            
+            <span class="menu-title">优单推荐</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Stephen-SMJ" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>1. To practice my English writing, I will write all blog in English later. If you want to see Chinese version, you can visit my CSDN. 2. I am happy to announce that I will pursue a PhD degree at Hong Kong Polytechnic University in September 2024. My research interests include Large Langauge Model, Multi-agent Collaboration, Diffusion Model, etc. Welcome like-minded friends for discussions.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/" rel="tag">Algorithms</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Back-end/" rel="tag">Back-end</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Deep-learning/" rel="tag">Deep learning</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Front-end/" rel="tag">Front-end</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/" rel="tag">Git</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-learning/" rel="tag">Machine learning</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Other/" rel="tag">Other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/" rel="tag">PHP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">7</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Algorithms/" style="font-size: 13px;">Algorithms</a> <a href="/tags/Back-end/" style="font-size: 14px;">Back-end</a> <a href="/tags/Deep-learning/" style="font-size: 13.5px;">Deep learning</a> <a href="/tags/Front-end/" style="font-size: 13.33px;">Front-end</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/JAVA/" style="font-size: 13.83px;">JAVA</a> <a href="/tags/Machine-learning/" style="font-size: 13.17px;">Machine learning</a> <a href="/tags/Other/" style="font-size: 13px;">Other</a> <a href="/tags/PHP/" style="font-size: 13px;">PHP</a> <a href="/tags/Python/" style="font-size: 13.67px;">Python</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">March 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">February 2023</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2023/03/21/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87%E8%A2%AB%E8%AE%BE%E7%BD%AE%E9%98%B2%E7%9B%97%E9%93%BE%E6%8E%A5%EF%BC%9F%E5%88%AB%E6%85%8C%EF%BC%8C%E6%88%91%E7%88%86%E8%82%9D%E4%B8%89%E6%99%9A%E5%86%99%E4%BA%86%E8%BF%99%E4%B8%AA%E6%89%B9%E9%87%8F%E5%9B%BE%E7%89%87%E7%AB%99%E7%82%B9%E8%BD%AC%E7%A7%BB%E8%84%9A%E6%9C%AC%EF%BC%88%E5%B7%B2%E5%BC%80%E6%BA%90%EF%BC%89/" class="title">博客图片被设置防盗链接？我爆肝三晚写了这个批量图片站点转移脚本（已开源）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-03-21T01:28:01.000Z" itemprop="datePublished">2023-03-21</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2023/03/03/Nginx%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E4%B8%AD%E7%9A%84%E6%B7%B1%E5%9D%91/" class="title">Nginx反向代理中的坑</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-03-03T10:02:21.000Z" itemprop="datePublished">2023-03-03</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2023/03/01/Git%20%E4%BC%81%E4%B8%9A%E7%BA%A7%E5%88%86%E6%94%AF%E6%8F%90%E4%BA%A4%E6%B5%81%E7%A8%8B/" class="title">Git企业级分支提交流程</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-03-01T10:02:21.000Z" itemprop="datePublished">2023-03-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2023/03/01/%E5%9C%A8%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E6%9F%A5%E6%89%BE%E6%95%B0%E5%AD%97I%E7%9A%84%E4%B8%AA%E6%95%B0/" class="title">剑指offer：在排序数组中查找数字I的个数</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-03-01T10:02:21.000Z" itemprop="datePublished">2023-03-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2023/02/28/Forward%20Propagation%20and%20Back%20Propagation/" class="title">手推神经网络前向与反向传播</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-02-28T10:02:21.000Z" itemprop="datePublished">2023-02-28</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-手把手教你如何使用YOLOV5训练自己的数据集" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      手把手教你使用YOLOV5训练自己的目标检测数据集
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2022/10/22/%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8YOLOV5%E8%AE%AD%E7%BB%83%E8%87%AA%E5%B7%B1%E7%9A%84%E6%95%B0%E6%8D%AE%E9%9B%86/" class="article-date">
+	  <time datetime="2022-10-22T11:13:50.000Z" itemprop="datePublished">2022-10-22</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/Deep-learning/" rel="tag">Deep learning</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/10/22/%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8YOLOV5%E8%AE%AD%E7%BB%83%E8%87%AA%E5%B7%B1%E7%9A%84%E6%95%B0%E6%8D%AE%E9%9B%86/#comments" class="article-comment-link">Comments</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 4.7k(words)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 20(minutes)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="YOLOV5介绍"><a href="#YOLOV5介绍" class="headerlink" title="YOLOV5介绍"></a>YOLOV5介绍</h1><p>YOLOV5是目前最火热的目标检测算法之一。YOLOV5为一阶段检测算法因此它的速度非常之快。可以在复杂场景中达到60祯的实时检测频率。<img src="https://gist.github.com/assets/67999981/f5bc1c7c-d7c3-4ee2-88e5-aa9bc06db4d5" alt="3538502afa944f1e81b8069e9ae5ec64"></p>
+<p><strong>接下来本文将详细的讲述如何使用YOLOV5去训练自己的数据集</strong></p>
+<h2 id="一、下载YOLOv5开源代码"><a href="#一、下载YOLOv5开源代码" class="headerlink" title="一、下载YOLOv5开源代码"></a>一、下载YOLOv5开源代码</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> git clone https://github.com/ultralytics/yolov5.git</span><br><span class="line"><span class="variable">$</span> <span class="built_in">cd</span> yolov5</span><br><span class="line"><span class="variable">$</span> pip install <span class="literal">-r</span> requirements.txt</span><br></pre></td></tr></table></figure>
+<p>YOLOV5中使用了Tensorboard和Wandb来可视化训练，其中Wandb配置可以看这篇文章：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44785351/article/details/127465183?spm=1001.2014.3001.5502">Wandb安装与配置</a></p>
+<h2 id="二、构建YOLO数据集"><a href="#二、构建YOLO数据集" class="headerlink" title="二、构建YOLO数据集"></a>二、构建YOLO数据集</h2><p>数据集地址：<a target="_blank" rel="noopener" href="https://www.kaggle.com/datasets/andrewmvd/face-mask-detection">MaskDetecion</a><br>下载好数据集之后将数据集解压到YOLOV5项目文件夹下的DataSets目录下（需要先新建一个DataSets文件夹）</p>
+<h3 id="划分数据集"><a href="#划分数据集" class="headerlink" title="划分数据集"></a>划分数据集</h3><p>将数据集划分为训练集、验证集、测试集：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line"><span class="comment">#划分数据集</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"></span><br><span class="line">parser = argparse.ArgumentParser()</span><br><span class="line"><span class="comment">#xml文件的地址，根据自己的数据进行修改 xml一般存放在Annotations下</span></span><br><span class="line">parser.add_argument(<span class="string">&#x27;--xml_path&#x27;</span>, default=<span class="string">&#x27;./DataSets/annotations&#x27;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, <span class="built_in">help</span>=<span class="string">&#x27;xml path&#x27;</span>)</span><br><span class="line"><span class="comment">#数据集划分后txt文件的存储地址，地址选择自己数据下的ImageSets/Main</span></span><br><span class="line">parser.add_argument(<span class="string">&#x27;--txt_path&#x27;</span>, default=<span class="string">&#x27;./DataSets/ImageSets/Main&#x27;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, <span class="built_in">help</span>=<span class="string">&#x27;output txt label path&#x27;</span>)</span><br><span class="line">opt = parser.parse_args()</span><br><span class="line"></span><br><span class="line">trainval_percent = <span class="number">0.9</span> <span class="comment">#训练集和验证集的比例</span></span><br><span class="line">train_percent = <span class="number">0.9</span> <span class="comment">#训练集占总数据的比例</span></span><br><span class="line">imgfilepath = opt.img_path</span><br><span class="line">txtsavepath = opt.txt_path</span><br><span class="line">total_xml = os.listdir(imgfilepath)</span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(txtsavepath):</span><br><span class="line">    os.makedirs(txtsavepath)</span><br><span class="line"></span><br><span class="line">num = <span class="built_in">len</span>(total_xml)</span><br><span class="line">list_index = <span class="built_in">range</span>(num)</span><br><span class="line">tv = <span class="built_in">int</span>(num * trainval_percent)</span><br><span class="line">tr = <span class="built_in">int</span>(tv * train_percent)</span><br><span class="line">trainval = random.sample(list_index, tv)</span><br><span class="line">train = random.sample(trainval, tr)</span><br><span class="line"><span class="comment">#划分生成的文件名称</span></span><br><span class="line">file_trainval = <span class="built_in">open</span>(txtsavepath + <span class="string">&#x27;/trainval.txt&#x27;</span>, <span class="string">&#x27;w&#x27;</span>)</span><br><span class="line">file_test = <span class="built_in">open</span>(txtsavepath + <span class="string">&#x27;/test.txt&#x27;</span>, <span class="string">&#x27;w&#x27;</span>)</span><br><span class="line">file_train = <span class="built_in">open</span>(txtsavepath + <span class="string">&#x27;/train.txt&#x27;</span>, <span class="string">&#x27;w&#x27;</span>)</span><br><span class="line">file_val = <span class="built_in">open</span>(txtsavepath + <span class="string">&#x27;/val.txt&#x27;</span>, <span class="string">&#x27;w&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> list_index:</span><br><span class="line">    name = total_xml[i][:-<span class="number">4</span>] + <span class="string">&#x27;\n&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> i <span class="keyword">in</span> trainval:</span><br><span class="line">        file_trainval.write(name)</span><br><span class="line">        <span class="keyword">if</span> i <span class="keyword">in</span> train:</span><br><span class="line">            file_train.write(name)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            file_val.write(name)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        file_test.write(name)</span><br><span class="line"></span><br><span class="line">file_trainval.close()</span><br><span class="line">file_train.close()</span><br><span class="line">file_val.close()</span><br><span class="line">file_test.close()</span><br></pre></td></tr></table></figure>
+<p>划分完成之后会生成以下文件：<br><img src="https://gist.github.com/assets/67999981/97f25b37-e6be-45b0-a35d-bef6d4f4f7bd" alt="ce14d91fd428416d9f1bcd119fd556d3"><br>每个txt中的内容为xml的文件名：<br><img src="https://gist.github.com/assets/67999981/3cf8ee6a-984d-4d2c-be8d-09f88a0b5689" alt="190431b4cd1d4963a59fce2af705cfb7"></p>
+<h3 id="生成YOLO格式的label"><a href="#生成YOLO格式的label" class="headerlink" title="生成YOLO格式的label"></a>生成YOLO格式的label</h3><p>转换xml为txt</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> xml.etree.ElementTree <span class="keyword">as</span> ET</span><br><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> os <span class="keyword">import</span> listdir, getcwd</span><br><span class="line"><span class="keyword">from</span> os.path <span class="keyword">import</span> join</span><br><span class="line"><span class="keyword">import</span> shutil</span><br><span class="line"><span class="comment">#VOC生成txt的文件</span></span><br><span class="line"></span><br><span class="line">sets = [<span class="string">&#x27;train&#x27;</span>, <span class="string">&#x27;val&#x27;</span>, <span class="string">&#x27;test&#x27;</span>] <span class="comment">#数据集，最后会生成以这三个数据集命名的txt文件</span></span><br><span class="line"></span><br><span class="line">classes = [<span class="string">&#x27;with_mask&#x27;</span>, <span class="string">&#x27;without_mask&#x27;</span>, <span class="string">&#x27;mask_weared_incorrect&#x27;</span>] <span class="comment">#标签名，注意一定不要出错</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">convert</span>(<span class="params">size, box</span>):</span><br><span class="line">    dw = <span class="number">1.</span> / size[<span class="number">0</span>]</span><br><span class="line">    dh = <span class="number">1.</span> / size[<span class="number">1</span>]</span><br><span class="line">    x = (box[<span class="number">0</span>] + box[<span class="number">1</span>]) / <span class="number">2.0</span></span><br><span class="line">    y = (box[<span class="number">2</span>] + box[<span class="number">3</span>]) / <span class="number">2.0</span></span><br><span class="line">    w = box[<span class="number">1</span>] - box[<span class="number">0</span>]</span><br><span class="line">    h = box[<span class="number">3</span>] - box[<span class="number">2</span>]</span><br><span class="line">    x = x * dw</span><br><span class="line">    w = w * dw</span><br><span class="line">    y = y * dh</span><br><span class="line">    h = h * dh</span><br><span class="line">    <span class="keyword">return</span> (x, y, w, h)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">convert_annotation</span>(<span class="params">image_id</span>):</span><br><span class="line">    in_file = <span class="built_in">open</span>(<span class="string">&#x27;./DataSets/annotations/%s.xml&#x27;</span> % (image_id), <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&quot;UTF-8&quot;</span>)</span><br><span class="line">    out_file = <span class="built_in">open</span>(<span class="string">&#x27;./DataSets/labels/%s.txt&#x27;</span> % (image_id), <span class="string">&#x27;w&#x27;</span>)</span><br><span class="line">    tree = ET.parse(in_file)</span><br><span class="line">    root = tree.getroot()</span><br><span class="line">    size = root.find(<span class="string">&#x27;size&#x27;</span>)</span><br><span class="line">    w = <span class="built_in">int</span>(size.find(<span class="string">&#x27;width&#x27;</span>).text)</span><br><span class="line">    h = <span class="built_in">int</span>(size.find(<span class="string">&#x27;height&#x27;</span>).text)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> obj <span class="keyword">in</span> root.<span class="built_in">iter</span>(<span class="string">&#x27;object&#x27;</span>):</span><br><span class="line">        difficult = obj.find(<span class="string">&#x27;difficult&#x27;</span>).text</span><br><span class="line">        cls = obj.find(<span class="string">&#x27;name&#x27;</span>).text</span><br><span class="line">        <span class="keyword">if</span> cls <span class="keyword">not</span> <span class="keyword">in</span> classes <span class="keyword">or</span> <span class="built_in">int</span>(difficult) == <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        cls_id = classes.index(cls)</span><br><span class="line">        xmlbox = obj.find(<span class="string">&#x27;bndbox&#x27;</span>)</span><br><span class="line">        b = (<span class="built_in">float</span>(xmlbox.find(<span class="string">&#x27;xmin&#x27;</span>).text), <span class="built_in">float</span>(xmlbox.find(<span class="string">&#x27;xmax&#x27;</span>).text), <span class="built_in">float</span>(xmlbox.find(<span class="string">&#x27;ymin&#x27;</span>).text),</span><br><span class="line">             <span class="built_in">float</span>(xmlbox.find(<span class="string">&#x27;ymax&#x27;</span>).text))</span><br><span class="line">        bb = convert((w, h), b)</span><br><span class="line">        out_file.write(<span class="built_in">str</span>(cls_id) + <span class="string">&quot; &quot;</span> + <span class="string">&quot; &quot;</span>.join([<span class="built_in">str</span>(a) <span class="keyword">for</span> a <span class="keyword">in</span> bb]) + <span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> image_set <span class="keyword">in</span> sets:</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(<span class="string">&#x27;./DataSets/labels/&#x27;</span>): <span class="comment">#创建label文件夹</span></span><br><span class="line">        os.makedirs(<span class="string">&#x27;./DataSets/labels/&#x27;</span>)</span><br><span class="line">    image_ids = <span class="built_in">open</span>(<span class="string">&#x27;./DataSets/ImageSets/Main/%s.txt&#x27;</span> % (image_set)).read().strip().split()</span><br><span class="line">    list_file = <span class="built_in">open</span>(<span class="string">&#x27;./DataSets/%s.txt&#x27;</span> % (image_set), <span class="string">&#x27;w&#x27;</span>)</span><br><span class="line">    <span class="keyword">for</span> image_id <span class="keyword">in</span> image_ids:</span><br><span class="line">        list_file.write(<span class="string">&#x27;S:/pythonProjects/DSA/MaskDetection/yolov5/DataSets/images/%s.png\n&#x27;</span> % (image_id)) <span class="comment">#这里最好用全局路径</span></span><br><span class="line">        convert_annotation(image_id)</span><br><span class="line">    list_file.close()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>运行结束后会生成label文件夹和划分后三个数据集的具体文件路径<br><img src="https://gist.github.com/assets/67999981/4f5603ba-20b5-44dd-9b15-7c4bf35c66e0" alt="070502a65ef0476aa0f3753ecd9b8a22"><br>label中是转换出来的yolo格式数据集，分别为：标签类别，x：中心点x值/图片宽度，y:中心点y值/图片高度，w：目标框的宽度/图片宽度，h：目标框的高度/图片高度。<br><img src="https://gist.github.com/assets/67999981/a9df531b-6e4b-42c3-96ad-3afe9da732a6" alt="f4e1efbe222a4264a63c243fff049363"><br>详情可参考博客：<a target="_blank" rel="noopener" href="https://qichenxi.blog.csdn.net/article/details/124234388?spm=1001.2014.3001.5506">YOLO数据集标注</a><br>而生成的三个txt相当于在之前划分的数据集上加上了路径，方便直接读取<br><img src="https://gist.github.com/assets/67999981/d78247c8-25f4-4b8c-8959-0e755a1bfe78" alt="950ecad811a442dc9ecc4538958b8a54"></p>
+<h3 id="新建一个数据集配置文件"><a href="#新建一个数据集配置文件" class="headerlink" title="新建一个数据集配置文件"></a>新建一个数据集配置文件</h3><p>在data文件夹下新建一个mask.yaml文件,用来写数据集的一些配置，后续代码中也是通过读取yaml来读取数据集</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#数据集的路径，推荐用绝对路径</span></span><br><span class="line">train: S:/pythonProjects/DSA/MaskDetection/yolov5/DataSets/train.txt</span><br><span class="line">val: S:/pythonProjects/DSA/MaskDetection/yolov5/DataSets/val.txt</span><br><span class="line">test: S:/pythonProjects/DSA/MaskDetection/yolov5/DataSets/test.txt</span><br><span class="line">nc: <span class="number">3</span> <span class="comment">#分类个数</span></span><br><span class="line">names: [<span class="string">&#x27;with_mask;&#x27;</span>, <span class="string">&#x27;without_mask&#x27;</span>, <span class="string">&#x27;mask_weared_incorrect&#x27;</span>]  <span class="comment">#标签</span></span><br></pre></td></tr></table></figure>
+<p>至此，数据集制作就结束了。</p>
+<h2 id="三、修改训练文件"><a href="#三、修改训练文件" class="headerlink" title="三、修改训练文件"></a>三、修改训练文件</h2><p>修改训练的一些参数（由于github上项目一直在更新，不同的版本的参数可能不同，比如我最新下载这个没有freeze这个冻结参数的选项了。但最重要的几个一直都有）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">parser = argparse.ArgumentParser()</span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--weights&#x27;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, default=<span class="string">&#x27;yolov5s.pt&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;initial weights path&#x27;</span>) </span><br><span class="line">    <span class="comment">#权重文件，在第一次训练时，YOLOV5提供了几个不同的预训练模型，详情：https://github.com/ultralytics/yolov5</span></span><br><span class="line">    <span class="comment">#可以提前去官网下载，如果没有提前下载也没关系，这里只要写上预训练模型的名称，会自动调用项目中的download.sh去下载权重。</span></span><br><span class="line">    <span class="comment">#当然也可以不使用预训练，这里设置为空就行；</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--cfg&#x27;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, default=<span class="string">&#x27;yolov5s.yaml&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;model.yaml path&#x27;</span>) </span><br><span class="line">    <span class="comment">#模型参数的配置文件，里面指定了一些参数信息和backbone的结构信息。需要跟选择的预训练模型一致。</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--data&#x27;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, default=<span class="string">&#x27;data/mask.yaml&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;data.yaml path&#x27;</span>) <span class="comment">#数据集地址</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--hyp&#x27;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, default=<span class="string">&#x27;data/hyp.scratch.yaml&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;hyperparameters path&#x27;</span>) </span><br><span class="line">    <span class="comment">#模型训练的初始超参数文件，同样也提供了其他训练的超参数文件，可以自行选择 </span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--epochs&#x27;</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, default=<span class="number">300</span>)</span><br><span class="line">    <span class="comment">#训练轮数，相当于0-299</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--batch-size&#x27;</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, default=<span class="number">16</span>, <span class="built_in">help</span>=<span class="string">&#x27;total batch size for all GPUs&#x27;</span>) </span><br><span class="line">    <span class="comment">#每次送入的样本量，数据集总数/batch_size就是每一轮总共要迭代的次数，越大效果越好。default=-1将时自动调节batchsize大小。</span></span><br><span class="line">    <span class="comment">#顺便说一下epoch、batchsize、iteration三者之间的联系 1、batchsize是批次大小，假如取batchsize=24，则表示每次训练时在训练集中取24个训练样本进行训练。 2、iteration是迭代次数，1个iteration就等于一次使用24（batchsize大小）个样本进行训练。 3、epoch：1个epoch就等于使用训练集中全部样本训练1次。</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--img-size&#x27;</span>, nargs=<span class="string">&#x27;+&#x27;</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, default=[<span class="number">640</span>, <span class="number">640</span>], <span class="built_in">help</span>=<span class="string">&#x27;[train, test] image sizes&#x27;</span>) </span><br><span class="line">    <span class="comment">#resize的图片大小，一般来说640就够了，原图都比较大，如果直接上原图会导致过度消耗GPU资源，但如果选择比较大的模型，也要跟着上调。</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--rect&#x27;</span>, action=<span class="string">&#x27;store_true&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;rectangular training&#x27;</span>)</span><br><span class="line">    <span class="comment">#是否采用矩阵推理的方式去训练模型；所谓矩阵推理就是不再要求你训练的图片是正方形了；矩阵推理会加速模型的推理过程，减少一些冗余信息。</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--resume&#x27;</span>, nargs=<span class="string">&#x27;?&#x27;</span>, const=<span class="literal">True</span>, default=<span class="literal">False</span>, <span class="built_in">help</span>=<span class="string">&#x27;resume most recent training&#x27;</span>) </span><br><span class="line">    <span class="comment">#恢复训练：在之前训练的一个模型基础上继续训练，比如第一次训练了100个epoch，后续想在第一次训练的模型的基础上继续训练100个epoch则这里改成true。或者是训练中出现报错而中断，也可以用resume继续训练。</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--nosave&#x27;</span>, action=<span class="string">&#x27;store_true&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;only save final checkpoint&#x27;</span>) </span><br><span class="line">    <span class="comment">#是否只保存最后一轮训练的模型，这个参数不推荐，因为默认的是同时保存best和last</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--notest&#x27;</span>, action=<span class="string">&#x27;store_true&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;only test final epoch&#x27;</span>)</span><br><span class="line">    <span class="comment">#只在最后一轮测试（这里说的应该是验证）；正常情况下每个epoch都会进行验证计算mAP，但如果开启了这个参数，那么就只在最后一轮上进行测试，不建议开启。</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--noautoanchor&#x27;</span>, action=<span class="string">&#x27;store_true&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;disable autoanchor check&#x27;</span>)</span><br><span class="line">    <span class="comment">#是否禁用自动锚框；不建议改动，默认是开启的，自动锚点的好处是可以简化训练过程；yolov5中预先设定了一下锚定框，这些锚框是针对coco数据集的，其他目标检测也适用，可以在models/yolov5.文件中查看。</span></span><br><span class="line">    <span class="comment">#需要注意的是在目标检测任务中，一般使用大特征图上去检测小目标，因为大特征图含有更多小目标信息，因此大特征图上的anchor数值通常设置为小数值，小特征图检测大目标，因此小特征图上anchor数值设置较大。</span></span><br><span class="line">    <span class="comment">#训练开始前，会自动计算数据集标注信息针对默认锚定框的最佳召回率，当最佳召回率大于等于0.98时，则不需要更新锚定框；如果最佳召回率小于0.98，则需要重新计算符合此数据集的锚定框。 </span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--evolve&#x27;</span>, action=<span class="string">&#x27;store_true&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;evolve hyperparameters&#x27;</span>)</span><br><span class="line">    <span class="comment">#遗传超参数进化；yolov5使用遗传超参数进化，提供的默认参数是通过在COCO数据集上使用超参数进化得来的。由于超参数进化会耗费大量的资源和时间，所以建议大家不要动这个参数。</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--bucket&#x27;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, default=<span class="string">&#x27;&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;gsutil bucket&#x27;</span>)</span><br><span class="line">    <span class="comment">#是否使用一些类似于阿里云之类的云盘来上传或下载东西，一般不用设置</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--cache-images&#x27;</span>, action=<span class="string">&#x27;store_true&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;cache images for faster training&#x27;</span>)</span><br><span class="line">    <span class="comment">#是否提前缓存图片到内存，以加快训练速度，推荐设置。</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--image-weights&#x27;</span>, action=<span class="string">&#x27;store_true&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;use weighted image selection for training&#x27;</span>)</span><br><span class="line">    <span class="comment">#是否启用加权图像策略，可以解决样本不平衡问题；开启后会对于上一轮训练效果不好的图片，在下一轮中增加一些权重；</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--device&#x27;</span>, default=<span class="string">&#x27;&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;cuda device, i.e. 0 or 0,1,2,3 or cpu&#x27;</span>)</span><br><span class="line">    <span class="comment">#训练设备，一般电脑只有一张显卡默认为0，但如果使用多卡的服务器进行训练，这里可以选择0,1,2,3分别对应卡号，多选就是多卡训练。</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--multi-scale&#x27;</span>, action=<span class="string">&#x27;store_true&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;vary img-size +/- 50%%&#x27;</span>)</span><br><span class="line">    <span class="comment">#是否使用多尺度训练：多尺度训练是指设置几种不同的图片输入尺度，训练时每隔一定iterations随机选取一种尺度训练，这样训练出来的模型鲁棒性更强。</span></span><br><span class="line">    <span class="comment">#多尺度训练在比赛中经常可以看到他身影，是被证明了有效提高性能的方式。输入图片的尺寸对检测模型的性能影响很大，在基础网络部分常常会生成比原图小数十倍的特征图，导致小物体的特征描述不容易被检测网络捕捉。通过输入更大、更多尺寸的图片进行训练，能够在一定程度上提高检测模型对物体大小的鲁棒性。</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--single-cls&#x27;</span>, action=<span class="string">&#x27;store_true&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;train multi-class data as single-class&#x27;</span>)</span><br><span class="line">    <span class="comment">#单分类；如果你的任务只需要检测一个类别则这里可以设置为True</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--adam&#x27;</span>, action=<span class="string">&#x27;store_true&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;use torch.optim.Adam() optimizer&#x27;</span>)</span><br><span class="line">    <span class="comment">#选择优化器；比如SGD，Adam，AdamW等等，默认为adam（不同版本的代码默认不一样）。</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--sync-bn&#x27;</span>, action=<span class="string">&#x27;store_true&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;use SyncBatchNorm, only available in DDP mode&#x27;</span>)</span><br><span class="line">    <span class="comment">#是否开启跨卡同步BN；开启参数后即可使用 SyncBatchNorm多GPU 进行分布式训练</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--local_rank&#x27;</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, default=-<span class="number">1</span>, <span class="built_in">help</span>=<span class="string">&#x27;DDP parameter, do not modify&#x27;</span>)</span><br><span class="line">    <span class="comment">#DDP参数，不要修改</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--workers&#x27;</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, default=<span class="number">8</span>, <span class="built_in">help</span>=<span class="string">&#x27;maximum number of dataloader workers&#x27;</span>)</span><br><span class="line">    <span class="comment">#dataloader使用多线程来加载数据，提前加载未来会用到的batch数据，详情可参考：https://www.cnblogs.com/hesse-summer/p/11343870.html</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--project&#x27;</span>, default=<span class="string">&#x27;runs/train&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;save to project/name&#x27;</span>)</span><br><span class="line">    <span class="comment">#训练文件的保存路径，不用修改，项目中默认的保存结构非常好看。</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--entity&#x27;</span>, default=<span class="literal">None</span>, <span class="built_in">help</span>=<span class="string">&#x27;W&amp;B entity&#x27;</span>)</span><br><span class="line">    <span class="comment">#在线可视化工具，类似于tensorboard，不推荐使用，yoloV5中同时使用了Tensorboard和Wandb两个在线可视化工具已经非常冗余了。</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--name&#x27;</span>, default=<span class="string">&#x27;exp&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;save to project/name&#x27;</span>)</span><br><span class="line">    <span class="comment">#每一轮迭代的文件夹名称，这里不用修改，后续训练会自动增加：exp,exp2,exp3,exp4...</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--exist-ok&#x27;</span>, action=<span class="string">&#x27;store_true&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;existing project/name ok, do not increment&#x27;</span>)</span><br><span class="line">    <span class="comment">#每次预测模型的结果是否保存在原来的文件夹；如果指定了这个参数的话，那么本次预测的结果还是保存在上一次保存的文件夹里；如果不指定就是每次预测结果保存一个新的文件夹下。</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--quad&#x27;</span>, action=<span class="string">&#x27;store_true&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;quad dataloader&#x27;</span>)</span><br><span class="line">    <span class="comment">#在比默认640 大的数据集上训练效果更好，副作用是在 640 大小的数据集上训练效果可能会差一些，详情可参考：https://blog.csdn.net/a18838956649/article/details/119020699</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--linear-lr&#x27;</span>, action=<span class="string">&#x27;store_true&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;linear LR&#x27;</span>)</span><br><span class="line">    <span class="comment">#线性学习率，有的项目是cos-lr，开启后学习率会动态的变化，推荐开启。</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--upload_dataset&#x27;</span>, action=<span class="string">&#x27;store_true&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;Upload dataset as W&amp;B artifact table&#x27;</span>)</span><br><span class="line">    <span class="comment">#是否上传数据集到wandb中，如果想要更好的看到数据集的情况可以开启。</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--bbox_interval&#x27;</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, default=-<span class="number">1</span>, <span class="built_in">help</span>=<span class="string">&#x27;Set bounding-box image logging interval for W&amp;B&#x27;</span>)</span><br><span class="line">    <span class="comment">#设置界框图像记录间隔，也是和wandb有关，一般用不到</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--save_period&#x27;</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, default=-<span class="number">1</span>, <span class="built_in">help</span>=<span class="string">&#x27;Log model after every &quot;save_period&quot; epoch&#x27;</span>)</span><br><span class="line">    <span class="comment">#用于设置多少个epoch保存一下checkpoint；</span></span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--artifact_alias&#x27;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, default=<span class="string">&quot;latest&quot;</span>, <span class="built_in">help</span>=<span class="string">&#x27;version of dataset artifact to be used&#x27;</span>)</span><br><span class="line">    <span class="comment">#要使用的数据集工件的版本，暂时还没看到这里的一些先关说明。</span></span><br><span class="line">    opt = parser.parse_args()</span><br></pre></td></tr></table></figure>
+<p>其中action=’store_true’的参数默认是不开启的，在shell只需要键入这个参数的名称，不需要加值就可以开启，这类一般是True或False的选项，如果想在编译器中使用这个参数，则可以加一个default=True<br>推荐参数：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python train.py <span class="literal">--weights</span> yolov5s.pt <span class="literal">--cfg</span> yolov5s.yaml <span class="literal">--data</span> <span class="keyword">data</span>/mask.yaml <span class="literal">--epochs</span> <span class="number">500</span> <span class="literal">--cache-images</span> <span class="literal">--image-weights</span> <span class="literal">--multi-scale</span> <span class="literal">--linear-lr</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="四、训练中遇到的一些报错问题"><a href="#四、训练中遇到的一些报错问题" class="headerlink" title="四、训练中遇到的一些报错问题"></a>四、训练中遇到的一些报错问题</h2><h3 id="编码报错"><a href="#编码报错" class="headerlink" title="编码报错"></a>编码报错</h3><p>‘gbk’ codec can’t decode byte 0xaf in position 15: illegal multitype sequence<br><img src="https://gist.github.com/assets/67999981/16d78011-133d-44fc-873f-7215438a676f" alt="346b47e6658244aeafcd12b2723c3189"><br>解决方案：在trian.py中这个位置的open中加上utf-8的编码，test.py中也有这个错误，可以一起加上，可能是个bug，不知道官方为什么还没改过来。<br><img src="https://gist.github.com/assets/67999981/112ccbbf-75f4-47d6-b37d-793ef2ef52d7" alt="9e5c00a5395f45c0867b7a493ae9898d"></p>
+<h3 id="找不到数据集或标签"><a href="#找不到数据集或标签" class="headerlink" title="找不到数据集或标签"></a>找不到数据集或标签</h3><p>AssertionError: No trains in D:\yolov5\train_data\train.cache. Can not train without trains.<br>AssertionError: No labels in D:\yolov5\train_data\train.cache. Can not train without labels.<br>这个错误很常见，根本原因还是数据集配置有问题，首先检查你数据集的data.yaml里面所有路径是否正确，其次检查train.txt、test.txt里面的路径是否正确，如果这些都没问题的话那就改接下来这处地方：<br>在utils里面的datasets.py中搜索define找到这个函数，将这里的images改成和你datasets目录下存储图片的文件夹的名字一样，比如你存储图片的文件夹叫JPEGImages，那么这里也要改成JPEGImages<br><img src="https://gist.github.com/assets/67999981/b812f3f0-a24d-40f7-86f9-f30a6a6d0c15" alt="e53281ac6eed42d8b89d2ca86d6388a0"><br><img src="https://gist.github.com/assets/67999981/0717586e-c156-42c8-85a1-9d8b1e7326b7" alt="1a4bc59eb2244b5d9abf6d809a7b486f"></p>
+<h3 id="libiomp5md-dll错误"><a href="#libiomp5md-dll错误" class="headerlink" title="libiomp5md.dll错误"></a>libiomp5md.dll错误</h3><p>这个报错是由于anaconda下存在多个libiomp5md.dll文件导致的，有两种解决方法：</p>
+<ol>
+<li>删除anaconda对应环境中Libary文件夹下libiomp5md.dll文件，再运行项目时会自动生成一个libiomp5md.dll文件</li>
+<li>在train.py中加上这句话，允许多个lib文件同时运行<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">os.environ[<span class="string">&#x27;KMP_DUPLICATE_LIB_OK&#x27;</span>]=<span class="string">&#x27;TRUE&#x27;</span></span><br></pre></td></tr></table></figure>
+<h3 id="libpng-warning-iCCP"><a href="#libpng-warning-iCCP" class="headerlink" title="libpng warning: iCCP"></a>libpng warning: iCCP</h3>libpng warning: iCCP: known incorrect sRGB profile<br>这个错误可能是由于一些图片中存在错误格式，且anaconda的libpng版本过高导致的，解决的方法大致有两种：</li>
+<li>替换掉anaconda中的库，详情可以查看这篇文章并且他提供了一个不会报错的版本。<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/banyueju/article/details/91553248?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-2.control&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-2.control">替换anaconda中的libpng库</a></li>
+<li>将所有数据集中的图片重新编码一下，代码如下：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> tqdm</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">from</span> skimage <span class="keyword">import</span> io</span><br><span class="line">path = <span class="string">r&quot;./images/&quot;</span>  <span class="comment">#path后面记得加 /</span></span><br><span class="line">fileList = os.listdir(path)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> tqdm(fileList):</span><br><span class="line">    image = io.imread(path+i)  <span class="comment"># image = io.imread(os.path.join(path, i))</span></span><br><span class="line">    image = cv2.cvtColor(image, cv2.COLOR_RGBA2BGRA)</span><br><span class="line">    cv2.imencode(<span class="string">&#x27;.png&#x27;</span>,image)[<span class="number">1</span>].tofile(path+i)</span><br></pre></td></tr></table></figure>
+<h2 id="五、测试"><a href="#五、测试" class="headerlink" title="五、测试"></a>五、测试</h2><p>测试文件为test.py，大部分参数解释和train是一样的，其实train.py中的验证代码用的就是test.py中的内容，这里做测试的话只需要把–task这个参数改成test就行<br><img src="https://gist.github.com/assets/67999981/3e5221f3-3aee-4d62-bad8-ee4b14cf36dd" alt="cf8a682ab41c42b78f06ef3cb36b34ef"></p>
+<h2 id="六、训练、测试结果"><a href="#六、训练、测试结果" class="headerlink" title="六、训练、测试结果"></a>六、训练、测试结果</h2><p>在训练、测试结束后会生成很多文件，这里来大致解析一下这些文件分别是什么意思：<br><img src="https://gist.github.com/assets/67999981/7ac8fa2c-433d-4308-a470-1a4dea4e490b" alt="aa6e8ff4d7f24da8b5a4419331d8fc4b"><br>我的保存路径在train下面，exp就是第一轮训练的结果，其中weights文件夹下面是训练生成的权重文件，也可以说是模型，best.pt是表现最好的模型，last.pt是最后一轮生成的模型<br><strong>比较重要的是result.png</strong>里面是模型整体训练的一个情况，从这里能看到绝大部分信息。<br>接下来是一些分类问题的评分指标：confusion_martix.png、F1_curve.png、P_curve.png、R_curve.png、PR_curve.png<br>两个参数文件：hyp.yaml/opt.yaml分别是模型的初始参数以及训练的初始超参数<br>三个events….为tensorboard的日志文件<br>train_batch\test_batch分别为训练和测试前三个batch的结果后缀为labels为标签，pred为预测的情况，可以从这里大致看出模型的一个实际效果。</p>
+<h2 id="七、检测"><a href="#七、检测" class="headerlink" title="七、检测"></a>七、检测</h2><p>检测文件为detect.py，只需要提供你想要检测的内容，包括图片、视频、调用摄像头，这个参数为<br>–source，给一个路径或者0，0为调用摄像头<br><img src="https://gist.github.com/assets/67999981/2c178c84-0eb1-48c4-8a5e-13b0b8258471" alt="a1b003ab667d454798917e31b812f871"><br>这是我实时检测的效果，可以说还不错<br><img src="https://gist.github.com/assets/67999981/5a5ae0bd-4856-4970-a02c-20546711bb3c" alt="aaa71155881145de8db4da6111cb5df4"></p>
+<p>这次关于YOLOV5的训练步骤就结束了，如有错误请及时指正，后续还会继续更新一些相关的知识，感谢观看！</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/xiaosangtongxue/article/details/124083959">https://blog.csdn.net/xiaosangtongxue/article/details/124083959</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/549163975">https://zhuanlan.zhihu.com/p/549163975</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/banyueju/article/details/91553248?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-2.control&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-2.control">https://blog.csdn.net/banyueju/article/details/91553248?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-2.control&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-2.control</a><br><a target="_blank" rel="noopener" href="https://qichenxi.blog.csdn.net/article/details/124234388?spm=1001.2014.3001.5506">https://qichenxi.blog.csdn.net/article/details/124234388?spm=1001.2014.3001.5506</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44785351/article/details/127465183?spm=1001.2014.3001.5502">https://blog.csdn.net/qq_44785351/article/details/127465183?spm=1001.2014.3001.5502</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/banyueju/article/details/91553248?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-2.control&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-2.control">https://blog.csdn.net/banyueju/article/details/91553248?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-2.control&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-2.control</a></p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://stephen-smj.tech/2022/10/22/%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8YOLOV5%E8%AE%AD%E7%BB%83%E8%87%AA%E5%B7%B1%E7%9A%84%E6%95%B0%E6%8D%AE%E9%9B%86/" title="手把手教你使用YOLOV5训练自己的目标检测数据集" target="_blank" rel="external">https://stephen-smj.tech/2022/10/22/手把手教你如何使用YOLOV5训练自己的数据集/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://stephen-smj.tech/about/" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://stephen-smj.tech/about/" target="_blank"><span class="text-dark">小孙不够睡</span><small class="ml-1x">AI Engineer &amp; Software Developer &amp; Big Data Scientist</small></a></h3>
+        <div>A student at Hong Kong Polytechnic University</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2022/11/01/%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E8%AF%A6%E7%BB%86%E6%AD%A5%E9%AA%A4%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E6%8E%92%E6%9F%A5%E6%A8%A1%E5%9E%8B%E5%92%8C%E5%8F%82%E6%95%B0%E5%AD%97%E5%85%B8%E5%AF%B9%E4%B8%8D%E4%B8%8A%E7%9A%84%E9%97%AE%E9%A2%98%EF%BC%9AMissing%20key(s)%20in%20state_dict_%20xxxx/" title="Pytorch模型推理详细步骤以及如何排查模型和参数字典对不上的问题：Missing key(s) in state_dict_ xxxx"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2022/10/22/Wandb%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/" title="Wandb安装与配置"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>$</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>Maybe you could buy me a cup of coffee.</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open alipay app scan this qrcode, buy me a coffee!</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open wechat app scan this qrcode, buy me a coffee!</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> alipay</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> wechat payment</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Stephen-SMJ" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2024 Sun Maojun
+        
+<!--        <div class="publishby">-->
+<!--        	copyright.theme_by <a href="https://github.com/cofess" target="_blank"> cofess </a>copyright.base_on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.-->
+<!--        </div>-->
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: 'IOO8LG95uLVEj8pH7y8rEB3n-gzGzoHsz',
+    appKey: 'PCqPCzTR2b9ttcHbt6ZP3HId',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>如何优雅的在php中调用python程序 | 小孙不够睡的Blog</title>
+  <meta name="description" content="需求：通过form表单把值传到python程序中，并把制行结果返回给前端 听到这个你肯定会想，需求中根本就没有用到php，那为什么还要用php呢，原因是当前主流的后端语言是java和php，虽然python也有web框架如Django,当然如果你会django的话肯定就不会搜索这个问题了。 execPHP中有一个函数可以运行第三方的脚本：exec(),来看看exec的函数结构: string ex">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何优雅的在php中调用python程序">
+<meta property="og:url" content="https://stephen-smj.tech/2020/12/16/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8php%E4%B8%AD%E8%B0%83%E7%94%A8python%E7%A8%8B%E5%BA%8F/index.html">
+<meta property="og:site_name" content="小孙不够睡的博客">
+<meta property="og:description" content="需求：通过form表单把值传到python程序中，并把制行结果返回给前端 听到这个你肯定会想，需求中根本就没有用到php，那为什么还要用php呢，原因是当前主流的后端语言是java和php，虽然python也有web框架如Django,当然如果你会django的话肯定就不会搜索这个问题了。 execPHP中有一个函数可以运行第三方的脚本：exec(),来看看exec的函数结构: string ex">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gist.github.com/assets/67999981/fddedd36-605a-42c9-93be-bd0a1d547802">
+<meta property="og:image" content="https://gist.github.com/assets/67999981/0d005767-4d80-4b85-b5d5-aacf9b02e95d">
+<meta property="og:image" content="https://gist.github.com/assets/67999981/457d6d8d-b9d8-4b7e-9cf4-60600958c1ad">
+<meta property="article:published_time" content="2020-12-16T05:06:33.000Z">
+<meta property="article:modified_time" content="2024-07-07T08:44:10.000Z">
+<meta property="article:author" content="Sun Maojun">
+<meta property="article:tag" content="PHP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gist.github.com/assets/67999981/fddedd36-605a-42c9-93be-bd0a1d547802">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://stephen-smj.tech/2020/12/16/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8php%E4%B8%AD%E8%B0%83%E7%94%A8python%E7%A8%8B%E5%BA%8F/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="小孙不够睡的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://stephen-smj.tech/about/" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">小孙不够睡</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">AI Engineer &amp; Software Developer &amp; Big Data Scientist</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Hong Kong SAR</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Blog</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">Links</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-projects">
+          <a href="/experience">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">Projects</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-group">
+          <a href="/group">
+            
+            <i class="icon icon-wechat"></i>
+            
+            <span class="menu-title">Goups</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-recommond">
+          <a href="/recommond">
+            
+            <i class="icon icon-users"></i>
+            
+            <span class="menu-title">优单推荐</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Stephen-SMJ" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>1. To practice my English writing, I will write all blog in English later. If you want to see Chinese version, you can visit my CSDN. 2. I am happy to announce that I will pursue a PhD degree at Hong Kong Polytechnic University in September 2024. My research interests include Large Langauge Model, Multi-agent Collaboration, Diffusion Model, etc. Welcome like-minded friends for discussions.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/" rel="tag">Algorithms</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Back-end/" rel="tag">Back-end</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Deep-learning/" rel="tag">Deep learning</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Front-end/" rel="tag">Front-end</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/" rel="tag">Git</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-learning/" rel="tag">Machine learning</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Other/" rel="tag">Other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/" rel="tag">PHP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">7</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Algorithms/" style="font-size: 13px;">Algorithms</a> <a href="/tags/Back-end/" style="font-size: 14px;">Back-end</a> <a href="/tags/Deep-learning/" style="font-size: 13.5px;">Deep learning</a> <a href="/tags/Front-end/" style="font-size: 13.33px;">Front-end</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/JAVA/" style="font-size: 13.83px;">JAVA</a> <a href="/tags/Machine-learning/" style="font-size: 13.17px;">Machine learning</a> <a href="/tags/Other/" style="font-size: 13px;">Other</a> <a href="/tags/PHP/" style="font-size: 13px;">PHP</a> <a href="/tags/Python/" style="font-size: 13.67px;">Python</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">March 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">February 2023</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2023/03/21/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87%E8%A2%AB%E8%AE%BE%E7%BD%AE%E9%98%B2%E7%9B%97%E9%93%BE%E6%8E%A5%EF%BC%9F%E5%88%AB%E6%85%8C%EF%BC%8C%E6%88%91%E7%88%86%E8%82%9D%E4%B8%89%E6%99%9A%E5%86%99%E4%BA%86%E8%BF%99%E4%B8%AA%E6%89%B9%E9%87%8F%E5%9B%BE%E7%89%87%E7%AB%99%E7%82%B9%E8%BD%AC%E7%A7%BB%E8%84%9A%E6%9C%AC%EF%BC%88%E5%B7%B2%E5%BC%80%E6%BA%90%EF%BC%89/" class="title">博客图片被设置防盗链接？我爆肝三晚写了这个批量图片站点转移脚本（已开源）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-03-21T01:28:01.000Z" itemprop="datePublished">2023-03-21</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2023/03/03/Nginx%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E4%B8%AD%E7%9A%84%E6%B7%B1%E5%9D%91/" class="title">Nginx反向代理中的坑</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-03-03T10:02:21.000Z" itemprop="datePublished">2023-03-03</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2023/03/01/Git%20%E4%BC%81%E4%B8%9A%E7%BA%A7%E5%88%86%E6%94%AF%E6%8F%90%E4%BA%A4%E6%B5%81%E7%A8%8B/" class="title">Git企业级分支提交流程</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-03-01T10:02:21.000Z" itemprop="datePublished">2023-03-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2023/03/01/%E5%9C%A8%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E6%9F%A5%E6%89%BE%E6%95%B0%E5%AD%97I%E7%9A%84%E4%B8%AA%E6%95%B0/" class="title">剑指offer：在排序数组中查找数字I的个数</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-03-01T10:02:21.000Z" itemprop="datePublished">2023-03-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2023/02/28/Forward%20Propagation%20and%20Back%20Propagation/" class="title">手推神经网络前向与反向传播</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-02-28T10:02:21.000Z" itemprop="datePublished">2023-02-28</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-如何优雅的在php中调用python程序" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      如何优雅的在php中调用python程序
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2020/12/16/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8php%E4%B8%AD%E8%B0%83%E7%94%A8python%E7%A8%8B%E5%BA%8F/" class="article-date">
+	  <time datetime="2020-12-16T05:06:33.000Z" itemprop="datePublished">2020-12-16</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/PHP/" rel="tag">PHP</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/12/16/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8php%E4%B8%AD%E8%B0%83%E7%94%A8python%E7%A8%8B%E5%BA%8F/#comments" class="article-comment-link">Comments</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 714(words)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 3(minutes)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>需求：通过form表单把值传到python程序中，并把制行结果返回给前端<br><img src="https://gist.github.com/assets/67999981/fddedd36-605a-42c9-93be-bd0a1d547802" alt="20201216130139463"></p>
+<p>听到这个你肯定会想，需求中根本就没有用到php，那为什么还要用php呢，原因是当前主流的后端语言是java和php，虽然python也有web框架如Django,当然如果你会django的话肯定就不会搜索这个问题了。</p>
+<h2 id="exec"><a href="#exec" class="headerlink" title="exec"></a>exec</h2><p>PHP中有一个函数可以运行第三方的脚本：exec(),来看看exec的函数结构:</p>
+<p>string exec ( string $command [, array &amp;$output [, int &amp;$return_var ]] )</p>
+<p>参数解释（来自PHP手册）</p>
+<p>command</p>
+<p>要执行的命令。</p>
+<p>output</p>
+<p>如果提供了 output 参数， 那么会用命令执行的输出填充此数组， 每行输出填充数组中的一个元素。 数组中的数据不包含行尾的空白字符，例如 \n 字符。 请注意，如果数组中已经包含了部分元素， exec() 函数会在数组末尾追加内容。如果你不想在数组末尾进行追加， 请在传入 exec() 函数之前 对数组使用 unset() 函数进行重置。</p>
+<p>return_var</p>
+<p>如果同时提供 output 和 return_var 参数， 命令执行后的返回状态会被写入到此变量。</p>
+<p>返回值：</p>
+<p>命令执行结果的最后一行内容。 如果你需要获取未经处理的全部输出数据， 请使用 passthru() 函数。</p>
+<p>如果想要获取命令的输出内容， 请确保使用 output 参数。</p>
+<h2 id="PHP带参数制行python程序"><a href="#PHP带参数制行python程序" class="headerlink" title="PHP带参数制行python程序"></a>PHP带参数制行python程序</h2><p>只需要在python.py文件后面空格加上参数即可：<br>如</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">exec</span>(<span class="string">&quot;python test.py <span class="subst">&#123;$underGraduate&#125;</span> </span></span><br><span class="line"><span class="string"><span class="subst">&#123;$achievement&#125;</span> <span class="subst">&#123;$language&#125;</span> <span class="subst">&#123;$GREGMAT&#125;</span> </span></span><br><span class="line"><span class="string"><span class="subst">&#123;$Recommender&#125;</span> <span class="subst">&#123;$background&#125;</span></span></span><br><span class="line"><span class="string"> <span class="subst">&#123;$postGraduate&#125;</span>&quot;</span> ,<span class="variable">$outputs</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="python接收参数"><a href="#python接收参数" class="headerlink" title="python接收参数"></a>python接收参数</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line"><span class="keyword">for</span> data in sys.argv:</span><br><span class="line">	<span class="keyword">print</span>(data + <span class="string">&#x27;dangdang&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>在python中我们把接收到的参数后面加个dangdang，再传回去验证一下是否已经被python修改。</p>
+<h2 id="案例代码："><a href="#案例代码：" class="headerlink" title="案例代码："></a>案例代码：</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;dosub&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$underGraduate</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;underGraduate&#x27;</span>];</span><br><span class="line">    <span class="variable">$achievement</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;achievement&#x27;</span>];</span><br><span class="line">    <span class="variable">$language</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;language&#x27;</span>];</span><br><span class="line">    <span class="variable">$GREGMAT</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;GREGMAT&#x27;</span>];</span><br><span class="line">    <span class="variable">$Recommender</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;Recommender&#x27;</span>];</span><br><span class="line">    <span class="variable">$background</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;background&#x27;</span>];</span><br><span class="line">    <span class="variable">$postGraduate</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;postGraduate&#x27;</span>];</span><br><span class="line"></span><br><span class="line">    <span class="variable">$cmd</span>=<span class="string">&quot;python test.py&quot;</span>;</span><br><span class="line">    <span class="keyword">unset</span>(<span class="variable">$outputs</span>);</span><br><span class="line">    <span class="title function_ invoke__">exec</span>(<span class="string">&quot;python test.py <span class="subst">&#123;$underGraduate&#125;</span> <span class="subst">&#123;$achievement&#125;</span> <span class="subst">&#123;$language&#125;</span> <span class="subst">&#123;$GREGMAT&#125;</span> <span class="subst">&#123;$Recommender&#125;</span> <span class="subst">&#123;$background&#125;</span> <span class="subst">&#123;$postGraduate&#125;</span>&quot;</span> ,<span class="variable">$outputs</span>);</span><br><span class="line">    <span class="keyword">unset</span>(<span class="variable">$outputs</span>[<span class="number">0</span>]);</span><br><span class="line">    <span class="keyword">foreach</span>(<span class="variable">$outputs</span> <span class="keyword">as</span> <span class="variable">$out</span>)&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$out</span>.<span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;form action=<span class="string">&quot;&quot;</span> method=<span class="string">&quot;post&quot;</span>&gt;</span><br><span class="line">    &lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;underGraduate&quot;</span>&gt;</span><br><span class="line">    &lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;achievement&quot;</span>&gt;</span><br><span class="line">    &lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;language&quot;</span>&gt;</span><br><span class="line">    &lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;GREGMAT&quot;</span>&gt;</span><br><span class="line">    &lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;Recommender&quot;</span>&gt;</span><br><span class="line">    &lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;background&quot;</span>&gt;</span><br><span class="line">    &lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;postGraduate&quot;</span>&gt;</span><br><span class="line">    &lt;input type=<span class="string">&quot;submit&quot;</span> name=<span class="string">&quot;dosub&quot;</span>&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="执行结果"><a href="#执行结果" class="headerlink" title="执行结果"></a>执行结果</h2><p>都传一个111的参数：<br><img src="https://gist.github.com/assets/67999981/0d005767-4d80-4b85-b5d5-aacf9b02e95d" alt="20201216130500846"><br>提交后：<br><img src="https://gist.github.com/assets/67999981/457d6d8d-b9d8-4b7e-9cf4-60600958c1ad" alt="20201216130532487"><br>可以看到php打印出来的值已经发生了变化，所以成功执行了py程序！</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://stephen-smj.tech/2020/12/16/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8php%E4%B8%AD%E8%B0%83%E7%94%A8python%E7%A8%8B%E5%BA%8F/" title="如何优雅的在php中调用python程序" target="_blank" rel="external">https://stephen-smj.tech/2020/12/16/如何优雅的在php中调用python程序/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://stephen-smj.tech/about/" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://stephen-smj.tech/about/" target="_blank"><span class="text-dark">小孙不够睡</span><small class="ml-1x">AI Engineer &amp; Software Developer &amp; Big Data Scientist</small></a></h3>
+        <div>A student at Hong Kong Polytechnic University</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2021/04/09/%E9%98%BF%E9%87%8C%E5%B7%B4%E5%B7%B4%E5%AE%9E%E4%B9%A0%E7%94%9F%E6%A0%A1%E6%8B%9B%E7%AC%94%E8%AF%95%EF%BC%88%E6%8A%80%E6%9C%AF%E7%B1%BB%EF%BC%892021.4.9%E5%9C%BA/" title="阿里巴巴实习生校招笔试（技术类）2021.4.9场"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2020/11/26/python%E7%AE%97%E6%B3%95%EF%BC%9A%E5%B7%B2%E7%9F%A5%E7%BA%BF%E6%80%A7%E6%8B%9F%E5%90%88%E7%9A%84%E4%B8%A4%E6%9D%A1%E7%9B%B4%E7%BA%BF%E6%B1%82%E5%85%B6%E4%BA%A4%E7%82%B9/" title="Python:已知两条直线求其交点"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>$</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>Maybe you could buy me a cup of coffee.</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open alipay app scan this qrcode, buy me a coffee!</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open wechat app scan this qrcode, buy me a coffee!</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> alipay</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> wechat payment</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Stephen-SMJ" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2024 Sun Maojun
+        
+<!--        <div class="publishby">-->
+<!--        	copyright.theme_by <a href="https://github.com/cofess" target="_blank"> cofess </a>copyright.base_on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.-->
+<!--        </div>-->
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: 'IOO8LG95uLVEj8pH7y8rEB3n-gzGzoHsz',
+    appKey: 'PCqPCzTR2b9ttcHbt6ZP3HId',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
