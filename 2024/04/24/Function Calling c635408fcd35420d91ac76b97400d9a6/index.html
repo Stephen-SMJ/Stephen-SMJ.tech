@@ -17,16 +17,16 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>How To Impelment Function Calling / Tool Use in Large Language Model | 小孙不够睡的Blog</title>
-  <meta name="description" content="How To Impelment Function Calling &#x2F; Tool Use in Large Language ModelImplementation: Client + Service ClientUser Input: Query + Function Description (system)Example:Query: Show 5 rows of data.Function">
+  <title>Achieve Function Calling and Tool Use in Large Language Models | 小孙不够睡的Blog</title>
+  <meta name="description" content="This article will tell you how to achieve a function calling ability in Large Language Models (LLM) and how to use the function in the LLM. Implementation architecture: Client + Service ClientUser Inp">
 <meta property="og:type" content="article">
-<meta property="og:title" content="How To Impelment Function Calling &#x2F; Tool Use in Large Language Model">
+<meta property="og:title" content="Achieve Function Calling and Tool Use in Large Language Models">
 <meta property="og:url" content="https://stephen-smj.tech/2024/04/24/Function%20Calling%20c635408fcd35420d91ac76b97400d9a6/index.html">
 <meta property="og:site_name" content="小孙不够睡的博客">
-<meta property="og:description" content="How To Impelment Function Calling &#x2F; Tool Use in Large Language ModelImplementation: Client + Service ClientUser Input: Query + Function Description (system)Example:Query: Show 5 rows of data.Function">
+<meta property="og:description" content="This article will tell you how to achieve a function calling ability in Large Language Models (LLM) and how to use the function in the LLM. Implementation architecture: Client + Service ClientUser Inp">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-04-24T10:02:21.000Z">
-<meta property="article:modified_time" content="2024-07-24T15:46:02.886Z">
+<meta property="article:modified_time" content="2024-07-26T09:40:18.158Z">
 <meta property="article:author" content="Sun Maojun">
 <meta property="article:tag" content="Deep learning">
 <meta name="twitter:card" content="summary">
@@ -242,7 +242,7 @@
                 
               </p>
               <p class="item-title">
-                <a href="/2024/04/24/Function%20Calling%20c635408fcd35420d91ac76b97400d9a6/" class="title">How To Impelment Function Calling / Tool Use in Large Language Model</a>
+                <a href="/2024/04/24/Function%20Calling%20c635408fcd35420d91ac76b97400d9a6/" class="title">Achieve Function Calling and Tool Use in Large Language Models</a>
               </p>
               <p class="item-date">
                 <time datetime="2024-04-24T10:02:21.000Z" itemprop="datePublished">2024-04-24</time>
@@ -330,7 +330,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      How To Impelment Function Calling / Tool Use in Large Language Model
+      Achieve Function Calling and Tool Use in Large Language Models
     </h1>
   
 
@@ -372,7 +372,8 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h1 id="How-To-Impelment-Function-Calling-Tool-Use-in-Large-Language-Model"><a href="#How-To-Impelment-Function-Calling-Tool-Use-in-Large-Language-Model" class="headerlink" title="How To Impelment Function Calling / Tool Use in Large Language Model"></a>How To Impelment Function Calling / Tool Use in Large Language Model</h1><p>Implementation: Client + Service</p>
+        <p>This article will tell you how to achieve a function calling ability in Large Language Models (LLM) and how to use the function in the LLM.</p>
+<p>Implementation architecture: Client + Service</p>
 <h2 id="Client"><a href="#Client" class="headerlink" title="Client"></a>Client</h2><p>User Input: Query + Function Description (system)<br>Example:<br>Query: Show 5 rows of data.<br>Function Description:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[&#123;</span><br><span class="line">   &quot;name&quot;: &quot;show_data_head&quot;,</span><br><span class="line">   &quot;description&quot;: &quot;Show top n row of data.&quot;,</span><br><span class="line">   &quot;parameters&quot;: &#123;</span><br><span class="line">       &quot;type&quot;: &quot;object&quot;,</span><br><span class="line">       &quot;properties&quot;: &#123;</span><br><span class="line">       &quot;row&quot;: &#123;</span><br><span class="line">           &quot;type&quot;: &quot;string&quot;,</span><br><span class="line">           &quot;description&quot;: &quot;number of rows to show.&quot;</span><br><span class="line">          &#125;</span><br><span class="line">       &#125;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;,</span><br><span class="line">....</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 
@@ -461,7 +462,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="https://stephen-smj.tech/2024/04/24/Function%20Calling%20c635408fcd35420d91ac76b97400d9a6/" title="How To Impelment Function Calling / Tool Use in Large Language Model" target="_blank" rel="external">https://stephen-smj.tech/2024/04/24/Function Calling c635408fcd35420d91ac76b97400d9a6/</a>
+      <a href="https://stephen-smj.tech/2024/04/24/Function%20Calling%20c635408fcd35420d91ac76b97400d9a6/" title="Achieve Function Calling and Tool Use in Large Language Models" target="_blank" rel="external">https://stephen-smj.tech/2024/04/24/Function Calling c635408fcd35420d91ac76b97400d9a6/</a>
     </li>
     
     <li class="post-copyright-license">
