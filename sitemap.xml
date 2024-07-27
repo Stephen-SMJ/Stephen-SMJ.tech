@@ -2,6 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://stephen-smj.tech/about/index.html</loc>
+    
+    <lastmod>2024-07-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://stephen-smj.tech/about/index_cn.html</loc>
+    
+    <lastmod>2024-07-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://stephen-smj.tech/2024/04/24/Function%20Calling%20c635408fcd35420d91ac76b97400d9a6/</loc>
     
     <lastmod>2024-07-26</lastmod>
@@ -21,24 +39,6 @@
   
   <url>
     <loc>https://stephen-smj.tech/gallery/index.html</loc>
-    
-    <lastmod>2024-07-26</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://stephen-smj.tech/about/index.html</loc>
-    
-    <lastmod>2024-07-26</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://stephen-smj.tech/about/index_cn.html</loc>
     
     <lastmod>2024-07-26</lastmod>
     
@@ -535,7 +535,7 @@
 
   <url>
     <loc>https://stephen-smj.tech/</loc>
-    <lastmod>2024-07-26</lastmod>
+    <lastmod>2024-07-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -543,70 +543,70 @@
   
   <url>
     <loc>https://stephen-smj.tech/tags/Back-end/</loc>
-    <lastmod>2024-07-26</lastmod>
+    <lastmod>2024-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://stephen-smj.tech/tags/Deep-learning/</loc>
-    <lastmod>2024-07-26</lastmod>
+    <lastmod>2024-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://stephen-smj.tech/tags/Git/</loc>
-    <lastmod>2024-07-26</lastmod>
+    <lastmod>2024-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://stephen-smj.tech/tags/JAVA/</loc>
-    <lastmod>2024-07-26</lastmod>
+    <lastmod>2024-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://stephen-smj.tech/tags/Front-end/</loc>
-    <lastmod>2024-07-26</lastmod>
+    <lastmod>2024-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://stephen-smj.tech/tags/Python/</loc>
-    <lastmod>2024-07-26</lastmod>
+    <lastmod>2024-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://stephen-smj.tech/tags/Machine-learning/</loc>
-    <lastmod>2024-07-26</lastmod>
+    <lastmod>2024-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://stephen-smj.tech/tags/Algorithms/</loc>
-    <lastmod>2024-07-26</lastmod>
+    <lastmod>2024-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://stephen-smj.tech/tags/PHP/</loc>
-    <lastmod>2024-07-26</lastmod>
+    <lastmod>2024-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://stephen-smj.tech/tags/Other/</loc>
-    <lastmod>2024-07-26</lastmod>
+    <lastmod>2024-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
