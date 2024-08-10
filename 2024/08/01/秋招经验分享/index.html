@@ -17,25 +17,28 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>浅谈ssm框架分层逻辑 | 小孙不够睡的Blog</title>
-  <meta name="description" content="第一次接触ssm的时候感觉自己就是个无情的码字机器，完全跟着老师敲，每一行代码在干嘛都不是很理解，也经常看到这样的哀嚎研究了一天后我也算是对这个框架有了一些浅薄的认识，这里我就完全用自己的理解来讲一下，如果说错欢迎指出。ssm（Spring+SpringMVC+MyBatis)是什么就不多说了，相信很多人都是用了它之后才知道它的好处 ssm项目分层目前所有企业基本都采用的这种分层标准，这种分层标准">
+  <title>经验分享-应届生如何在秋招拿下多个年薪50w的offer | 小孙不够睡的Blog</title>
+  <meta name="description" content="转眼间25届的秋招提前批已经开始啦，不禁让我想起了去年这个时间段边实习边秋招边完成毕业论文的煎熬。一直坚持到12月份之后感觉整体结果还是满意的。我同时参加了大陆的秋招和香港小部分公司的招聘（因为感觉香港没有分春秋招，全年可投），拿到的offer情况如下： 大陆投递了300多家公司，拿到多个互联网公司以及新能源公司的算法岗以及开发岗的offer。其中一个SSP，一个SP。  SP来自国内某电商中偏大">
 <meta property="og:type" content="article">
-<meta property="og:title" content="浅谈ssm框架分层逻辑">
-<meta property="og:url" content="https://stephen-smj.tech/2020/07/04/%E6%B5%85%E8%B0%88ssm%E6%A1%86%E6%9E%B6%E5%88%86%E5%B1%82%E9%80%BB%E8%BE%91/index.html">
+<meta property="og:title" content="经验分享-应届生如何在秋招拿下多个年薪50w的offer">
+<meta property="og:url" content="https://stephen-smj.tech/2024/08/01/%E7%A7%8B%E6%8B%9B%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/index.html">
 <meta property="og:site_name" content="小孙不够睡的博客">
-<meta property="og:description" content="第一次接触ssm的时候感觉自己就是个无情的码字机器，完全跟着老师敲，每一行代码在干嘛都不是很理解，也经常看到这样的哀嚎研究了一天后我也算是对这个框架有了一些浅薄的认识，这里我就完全用自己的理解来讲一下，如果说错欢迎指出。ssm（Spring+SpringMVC+MyBatis)是什么就不多说了，相信很多人都是用了它之后才知道它的好处 ssm项目分层目前所有企业基本都采用的这种分层标准，这种分层标准">
+<meta property="og:description" content="转眼间25届的秋招提前批已经开始啦，不禁让我想起了去年这个时间段边实习边秋招边完成毕业论文的煎熬。一直坚持到12月份之后感觉整体结果还是满意的。我同时参加了大陆的秋招和香港小部分公司的招聘（因为感觉香港没有分春秋招，全年可投），拿到的offer情况如下： 大陆投递了300多家公司，拿到多个互联网公司以及新能源公司的算法岗以及开发岗的offer。其中一个SSP，一个SP。  SP来自国内某电商中偏大">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://gist.github.com/assets/67999981/48703fa6-66b9-4841-839d-751c1fbb5816">
-<meta property="og:image" content="https://gist.github.com/assets/67999981/4583c361-1089-4b2a-8977-1de435b4b208">
-<meta property="og:image" content="https://gist.github.com/assets/67999981/962abf60-d60f-48e6-8955-b920d76ad3e9">
-<meta property="article:published_time" content="2020-07-04T06:28:56.000Z">
-<meta property="article:modified_time" content="2024-07-07T08:40:08.000Z">
+<meta property="og:image" content="https://gist.github.com/user-attachments/assets/8c385ee2-c9d8-41ff-9aba-16de0603aad0">
+<meta property="og:image" content="https://gist.github.com/user-attachments/assets/2820ed3d-0add-49d6-bc5c-3264ce61b8ae">
+<meta property="og:image" content="https://gist.github.com/user-attachments/assets/fb0b819a-2480-4d26-8818-868743e6a010">
+<meta property="og:image" content="https://gist.github.com/user-attachments/assets/fc3b4754-c506-4ce1-9950-45d33a225fb9">
+<meta property="og:image" content="https://gist.github.com/user-attachments/assets/9e62360b-85ae-43d8-b98f-60a6a713ceb3">
+<meta property="og:image" content="https://gist.github.com/user-attachments/assets/d2311966-b905-4ce5-8ce2-725827dfa555">
+<meta property="article:published_time" content="2024-08-01T07:49:26.000Z">
+<meta property="article:modified_time" content="2024-08-10T08:54:06.778Z">
 <meta property="article:author" content="Sun Maojun">
-<meta property="article:tag" content="Back-end">
+<meta property="article:tag" content="Experience">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gist.github.com/assets/67999981/48703fa6-66b9-4841-839d-751c1fbb5816">
+<meta name="twitter:image" content="https://gist.github.com/user-attachments/assets/8c385ee2-c9d8-41ff-9aba-16de0603aad0">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://stephen-smj.tech/2020/07/04/%E6%B5%85%E8%B0%88ssm%E6%A1%86%E6%9E%B6%E5%88%86%E5%B1%82%E9%80%BB%E8%BE%91/index.html">
+  <link rel="canonical" href="https://stephen-smj.tech/2024/08/01/%E7%A7%8B%E6%8B%9B%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/index.html">
   
     <link rel="alternate" href="/atom.xml" title="小孙不够睡的博客" type="application/atom+xml">
   
@@ -327,14 +330,14 @@
   
 <main class="main" role="main">
   <div class="content">
-  <article id="post-浅谈ssm框架分层逻辑" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-秋招经验分享" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      浅谈ssm框架分层逻辑
+      经验分享-应届生如何在秋招拿下多个年薪50w的offer
     </h1>
   
 
@@ -342,15 +345,15 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/2020/07/04/%E6%B5%85%E8%B0%88ssm%E6%A1%86%E6%9E%B6%E5%88%86%E5%B1%82%E9%80%BB%E8%BE%91/" class="article-date">
-	  <time datetime="2020-07-04T06:28:56.000Z" itemprop="datePublished">2020-07-04</time>
+	<a href="/2024/08/01/%E7%A7%8B%E6%8B%9B%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/" class="article-date">
+	  <time datetime="2024-08-01T07:49:26.000Z" itemprop="datePublished">2024-08-01</time>
 	</a>
 </span>
         
         
   <span class="article-tag">
     <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/tags/Back-end/" rel="tag">Back-end</a>
+	<a class="article-tag-link-link" href="/tags/Experience/" rel="tag">Experience</a>
   </span>
 
 
@@ -363,35 +366,70 @@
 	</span>
 
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/07/04/%E6%B5%85%E8%B0%88ssm%E6%A1%86%E6%9E%B6%E5%88%86%E5%B1%82%E9%80%BB%E8%BE%91/#comments" class="article-comment-link">Comments</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2024/08/01/%E7%A7%8B%E6%8B%9B%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/#comments" class="article-comment-link">Comments</a></span>
         
 	
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 1.4k(words)</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 2.6k(words)</span>
 	
 	
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 5(minutes)</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 8(minutes)</span>
 	
 
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <p>第一次接触ssm的时候感觉自己就是个无情的码字机器，完全跟着老师敲，每一行代码在干嘛都不是很理解，也经常看到这样的哀嚎<br><img src="https://gist.github.com/assets/67999981/48703fa6-66b9-4841-839d-751c1fbb5816" alt="20200704122914927"><br>研究了一天后我也算是对这个框架有了一些浅薄的认识，这里我就完全用自己的理解来讲一下，如果说错欢迎指出。<br>ssm（Spring+SpringMVC+MyBatis)是什么就不多说了，相信很多人都是用了它之后才知道它的好处</p>
-<h2 id="ssm项目分层"><a href="#ssm项目分层" class="headerlink" title="ssm项目分层"></a>ssm项目分层</h2><p>目前所有企业基本都采用的这种分层标准，这种分层标准的好处就是让项目看起来整齐划一，每层都负责做自己的事情，方便开发者对代码进行管理与调试，让代码的可读性更强。一般无论是在学校还是在培训班都会首先跟你讲分哪些层和每个层的作用，作为刚入门的初学在编写几个完整项目之前者确实很难理解，去网上搜的解释又都太官方难懂，同样作为初学者的我在编写了一个项目研究了一天之后对这个分层终于有了比较浅薄的理解。</p>
-<h2 id="bean层"><a href="#bean层" class="headerlink" title="bean层"></a>bean层</h2><p>bean层：存放数据表转化的类。<br>比如你数据库的表叫tb_user,那就在bean层下面创建一个User的类，把数据库中需要用到的字段全部写进去。<br>比如你数据库中字段是这样的：<br><img src="https://gist.github.com/assets/67999981/4583c361-1089-4b2a-8977-1de435b4b208" alt="20200704115755708"><br>那么你创建的User类就这样写（属性+get+set方法，构造方法和ToString也推荐写进去）：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> id;</span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getId</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setId</span><span class="params">(<span class="type">int</span> id)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.id = id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getUsername</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> username;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setUsername</span><span class="params">(String username)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.username = username;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getPassword</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> password;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setPassword</span><span class="params">(String password)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.password = password;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">toString</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;User&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;id=&quot;</span> + id +</span><br><span class="line">                <span class="string">&quot;, username=&#x27;&quot;</span> + username + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&quot;, password=&#x27;&quot;</span> + password + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p>转眼间25届的秋招提前批已经开始啦，不禁让我想起了去年这个时间段边实习边秋招边完成毕业论文的煎熬。一直坚持到12月份之后感觉整体结果还是满意的。我同时参加了大陆的秋招和香港小部分公司的招聘（因为感觉香港没有分春秋招，全年可投），拿到的offer情况如下：</p>
+<h3 id="大陆"><a href="#大陆" class="headerlink" title="大陆"></a>大陆</h3><p>投递了300多家公司，拿到多个互联网公司以及新能源公司的算法岗以及开发岗的offer。其中一个SSP，一个SP。</p>
+<ol>
+<li>SP来自国内某电商中偏大厂，AI开发工程师，给出x*16薪 + (房补+餐补)*12的offer总包刚好50w。</li>
+<li>SSP来自国内某新能源Top1，大语言模型算法工程师，给出((x-8)*12) * 2的offer，比上一个差一些。（感觉是赶上风口了, 之前没想过自己能拿到纯算法岗的offer）</li>
+</ol>
+<p>还有一些其他互联网，能源，通信公司的offer相对这两个给的就很少，基本听到报价就直接拒了。</p>
+<h3 id="香港"><a href="#香港" class="headerlink" title="香港"></a>香港</h3><ol>
+<li><p>本地政府机构实习转正，给出（x-2）* 12 + 合同完期的bonus （两年总包*15%）。了解下来算是在香港本地公司里算比较高的了，但是跟大陆比还差一截。是的你没听错，<br>在寸土寸金的生活费巨高的香港给应届生的工资还不如大陆（It是这样的，其他行业感觉还是香港高一些）。</p>
+</li>
+<li><p>刚好赶上大陆某个Top1招聘行业的互联网公司出海，NLP算法岗，给出(x+1) * 14的总包，42w港币，后来我发现北京的总部也能拿到这个数的RMB。<br>后面问Hr，香港的生活成本比北京高多了，而且香港发的还是港币，相对发rmb的北京以后可能还要打八折，这么一算比北京还要少。Hr回复是根据香港本地It行情+30%来定价的<br>无异于再次证明了香港程序员的工资相对其他行业并不突出。其实我拿到这个offer的时候是想留下来的，但后来因为argue package搞得很不愉快，最终散是满天星了。</p>
+</li>
+</ol>
+<p>后来偶然的机会让我选择了读博，于是乎就放弃了这些offer，感觉还是挺可惜的，毕竟大陆的互联网一年不如一年，现在还能喝口风口末期的汤，有朋友劝我说搞不好我博士毕业回去还不如硕士毕业拿得多，我也觉得有这种可能，但是能遇到一个欣赏我的Phd supervisor也是千载难逢。最后跟家人商量下来，还是觉得继续读书了。</p>
+<h2 id="秋招准备经验分享"><a href="#秋招准备经验分享" class="headerlink" title="秋招准备经验分享"></a>秋招准备经验分享</h2><p>我在秋招总结出来了一套自己的准备方法，我觉得这个方法还是效率挺高的，分享出来希望能帮助到大家。</p>
+<h3 id="刷题"><a href="#刷题" class="headerlink" title="刷题"></a>刷题</h3><p><img src="https://gist.github.com/user-attachments/assets/8c385ee2-c9d8-41ff-9aba-16de0603aad0" alt="image"></p>
+<p>首先最基本的任务就是刷题了，互联网基本在3-6轮面试左右，前4轮基本每一轮都要当场手撕代码，写题大多是在牛客上，所以我后来觉得先刷LeetCode很不明智。于是从9月份开始我基本就只刷牛客上了，注意，LeetCode跟牛客的提交方式还是有很大差距，LeetCode是核心代码模式，不用自己写提交函数。而牛客是ACM模式，需要完整的代码。建议刚准备的同学可以先在LeetCode上刷一下常见题型，因为LeetCode比牛客要全一些，而且分类整理的更好。如果准备时间不够充分，就刷<a target="_blank" rel="noopener" href="https://leetcode.cn/studyplan/top-100-liked/">hot100</a>。然后多去牛客上刷题，主要是为了熟练ACM模式的规则。整体上刷300道左右，面试写代码这一关通过率就很高了。</p>
+<h3 id="八股文准备"><a href="#八股文准备" class="headerlink" title="八股文准备"></a>八股文准备</h3><p>技术面的第一个环节要么是写题，要么是八股文，题目没写出来八股文回答的好可能还能拯救一下，那么如何准备八股文呢。我的方法是自己整理一个跟自己用到的技术息息相关的文档，比如你简历里写了你熟练使用java，那面试官大概率会问你java里的锁机制，多线程，I/O，jvm等等（现在比较卷了，基础的继承，封装，多态这些基本不会再问了），大厂会问的特别深，很多问题必须看过源码才能回答上来，比如腾讯二面当时问我乐观锁和悲观锁有哪些，机制分别是什么样的，在我回答完synchronized锁之后又立马追问我synchronized锁是如何实现的。这些问题是背不完的，并且我觉得死记硬背也没意义，所以我建议应届生的简历里尽量不要用“精通”“熟练掌握”这些个词语，很多面试官自己都不敢这么写，看到你这么写之后就会有竞争心里，一定要问到你答不出来为止。再比如你简历里写了你懂计算机网络，那么面试官一定会问你TCP/UDP的通信过程，握手细节，http，https，websocket等协议的区别，拥塞控制和流量控制是如何实现的等等。<br><strong>所以简历里写到的所有技术的八股文一定要了解原理，不能只会用。</strong> 如果简历里写了却答不出来就会很扣分，并且会很尴尬。<br>这里我有一个小tips：<br>如果准备的时间不够充分，一定要把自己熟悉原理的技术放在前面，这样就可以起到吸引火力的作用，一般八股文这个环节就15分钟左右，问不了太多的问题。</p>
+<h3 id="我所了解到的岗位需要准备的知识"><a href="#我所了解到的岗位需要准备的知识" class="headerlink" title="我所了解到的岗位需要准备的知识"></a>我所了解到的岗位需要准备的知识</h3><ul>
+<li>后端开发岗必会：一个编程语言（一般是java或者go），数据结构，计算机网络，数据库（一般是MySQL）。</li>
+<li>后端开发岗锦上添花（想在池子中排名靠前必会）：一个开发框架（SpringBoot，SpringCloud等），缓存数据库（Redis，MongoDB等）, 消息中间件（RabbitMQ，Kafka等等）。如果简历里写了这些，前面基础的问题可能就随便问一两个了。</li>
+<li>前端开发岗必会（略微准备了一些，但没投过）：html，css，js三组件，一个开发框架（Vue或React），计算机网络。</li>
+<li>算法岗必会：Pytorch/TensorFlow，你研究领域的常见算法，如做CV的必须会CNN以及一些变体，做NLP的必须精通Transformer，还有一些机器学习的算法原理，要能够很深入的回答出来某些结构为什么好为什么不好，比如序列任务中为什么batch normalization效果不好，以及某某损失函数在某个场景下为什么比其他好。</li>
+<li>算法岗锦上添花：你这个领域近些年引用量比较高的论文里提出的方法得口到擒来，其次有个非常加分的点：了解一些工程性的技术，因为互联网大多部门的算法岗大部分工作其实在工程实现上，如果懂一些算法部署框架如Flask，加速框架如TensorRT等等会比较加分，能拿到SP的基本要求。</li>
+</ul>
+<h3 id="项目准备"><a href="#项目准备" class="headerlink" title="项目准备"></a>项目准备</h3><p>现在互联网比较卷了，大家基本都有多段实习，如果学历特别好只有一段拿得出手的实习就行。我准备项目的时候是这样准备的：<br>首先把你简历里所有项目经历放在一个文档里，比如Markdown，接下来对每一段项目经历总结以下几个点：</p>
+<ol>
+<li>技术原理：项目中用到的所有相关技术的八股文一定要非常了解。</li>
+<li>复习项目：复习项目中的所有代码实现。如果没有代码了怎么办：至少能用一个非常通顺切合理的逻辑去把这个项目的实现过程复述一遍。</li>
+<li>项目反问：反思项目中所有可能会被面试官问到的点。</li>
+<li>项目贡献：最好能总结出来你在这段项目中带来了哪些贡献，比如系统的QPS经过你优化之后提升了多少多少，再比如高并发场景下你如何优化数据一致性问题。</li>
+<li>改进方法：在你讲完你的项目之后，面试官可能还会追问针对你提到的某一个点，你还有没有改进的办法，所以提前把这些问题想好到时候就不会慌乱了。</li>
+</ol>
+<p><strong>尤其是第3点至今都让我觉得受益匪浅，我当时会不停的思考，我讲到任何一点的时候面试官都可能会打断我并且提出问题，那么我如何回答这个问题能让面试官非常满意。</strong></p>
+<h4 id="这里给一些我当时整理的文档的截图，总共整理了10w多个字："><a href="#这里给一些我当时整理的文档的截图，总共整理了10w多个字：" class="headerlink" title="这里给一些我当时整理的文档的截图，总共整理了10w多个字："></a>这里给一些我当时整理的文档的截图，总共整理了10w多个字：</h4><h4 id="比如一个大模型的项目中："><a href="#比如一个大模型的项目中：" class="headerlink" title="比如一个大模型的项目中："></a>比如一个大模型的项目中：</h4><div style="width: 70%; text-align: center; margin: 0 auto">
+<img src="https://gist.github.com/user-attachments/assets/2820ed3d-0add-49d6-bc5c-3264ce61b8ae">
+<img src="https://gist.github.com/user-attachments/assets/fb0b819a-2480-4d26-8818-868743e6a010">
+</div>
 
-<h2 id="dao层"><a href="#dao层" class="headerlink" title="dao层"></a>dao层</h2><p>持久层(Dao层)：主要负责与数据库进行交互，一般为接口，简单说就是对数据库进行增删改查。写好之后去Mapper.xml里配置和写sql语句。这个层最好理解，你需要数据库中的哪些功能就写哪些方法，而且先不需要去考虑去怎么实现，因为实现属于业务层的范畴了，这里只需无脑写方法就好了，这也体现出ssm框架分层的好处，东西先有，之后再实现。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">UserDao</span> &#123;</span><br><span class="line">    List&lt;User&gt; <span class="title function_">findAll</span><span class="params">(<span class="meta">@Param(&quot;start&quot;)</span> <span class="type">int</span> start, <span class="meta">@Param(&quot;username&quot;)</span> String username)</span>;</span><br><span class="line"></span><br><span class="line">    User <span class="title function_">findUserByUserName</span><span class="params">(String username)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">deleteById</span><span class="params">(<span class="type">int</span> id)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">add</span><span class="params">(User user)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">UserById</span><span class="params">(<span class="type">int</span> id)</span>;</span><br><span class="line"></span><br><span class="line">    User <span class="title function_">selectById</span><span class="params">(<span class="type">int</span> id)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">update</span><span class="params">(User user)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> <span class="title function_">getTotalCount</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">    List&lt;User&gt; <span class="title function_">fuzzyFindByUsername</span><span class="params">(<span class="meta">@Param(&quot;start&quot;)</span> <span class="type">int</span> start, <span class="meta">@Param(&quot;username&quot;)</span> String username)</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="service层"><a href="#service层" class="headerlink" title="service层"></a>service层</h2><p>业务层(service层)：这一层是最抽象的也是最难理解的，我对业务层的理解是它负责项目的核心业务，比如登录、注册、这些都是业务，通俗的说就是在业务层中把项目的核心方法都写出来，<strong>首先定义一个业务层的接口，然后用实现类去实现它，在这个实现类中调用DAO层的方法以对数据库进行增删改查，这样就直接把Spring模块和Mybatis模块串起来了</strong>，这样说是不是很明白了，举个简单的例子，现在要实现登录功能，那要在service的实现类里面首先写一个dao层的对象（以调用MYbatis模块，对数据库增删改查）。<br>然后在下面的登录方法中调用dao层，实际上就是调用到了数据库，判断用户是否存在，然后再对这个方法完善，判断密码是否正确，就用ssm实现了这样一个简单的登录逻辑。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> UserDao userDao;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">login</span><span class="params">(String username, String password)</span> &#123;</span><br><span class="line">    <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> userDao.findUserByUserName(username);<span class="comment">//调用MYbatis模块</span></span><br><span class="line">    <span class="keyword">if</span> (user != <span class="literal">null</span> &amp;&amp; user.getPassword().equals(password)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Controller层"><a href="#Controller层" class="headerlink" title="Controller层"></a>Controller层</h2><p>前面两个模块都已经写好了，那现在差的就是再网页中如何把我们的刚才的登录信息显示出来，这里就用到了控制层(controller层)：属于springMVC模块，控制web访问，这一层也不难理解，它要与视图层联系起来，即前端页面发送请求，控制层接收请求并处理，最后返回数据到前端。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> IUserService userService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/login.do&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> ModelAndView <span class="title function_">login</span><span class="params">(User user, HttpSession session)</span> &#123;</span><br><span class="line">        <span class="type">boolean</span> <span class="variable">flag</span> <span class="operator">=</span> userService.login(user.getUsername(), user.getPassword());</span><br><span class="line">        <span class="type">ModelAndView</span> <span class="variable">modelAndView</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ModelAndView</span>();</span><br><span class="line">        <span class="keyword">if</span> (flag) &#123;</span><br><span class="line">            session.setAttribute(<span class="string">&quot;user&quot;</span>, user);</span><br><span class="line">            modelAndView.setViewName(<span class="string">&quot;main&quot;</span>);<span class="comment">//登陆成功进入main.jsp</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            modelAndView.setViewName(<span class="string">&quot;../failer&quot;</span>);<span class="comment">//失败进入拦截器</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> modelAndView;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="再比如一个视觉算法的项目中："><a href="#再比如一个视觉算法的项目中：" class="headerlink" title="再比如一个视觉算法的项目中："></a>再比如一个视觉算法的项目中：</h4><div style="width: 70%; text-align: center; margin: 0 auto">
+<img src="https://gist.github.com/user-attachments/assets/fc3b4754-c506-4ce1-9950-45d33a225fb9">
+<img src="https://gist.github.com/user-attachments/assets/9e62360b-85ae-43d8-b98f-60a6a713ceb3">
+</div>
 
-<p>视图层(view层)：view层不需要单独建一个叫view的package来单独存放，直接放在webapp下面，这个层最简单，其实就是存放前端的网页，一般为jsp，html格式。。</p>
-<h2 id="结构图"><a href="#结构图" class="headerlink" title="结构图"></a>结构图</h2><p>图片转自<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38685503/article/details/88022904![20200704143030291](https://gist.github.com/assets/67999981/1361dc9f-387d-432a-9d9a-2896a58183a6)">https://blog.csdn.net/qq_38685503/article/details/88022904![20200704143030291](https://gist.github.com/assets/67999981/1361dc9f-387d-432a-9d9a-2896a58183a6)</a></p>
-<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><p><img src="https://gist.github.com/assets/67999981/962abf60-d60f-48e6-8955-b920d76ad3e9" alt="20200704142029799"><br>当然，这只是最基础的分层，实际项目中往往还需要拦截器（filter层)等等按需求增加分层就好，总之记住一点，初学者可以先按照这个分层去写，哪怕不理解也要把每一层是干什么的，有哪些东西都要记住，写多了就对这些了如指掌了。</p>
+<h4 id="再比如一个开发的项目中："><a href="#再比如一个开发的项目中：" class="headerlink" title="再比如一个开发的项目中："></a>再比如一个开发的项目中：</h4><div style="width: 70%; text-align: center; margin: 0 auto">
+<img src="https://gist.github.com/user-attachments/assets/d2311966-b905-4ce5-8ce2-725827dfa555">
+</div>
 
+
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>以上就是针对项目中的一些八股文和问题整理的回答思路。不需要整理的很规范，自己能看懂就行，节省时间用来投递最重要。<br>最后吐槽一下秋招投递：每一家公司要填的信息非常多，而且都是手填，有些插件效果也不太好，还是要自己调整，我最后就准备了一个专门用来投递的文档，把信息直接复制上去，不过还是很花时间，平均投递一家公司要20分钟。那么投递300家公司就是6000分钟，我当时秋招就差不多是这个数，后来因为有offer了且打算读书了，春招就直接放弃了。</p>
+<h4 id="最后祝愿大家都能顺利上岸，拿到满意的Package！"><a href="#最后祝愿大家都能顺利上岸，拿到满意的Package！" class="headerlink" title="最后祝愿大家都能顺利上岸，拿到满意的Package！"></a>最后祝愿大家都能顺利上岸，拿到满意的Package！</h4>
       
     </div>
     <div class="article-footer">
@@ -400,7 +438,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="https://stephen-smj.tech/2020/07/04/%E6%B5%85%E8%B0%88ssm%E6%A1%86%E6%9E%B6%E5%88%86%E5%B1%82%E9%80%BB%E8%BE%91/" title="浅谈ssm框架分层逻辑" target="_blank" rel="external">https://stephen-smj.tech/2020/07/04/浅谈ssm框架分层逻辑/</a>
+      <a href="https://stephen-smj.tech/2024/08/01/%E7%A7%8B%E6%8B%9B%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/" title="经验分享-应届生如何在秋招拿下多个年薪50w的offer" target="_blank" rel="external">https://stephen-smj.tech/2024/08/01/秋招经验分享/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -446,13 +484,9 @@
   
   <ul class="pager pull-left">
     
-    <li class="prev">
-      <a href="/2020/07/07/%E4%BD%BF%E7%94%A8hibernate%E6%A1%86%E6%9E%B6%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E7%9A%84%E8%A1%A8/" title="使用hibernate框架自动生成数据库中的表"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
-    </li>
-    
     
     <li class="next">
-      <a href="/2020/07/03/Servlet%E5%AE%9E%E7%8E%B0%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E5%8A%9F%E8%83%BD%E8%AF%A6%E7%BB%86%E6%AD%A5%E9%AA%A4/" title="Servlet实现用户登录功能详细步骤"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/2024/04/24/Function%20Calling%20c635408fcd35420d91ac76b97400d9a6/" title="Achieve Function Calling and Tool Use in Large Language Models"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     
