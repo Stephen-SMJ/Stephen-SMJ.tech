@@ -1,7 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://stephen-smj.tech/2024/07/09/LLM%20Introduction/</loc>
+    <lastmod>2024-09-16</lastmod>
+  </url>
+  <url>
+    <loc>https://stephen-smj.tech/2024/06/23/Pytorch/</loc>
+    <lastmod>2024-09-16</lastmod>
+  </url>
+  <url>
+    <loc>https://stephen-smj.tech/2024/05/25/Transformers/</loc>
+    <lastmod>2024-09-16</lastmod>
+  </url>
+  <url>
+    <loc>https://stephen-smj.tech/2024/03/05/Prompt%20engineering/</loc>
+    <lastmod>2024-09-16</lastmod>
+  </url>
+  <url>
+    <loc>https://stephen-smj.tech/2024/05/01/Start%20with%20LangChain/</loc>
+    <lastmod>2024-09-16</lastmod>
+  </url>
+  <url>
     <loc>https://stephen-smj.tech/2023/02/28/Forward%20Propagation%20and%20Back%20Propagation/</loc>
+    <lastmod>2024-09-16</lastmod>
+  </url>
+  <url>
+    <loc>https://stephen-smj.tech/2024/08/05/Decode%20in%20LLM/</loc>
+    <lastmod>2024-09-16</lastmod>
+  </url>
+  <url>
+    <loc>https://stephen-smj.tech/2024/07/23/What%20is%20LLM%20Agent/</loc>
     <lastmod>2024-09-16</lastmod>
   </url>
   <url>

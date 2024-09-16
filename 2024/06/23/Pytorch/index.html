@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Essential PyTorch Syntax for Deep Learning - A Quick Guide | 小孙不够睡的Blog</title>
+  <meta name="description" content="PyTorch is one of the most popular deep learning frameworks due to its ease of use, flexibility, and dynamic computational graph. If you’re new to PyTorch or need a quick reference, this guide will wa">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Essential PyTorch Syntax for Deep Learning - A Quick Guide">
+<meta property="og:url" content="https://stephen-smj.tech/2024/06/23/Pytorch/index.html">
+<meta property="og:site_name" content="小孙不够睡的博客">
+<meta property="og:description" content="PyTorch is one of the most popular deep learning frameworks due to its ease of use, flexibility, and dynamic computational graph. If you’re new to PyTorch or need a quick reference, this guide will wa">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-06-23T03:56:06.000Z">
+<meta property="article:modified_time" content="2024-09-16T15:40:18.569Z">
+<meta property="article:author" content="Sun Maojun">
+<meta property="article:tag" content="Deep learning">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://stephen-smj.tech/2024/06/23/Pytorch/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="小孙不够睡的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://stephen-smj.tech/about/" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">小孙不够睡</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">AI Engineer &amp; Software Developer &amp; Big Data Scientist</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Hong Kong SAR</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Blog</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">Links</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-moments">
+          <a href="/moments">
+            
+            <i class="icon icon-wechat"></i>
+            
+            <span class="menu-title">Moments</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-gallery">
+          <a href="/gallery">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Gallery</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Stephen-SMJ" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>1. To practice my English writing, I will write all blog in English later. If you want to see Chinese version, you can visit my CSDN. 2. I am happy to announce that I will pursue a PhD degree at Hong Kong Polytechnic University in September 2024. My research interests include Large Language Model, Multi-agent Collaboration, Diffusion Model, etc. Welcome like-minded friends for discussions.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/" rel="tag">Algorithms</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Back-end/" rel="tag">Back-end</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Deep-learning/" rel="tag">Deep learning</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Experience/" rel="tag">Experience</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Front-end/" rel="tag">Front-end</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/" rel="tag">Git</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Large-Language-Model/" rel="tag">Large Language Model</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-learning/" rel="tag">Machine learning</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Other/" rel="tag">Other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/" rel="tag">PHP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">7</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Algorithms/" style="font-size: 13px;">Algorithms</a> <a href="/tags/Back-end/" style="font-size: 14px;">Back-end</a> <a href="/tags/Deep-learning/" style="font-size: 13.83px;">Deep learning</a> <a href="/tags/Experience/" style="font-size: 13px;">Experience</a> <a href="/tags/Front-end/" style="font-size: 13.33px;">Front-end</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/JAVA/" style="font-size: 13.83px;">JAVA</a> <a href="/tags/Large-Language-Model/" style="font-size: 13.5px;">Large Language Model</a> <a href="/tags/Machine-learning/" style="font-size: 13.17px;">Machine learning</a> <a href="/tags/Other/" style="font-size: 13px;">Other</a> <a href="/tags/PHP/" style="font-size: 13px;">PHP</a> <a href="/tags/Python/" style="font-size: 13.67px;">Python</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">May 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">March 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">March 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">February 2023</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2024/08/05/Decode%20in%20LLM/" class="title">Understanding Decoding Methods in Large Language Models (LLMs) and Key Parameters</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-08-05T12:07:34.000Z" itemprop="datePublished">2024-08-05</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2024/08/01/%E7%A7%8B%E6%8B%9B%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/" class="title">经验分享-应届生如何在秋招拿下多个年薪50w的offer</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-08-01T07:49:26.000Z" itemprop="datePublished">2024-08-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2024/07/23/What%20is%20LLM%20Agent/" class="title">What is an LLM Agent? A Guide to Large Language Model Agents</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-07-23T08:04:38.000Z" itemprop="datePublished">2024-07-23</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2024/07/09/LLM%20Introduction/" class="title">Introduction to Large Language Models (LLMs) and Their Principles</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-07-09T08:04:38.000Z" itemprop="datePublished">2024-07-09</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2024/06/23/Pytorch/" class="title">Essential PyTorch Syntax for Deep Learning - A Quick Guide</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-06-23T03:56:06.000Z" itemprop="datePublished">2024-06-23</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Pytorch" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Essential PyTorch Syntax for Deep Learning - A Quick Guide
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2024/06/23/Pytorch/" class="article-date">
+	  <time datetime="2024-06-23T03:56:06.000Z" itemprop="datePublished">2024-06-23</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/Deep-learning/" rel="tag">Deep learning</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2024/06/23/Pytorch/#comments" class="article-comment-link">Comments</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 906(words)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 5(minutes)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>PyTorch is one of the most popular deep learning frameworks due to its ease of use, flexibility, and dynamic computational graph. If you’re new to PyTorch or need a quick reference, this guide will walk you through the most commonly used syntax and commands.</p>
+<h2 id="1-What-is-PyTorch"><a href="#1-What-is-PyTorch" class="headerlink" title="1. What is PyTorch?"></a>1. What is PyTorch?</h2><p>PyTorch is an open-source deep learning framework developed by Facebook’s AI Research lab (FAIR). It allows users to build complex neural networks with a Pythonic approach, making it accessible for both research and production.</p>
+<h2 id="2-Installing-PyTorch"><a href="#2-Installing-PyTorch" class="headerlink" title="2. Installing PyTorch"></a>2. Installing PyTorch</h2><p>First, you need to install PyTorch. Depending on your system configuration (CPU/GPU), you can install PyTorch with:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># For CPU</span></span><br><span class="line">pip install torch torchvision</span><br><span class="line"></span><br><span class="line"><span class="comment"># For GPU (CUDA 11.8 as an example)</span></span><br><span class="line">pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118</span><br></pre></td></tr></table></figure>
+
+<p>Now, let’s dive into the most frequently used PyTorch syntax.</p>
+<h2 id="3-Basic-Tensor-Operations"><a href="#3-Basic-Tensor-Operations" class="headerlink" title="3. Basic Tensor Operations"></a>3. Basic Tensor Operations</h2><p>Tensors are the core data structure in PyTorch, and they are similar to NumPy arrays. Let’s start by creating and manipulating tensors.</p>
+<h3 id="3-1-Creating-Tensors"><a href="#3-1-Creating-Tensors" class="headerlink" title="3.1. Creating Tensors"></a>3.1. Creating Tensors</h3><p>You can create tensors using various methods:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line"><span class="comment"># Creating a tensor from a list</span></span><br><span class="line">x = torch.tensor([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]])</span><br><span class="line"><span class="built_in">print</span>(x)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Creating a tensor with all zeros</span></span><br><span class="line">zeros = torch.zeros((<span class="number">3</span>, <span class="number">3</span>))</span><br><span class="line"><span class="built_in">print</span>(zeros)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Creating a tensor with random values</span></span><br><span class="line">rand_tensor = torch.rand((<span class="number">2</span>, <span class="number">4</span>))</span><br><span class="line"><span class="built_in">print</span>(rand_tensor)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-Tensor-Operations"><a href="#3-2-Tensor-Operations" class="headerlink" title="3.2. Tensor Operations"></a>3.2. Tensor Operations</h3><p>You can perform a variety of operations on tensors, including addition, multiplication, and reshaping:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Element-wise addition</span></span><br><span class="line">a = torch.tensor([<span class="number">1</span>, <span class="number">2</span>])</span><br><span class="line">b = torch.tensor([<span class="number">3</span>, <span class="number">4</span>])</span><br><span class="line">c = a + b</span><br><span class="line"><span class="built_in">print</span>(c)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Matrix multiplication</span></span><br><span class="line">mat1 = torch.tensor([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]])</span><br><span class="line">mat2 = torch.tensor([[<span class="number">5</span>, <span class="number">6</span>], [<span class="number">7</span>, <span class="number">8</span>]])</span><br><span class="line">result = torch.matmul(mat1, mat2)</span><br><span class="line"><span class="built_in">print</span>(result)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Reshaping a tensor</span></span><br><span class="line">reshaped = mat1.view(<span class="number">4</span>)</span><br><span class="line"><span class="built_in">print</span>(reshaped)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-Moving-Tensors-to-GPU"><a href="#3-3-Moving-Tensors-to-GPU" class="headerlink" title="3.3. Moving Tensors to GPU"></a>3.3. Moving Tensors to GPU</h3><p>If you’re working with large models, you’ll likely want to take advantage of a GPU:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Check if CUDA (GPU) is available</span></span><br><span class="line">device = torch.device(<span class="string">&quot;cuda&quot;</span> <span class="keyword">if</span> torch.cuda.is_available() <span class="keyword">else</span> <span class="string">&quot;cpu&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Move tensor to GPU</span></span><br><span class="line">gpu_tensor = torch.rand((<span class="number">2</span>, <span class="number">2</span>)).to(device)</span><br><span class="line"><span class="built_in">print</span>(gpu_tensor)</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-Building-a-Simple-Neural-Network"><a href="#4-Building-a-Simple-Neural-Network" class="headerlink" title="4. Building a Simple Neural Network"></a>4. Building a Simple Neural Network</h2><p>Let’s see how to define and train a simple neural network using PyTorch’s <code>nn.Module</code> class. </p>
+<h3 id="4-1-Defining-a-Model"><a href="#4-1-Defining-a-Model" class="headerlink" title="4.1. Defining a Model"></a>4.1. Defining a Model</h3><p>In PyTorch, you define your neural network as a class that inherits from <code>nn.Module</code>. Here’s an example of a basic fully connected neural network:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SimpleNN</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>(SimpleNN, self).__init__()</span><br><span class="line">        self.fc1 = nn.Linear(<span class="number">28</span>*<span class="number">28</span>, <span class="number">128</span>)</span><br><span class="line">        self.fc2 = nn.Linear(<span class="number">128</span>, <span class="number">64</span>)</span><br><span class="line">        self.fc3 = nn.Linear(<span class="number">64</span>, <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        x = F.relu(self.fc1(x))</span><br><span class="line">        x = F.relu(self.fc2(x))</span><br><span class="line">        x = self.fc3(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-Initializing-and-Using-the-Model"><a href="#4-2-Initializing-and-Using-the-Model" class="headerlink" title="4.2. Initializing and Using the Model"></a>4.2. Initializing and Using the Model</h3><p>To initialize the model and pass data through it, use the following commands:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">model = SimpleNN()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Random input tensor simulating a batch of 32 images, each of size 28x28</span></span><br><span class="line">input_data = torch.rand((<span class="number">32</span>, <span class="number">28</span>*<span class="number">28</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Forward pass</span></span><br><span class="line">output = model(input_data)</span><br><span class="line"><span class="built_in">print</span>(output)</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-Loss-Functions-and-Optimizers"><a href="#5-Loss-Functions-and-Optimizers" class="headerlink" title="5. Loss Functions and Optimizers"></a>5. Loss Functions and Optimizers</h2><p>PyTorch provides various built-in loss functions and optimizers. Let’s use Cross-Entropy Loss and Stochastic Gradient Descent (SGD) for a classification task.</p>
+<h3 id="5-1-Defining-a-Loss-Function"><a href="#5-1-Defining-a-Loss-Function" class="headerlink" title="5.1. Defining a Loss Function"></a>5.1. Defining a Loss Function</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">criterion = nn.CrossEntropyLoss()</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-Optimizer-Setup"><a href="#5-2-Optimizer-Setup" class="headerlink" title="5.2. Optimizer Setup"></a>5.2. Optimizer Setup</h3><p>To update the model weights, you can use an optimizer like <code>torch.optim.SGD</code>:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">optimizer = torch.optim.SGD(model.parameters(), lr=<span class="number">0.01</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-Training-the-Model"><a href="#5-3-Training-the-Model" class="headerlink" title="5.3. Training the Model"></a>5.3. Training the Model</h3><p>Here’s how you would structure the training loop in PyTorch:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Sample input and target</span></span><br><span class="line">input_data = torch.rand((<span class="number">32</span>, <span class="number">28</span>*<span class="number">28</span>))</span><br><span class="line">target = torch.randint(<span class="number">0</span>, <span class="number">10</span>, (<span class="number">32</span>,))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Zero the gradients</span></span><br><span class="line">optimizer.zero_grad()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Forward pass</span></span><br><span class="line">output = model(input_data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Calculate loss</span></span><br><span class="line">loss = criterion(output, target)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Backward pass (compute gradients)</span></span><br><span class="line">loss.backward()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Update weights</span></span><br><span class="line">optimizer.step()</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-DataLoader-Loading-Data-Efficiently"><a href="#6-DataLoader-Loading-Data-Efficiently" class="headerlink" title="6. DataLoader: Loading Data Efficiently"></a>6. DataLoader: Loading Data Efficiently</h2><p>PyTorch’s <code>DataLoader</code> is essential for handling large datasets, especially when dealing with mini-batch training.</p>
+<h3 id="6-1-Using-DataLoader-with-Built-in-Datasets"><a href="#6-1-Using-DataLoader-with-Built-in-Datasets" class="headerlink" title="6.1. Using DataLoader with Built-in Datasets"></a>6.1. Using DataLoader with Built-in Datasets</h3><p>PyTorch provides several built-in datasets, such as MNIST. You can easily load these datasets and use a DataLoader for batching:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> datasets, transforms</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line"></span><br><span class="line"><span class="comment"># Transform to normalize data and convert to tensor</span></span><br><span class="line">transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((<span class="number">0.5</span>,), (<span class="number">0.5</span>,))])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Download the MNIST dataset</span></span><br><span class="line">train_dataset = datasets.MNIST(root=<span class="string">&#x27;./data&#x27;</span>, train=<span class="literal">True</span>, transform=transform, download=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Load the dataset into DataLoader</span></span><br><span class="line">train_loader = DataLoader(train_dataset, batch_size=<span class="number">32</span>, shuffle=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Iterating through the DataLoader</span></span><br><span class="line"><span class="keyword">for</span> batch_idx, (data, target) <span class="keyword">in</span> <span class="built_in">enumerate</span>(train_loader):</span><br><span class="line">    <span class="built_in">print</span>(batch_idx, data.size(), target.size())</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-2-Custom-Dataset"><a href="#6-2-Custom-Dataset" class="headerlink" title="6.2. Custom Dataset"></a>6.2. Custom Dataset</h3><p>You can also create custom datasets by subclassing <code>torch.utils.data.Dataset</code>:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> Dataset</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CustomDataset</span>(<span class="title class_ inherited__">Dataset</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, data, labels</span>):</span><br><span class="line">        self.data = data</span><br><span class="line">        self.labels = labels</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__len__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">len</span>(self.data)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__getitem__</span>(<span class="params">self, idx</span>):</span><br><span class="line">        <span class="keyword">return</span> self.data[idx], self.labels[idx]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Example usage</span></span><br><span class="line">custom_data = CustomDataset(torch.rand((<span class="number">100</span>, <span class="number">28</span>*<span class="number">28</span>)), torch.randint(<span class="number">0</span>, <span class="number">10</span>, (<span class="number">100</span>,)))</span><br><span class="line">custom_loader = DataLoader(custom_data, batch_size=<span class="number">16</span>, shuffle=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-Conclusion"><a href="#7-Conclusion" class="headerlink" title="7. Conclusion"></a>7. Conclusion</h2><p>In this post, we’ve covered the most commonly used syntax in PyTorch, including basic tensor operations, building neural networks, handling loss functions and optimizers, and working with DataLoader. These essential tools provide the foundation for building deep learning models efficiently in PyTorch.</p>
+<p>PyTorch’s flexibility makes it great for experimentation, while its performance makes it suitable for production environments as well. Whether you’re training a small neural network or a large transformer model, PyTorch’s intuitive API makes it a valuable tool for deep learning.</p>
+<h2 id="8-Further-Reading"><a href="#8-Further-Reading" class="headerlink" title="8. Further Reading"></a>8. Further Reading</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/index.html">PyTorch Documentation</a></li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html">Deep Learning with PyTorch</a></li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/vision/stable/index.html">Torchvision: Datasets and Models for Computer Vision</a></li>
+</ul>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://stephen-smj.tech/2024/06/23/Pytorch/" title="Essential PyTorch Syntax for Deep Learning - A Quick Guide" target="_blank" rel="external">https://stephen-smj.tech/2024/06/23/Pytorch/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://stephen-smj.tech/about/" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://stephen-smj.tech/about/" target="_blank"><span class="text-dark">小孙不够睡</span><small class="ml-1x">AI Engineer &amp; Software Developer &amp; Big Data Scientist</small></a></h3>
+        <div>PhD Student @ Hong Kong Polytechnic University</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2024/07/09/LLM%20Introduction/" title="Introduction to Large Language Models (LLMs) and Their Principles"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2024/05/25/Transformers/" title="Mastering the Hugging Face Transformers Library - A Quick Introduction"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>$</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>Maybe you could buy me a cup of coffee.</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open alipay app scan this qrcode, buy me a coffee!</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open wechat app scan this qrcode, buy me a coffee!</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> alipay</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> wechat payment</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Stephen-SMJ" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2024 Sun Maojun
+        
+<!--        <div class="publishby">-->
+<!--        	copyright.theme_by <a href="https://github.com/cofess" target="_blank"> cofess </a>copyright.base_on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.-->
+<!--        </div>-->
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: 'IOO8LG95uLVEj8pH7y8rEB3n-gzGzoHsz',
+    appKey: 'PCqPCzTR2b9ttcHbt6ZP3HId',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Understanding Decoding Methods in Large Language Models (LLMs) and Key Parameters | 小孙不够睡的Blog</title>
+  <meta name="description" content="When interacting with Large Language Models (LLMs) like GPT, BERT, or T5, the magic happens not only in the training but also in the decoding phase. Decoding is the process through which a language mo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Understanding Decoding Methods in Large Language Models (LLMs) and Key Parameters">
+<meta property="og:url" content="https://stephen-smj.tech/2024/08/05/Decode%20in%20LLM/index.html">
+<meta property="og:site_name" content="小孙不够睡的博客">
+<meta property="og:description" content="When interacting with Large Language Models (LLMs) like GPT, BERT, or T5, the magic happens not only in the training but also in the decoding phase. Decoding is the process through which a language mo">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-08-05T12:07:34.000Z">
+<meta property="article:modified_time" content="2024-09-16T15:31:59.785Z">
+<meta property="article:author" content="Sun Maojun">
+<meta property="article:tag" content="Large Language Model">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://stephen-smj.tech/2024/08/05/Decode%20in%20LLM/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="小孙不够睡的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://stephen-smj.tech/about/" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">小孙不够睡</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">AI Engineer &amp; Software Developer &amp; Big Data Scientist</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Hong Kong SAR</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Blog</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">Links</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-moments">
+          <a href="/moments">
+            
+            <i class="icon icon-wechat"></i>
+            
+            <span class="menu-title">Moments</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-gallery">
+          <a href="/gallery">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Gallery</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Stephen-SMJ" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>1. To practice my English writing, I will write all blog in English later. If you want to see Chinese version, you can visit my CSDN. 2. I am happy to announce that I will pursue a PhD degree at Hong Kong Polytechnic University in September 2024. My research interests include Large Language Model, Multi-agent Collaboration, Diffusion Model, etc. Welcome like-minded friends for discussions.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithms/" rel="tag">Algorithms</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Back-end/" rel="tag">Back-end</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Deep-learning/" rel="tag">Deep learning</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Experience/" rel="tag">Experience</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Front-end/" rel="tag">Front-end</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/" rel="tag">Git</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Large-Language-Model/" rel="tag">Large Language Model</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Machine-learning/" rel="tag">Machine learning</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Other/" rel="tag">Other</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/" rel="tag">PHP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">7</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Algorithms/" style="font-size: 13px;">Algorithms</a> <a href="/tags/Back-end/" style="font-size: 14px;">Back-end</a> <a href="/tags/Deep-learning/" style="font-size: 13.83px;">Deep learning</a> <a href="/tags/Experience/" style="font-size: 13px;">Experience</a> <a href="/tags/Front-end/" style="font-size: 13.33px;">Front-end</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/JAVA/" style="font-size: 13.83px;">JAVA</a> <a href="/tags/Large-Language-Model/" style="font-size: 13.5px;">Large Language Model</a> <a href="/tags/Machine-learning/" style="font-size: 13.17px;">Machine learning</a> <a href="/tags/Other/" style="font-size: 13px;">Other</a> <a href="/tags/PHP/" style="font-size: 13px;">PHP</a> <a href="/tags/Python/" style="font-size: 13.67px;">Python</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">May 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">March 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">March 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">February 2023</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2024/08/05/Decode%20in%20LLM/" class="title">Understanding Decoding Methods in Large Language Models (LLMs) and Key Parameters</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-08-05T12:07:34.000Z" itemprop="datePublished">2024-08-05</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2024/08/01/%E7%A7%8B%E6%8B%9B%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/" class="title">经验分享-应届生如何在秋招拿下多个年薪50w的offer</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-08-01T07:49:26.000Z" itemprop="datePublished">2024-08-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2024/07/23/What%20is%20LLM%20Agent/" class="title">What is an LLM Agent? A Guide to Large Language Model Agents</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-07-23T08:04:38.000Z" itemprop="datePublished">2024-07-23</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2024/07/09/LLM%20Introduction/" class="title">Introduction to Large Language Models (LLMs) and Their Principles</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-07-09T08:04:38.000Z" itemprop="datePublished">2024-07-09</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2024/06/23/Pytorch/" class="title">Essential PyTorch Syntax for Deep Learning - A Quick Guide</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-06-23T03:56:06.000Z" itemprop="datePublished">2024-06-23</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Decode in LLM" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Understanding Decoding Methods in Large Language Models (LLMs) and Key Parameters
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2024/08/05/Decode%20in%20LLM/" class="article-date">
+	  <time datetime="2024-08-05T12:07:34.000Z" itemprop="datePublished">2024-08-05</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/Large-Language-Model/" rel="tag">Large Language Model</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2024/08/05/Decode%20in%20LLM/#comments" class="article-comment-link">Comments</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 1.3k(words)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 8(minutes)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>When interacting with Large Language Models (LLMs) like GPT, BERT, or T5, the magic happens not only in the training but also in the <strong>decoding</strong> phase. Decoding is the process through which a language model generates output, and the choice of decoding method can greatly influence the quality of the generated text.</p>
+<p>In this post, we’ll explore the common decoding techniques, explain key parameters such as <code>top-p</code> and <code>top-k</code>, and discuss how these models are trained to generate coherent and contextually accurate outputs.</p>
+<h2 id="1-Introduction-to-Decoding-in-LLMs"><a href="#1-Introduction-to-Decoding-in-LLMs" class="headerlink" title="1. Introduction to Decoding in LLMs"></a>1. Introduction to Decoding in LLMs</h2><p>Decoding is the step where the model takes a sequence of probabilities generated by its neural network and converts it into human-readable text. This is not a straightforward task, as the model can produce many possible sequences. Choosing the right sequence involves controlling randomness and ensuring that the output is grammatically and contextually correct.</p>
+<p>Here are the most common decoding techniques:</p>
+<h3 id="1-1-Greedy-Decoding"><a href="#1-1-Greedy-Decoding" class="headerlink" title="1.1. Greedy Decoding"></a>1.1. Greedy Decoding</h3><p><strong>Greedy decoding</strong> selects the word with the highest probability at each step of generation. While simple, it can often result in repetitive or low-quality text because it doesn’t explore alternative words that might lead to better outcomes.</p>
+<p><strong>Example</strong>:</p>
+<ul>
+<li>Input: “The cat”</li>
+<li>Greedy Output: “The cat is on the mat.”</li>
+</ul>
+<h3 id="1-2-Beam-Search"><a href="#1-2-Beam-Search" class="headerlink" title="1.2. Beam Search"></a>1.2. Beam Search</h3><p><strong>Beam search</strong> is an improvement over greedy decoding. It keeps track of multiple possible sequences (called “beams”) at each step, choosing the best one after considering several alternatives. The size of the beam (<code>beam width</code>) determines how many sequences the model will consider.</p>
+<p><strong>Example</strong>:</p>
+<ul>
+<li>Input: “The cat”</li>
+<li>Beam Search Output: “The cat is sitting by the window.”</li>
+</ul>
+<p>Beam search provides more coherent and higher-quality outputs, but it can be computationally expensive.</p>
+<h3 id="1-3-Top-k-Sampling"><a href="#1-3-Top-k-Sampling" class="headerlink" title="1.3. Top-k Sampling"></a>1.3. Top-k Sampling</h3><p><strong>Top-k sampling</strong> is a method where the model only considers the top <code>k</code> most probable words at each step, and it randomly selects one of them. This introduces more diversity and creativity in the output by not always choosing the most probable word.</p>
+<ul>
+<li><code>k</code>: The number of top words to sample from.</li>
+</ul>
+<p><strong>Example</strong>:</p>
+<ul>
+<li>Input: “The cat”</li>
+<li>Top-k (with k=5) Output: “The cat jumped over the fence.”</li>
+</ul>
+<p>The higher the value of <code>k</code>, the more diverse and unexpected the text can become, but it might also lose coherence.</p>
+<h3 id="1-4-Nucleus-Sampling-Top-p-Sampling"><a href="#1-4-Nucleus-Sampling-Top-p-Sampling" class="headerlink" title="1.4. Nucleus Sampling (Top-p Sampling)"></a>1.4. Nucleus Sampling (Top-p Sampling)</h3><p><strong>Top-p sampling</strong>, also known as <strong>nucleus sampling</strong>, improves on top-k by considering all words whose cumulative probability adds up to a threshold <code>p</code>. It adapts dynamically to the context of the generation, ensuring both diversity and coherence.</p>
+<ul>
+<li><code>p</code>: The cumulative probability threshold (e.g., p=0.9).</li>
+</ul>
+<p><strong>Example</strong>:</p>
+<ul>
+<li>Input: “The cat”</li>
+<li>Top-p (with p=0.9) Output: “The cat darted across the room.”</li>
+</ul>
+<p>Top-p sampling adjusts the number of words sampled at each step, giving the model more flexibility compared to top-k, where the number of options is fixed.</p>
+<h3 id="1-5-Temperature-Sampling"><a href="#1-5-Temperature-Sampling" class="headerlink" title="1.5. Temperature Sampling"></a>1.5. Temperature Sampling</h3><p><strong>Temperature</strong> controls the randomness of the output by scaling the probability distribution of the model. Higher temperatures make the model more likely to select less probable words, resulting in more creative but potentially less coherent text.</p>
+<ul>
+<li><code>temperature</code>: A value between 0 and 1 (default is 1). Lower values make the output more deterministic, while higher values increase randomness.</li>
+</ul>
+<p><strong>Example</strong>:</p>
+<ul>
+<li>Input: “The cat”</li>
+<li>Temperature 0.5: “The cat is sleeping.”</li>
+<li>Temperature 1.5: “The feline leaps across the horizon in pursuit of adventure.”</li>
+</ul>
+<p>A lower temperature makes the model more conservative, while a higher temperature makes it more creative.</p>
+<hr>
+<h2 id="2-Key-Parameters-in-Decoding"><a href="#2-Key-Parameters-in-Decoding" class="headerlink" title="2. Key Parameters in Decoding"></a>2. Key Parameters in Decoding</h2><p>Now that we understand the common decoding methods, let’s look at the parameters that control how these methods function and affect the quality of generated text.</p>
+<h3 id="2-1-top-k"><a href="#2-1-top-k" class="headerlink" title="2.1. top-k"></a>2.1. <code>top-k</code></h3><p><strong><code>top-k</code></strong> is a parameter used in top-k sampling, determining the number of top possible words to sample from at each step. It balances between randomness and coherence.</p>
+<ul>
+<li><strong>Low <code>k</code> values</strong>: Result in more deterministic and repetitive text.</li>
+<li><strong>High <code>k</code> values</strong>: Lead to more varied, creative text but may decrease coherence.</li>
+</ul>
+<p><strong>When to use?</strong>: Use top-k sampling when you want more diverse outputs, like in creative writing tasks or when generating longer texts.</p>
+<h3 id="2-2-top-p-Nucleus-Sampling"><a href="#2-2-top-p-Nucleus-Sampling" class="headerlink" title="2.2. top-p (Nucleus Sampling)"></a>2.2. <code>top-p</code> (Nucleus Sampling)</h3><p><strong><code>top-p</code></strong> is the cumulative probability threshold for selecting words in nucleus sampling. Unlike top-k, it adapts dynamically to the output distribution.</p>
+<ul>
+<li><strong>Low <code>p</code> values</strong>: Lead to conservative text, similar to greedy decoding.</li>
+<li><strong>High <code>p</code> values</strong>: Increase diversity by sampling from a larger set of possible words.</li>
+</ul>
+<p><strong>When to use?</strong>: Nucleus sampling is great for balancing quality and creativity, especially for conversational agents or storytelling.</p>
+<h3 id="2-3-temperature"><a href="#2-3-temperature" class="headerlink" title="2.3. temperature"></a>2.3. <code>temperature</code></h3><p><strong><code>temperature</code></strong> affects the randomness of word selection by scaling the probabilities in the output distribution.</p>
+<ul>
+<li><strong>Lower temperature (e.g., 0.2)</strong>: More deterministic and focused outputs.</li>
+<li><strong>Higher temperature (e.g., 1.2)</strong>: More creative but less predictable outputs.</li>
+</ul>
+<p><strong>When to use?</strong>: Adjust the temperature to match your needs. For factual, structured responses, a low temperature is preferred. For creative or open-ended generation, a higher temperature can lead to more varied responses.</p>
+<h3 id="2-4-max-length"><a href="#2-4-max-length" class="headerlink" title="2.4. max_length"></a>2.4. <code>max_length</code></h3><p><strong><code>max_length</code></strong> defines the maximum number of tokens the model can generate. This limits how long the output will be and is often used to prevent overly long or runaway generations.</p>
+<ul>
+<li><strong>Short <code>max_length</code></strong>: Produces concise and to-the-point responses.</li>
+<li><strong>Long <code>max_length</code></strong>: Useful for generating essays, articles, or other long-form content.</li>
+</ul>
+<hr>
+<h2 id="3-How-Are-LLMs-Trained"><a href="#3-How-Are-LLMs-Trained" class="headerlink" title="3. How Are LLMs Trained?"></a>3. How Are LLMs Trained?</h2><p>Understanding decoding methods and parameters is critical for using LLMs effectively, but how are these models trained to generate such coherent and contextually accurate text? Let’s briefly cover the training process of LLMs.</p>
+<h3 id="3-1-Pretraining-Phase"><a href="#3-1-Pretraining-Phase" class="headerlink" title="3.1. Pretraining Phase"></a>3.1. Pretraining Phase</h3><p>LLMs like GPT or BERT are trained on massive datasets containing text from the web, books, and other sources. During <strong>pretraining</strong>, the model learns to predict the next word in a sentence (for models like GPT) or predict masked words (for models like BERT). This helps the model develop a strong understanding of language patterns, syntax, and semantics.</p>
+<h3 id="3-2-Fine-Tuning-Phase"><a href="#3-2-Fine-Tuning-Phase" class="headerlink" title="3.2. Fine-Tuning Phase"></a>3.2. Fine-Tuning Phase</h3><p>After pretraining, the model is <strong>fine-tuned</strong> on specific tasks, such as question answering, summarization, or text generation. Fine-tuning is done on a smaller, more specific dataset related to the task at hand. For instance, to fine-tune a model for customer service chatbots, it would be trained on dialogue data from customer interactions.</p>
+<h3 id="3-3-Loss-Function"><a href="#3-3-Loss-Function" class="headerlink" title="3.3. Loss Function"></a>3.3. Loss Function</h3><p>The <strong>loss function</strong> during training helps the model learn from its mistakes. For LLMs, the most common loss function is <strong>cross-entropy loss</strong>, which measures how well the model’s predicted probability distribution matches the true distribution of the next word.</p>
+<h3 id="3-4-Optimizers-and-Training-Dynamics"><a href="#3-4-Optimizers-and-Training-Dynamics" class="headerlink" title="3.4. Optimizers and Training Dynamics"></a>3.4. Optimizers and Training Dynamics</h3><p>To optimize the model’s parameters, techniques like <strong>Adam</strong> or <strong>AdamW</strong> (Weight Decay) are used. These algorithms help the model converge to a solution where the predictions match the real-world language distribution as closely as possible.</p>
+<p>The training process involves:</p>
+<ul>
+<li><strong>Forward Pass</strong>: The model generates predictions.</li>
+<li><strong>Backpropagation</strong>: Errors (measured by the loss function) are propagated back through the model to adjust its parameters.</li>
+<li><strong>Gradient Descent</strong>: The optimizer updates the model’s weights to minimize the loss.</li>
+</ul>
+<hr>
+<h2 id="4-Conclusion"><a href="#4-Conclusion" class="headerlink" title="4. Conclusion"></a>4. Conclusion</h2><p>The decoding phase of Large Language Models is where the raw power of the model is transformed into readable, meaningful text. By selecting the right decoding method (greedy, beam search, top-k, or top-p) and adjusting key parameters like <code>temperature</code>, <code>top-k</code>, and <code>top-p</code>, you can influence the creativity, coherence, and quality of the generated output.</p>
+<p>Understanding these parameters allows you to fine-tune the model’s behavior for different tasks, from factual reporting to creative writing. Along with proper training, these methods ensure that LLMs deliver contextually accurate and relevant text.</p>
+<hr>
+<h2 id="5-Further-Reading"><a href="#5-Further-Reading" class="headerlink" title="5. Further Reading"></a>5. Further Reading</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/v4.12.0/en/main_classes/text_generation">Hugging Face - Text Generation API</a></li>
+<li><a target="_blank" rel="noopener" href="https://beta.openai.com/docs/">OpenAI GPT-3 Documentation</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1904.09751">Top-k vs. Nucleus Sampling</a></li>
+</ul>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://stephen-smj.tech/2024/08/05/Decode%20in%20LLM/" title="Understanding Decoding Methods in Large Language Models (LLMs) and Key Parameters" target="_blank" rel="external">https://stephen-smj.tech/2024/08/05/Decode in LLM/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://stephen-smj.tech/about/" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://stephen-smj.tech/about/" target="_blank"><span class="text-dark">小孙不够睡</span><small class="ml-1x">AI Engineer &amp; Software Developer &amp; Big Data Scientist</small></a></h3>
+        <div>PhD Student @ Hong Kong Polytechnic University</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2024/08/01/%E7%A7%8B%E6%8B%9B%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/" title="经验分享-应届生如何在秋招拿下多个年薪50w的offer"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>$</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>Maybe you could buy me a cup of coffee.</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open alipay app scan this qrcode, buy me a coffee!</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open wechat app scan this qrcode, buy me a coffee!</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> alipay</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> wechat payment</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/Stephen-SMJ" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2024 Sun Maojun
+        
+<!--        <div class="publishby">-->
+<!--        	copyright.theme_by <a href="https://github.com/cofess" target="_blank"> cofess </a>copyright.base_on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.-->
+<!--        </div>-->
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: 'IOO8LG95uLVEj8pH7y8rEB3n-gzGzoHsz',
+    appKey: 'PCqPCzTR2b9ttcHbt6ZP3HId',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
