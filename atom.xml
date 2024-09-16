@@ -152,13 +152,13 @@
   </entry>
   
   <entry>
-    <title>手推神经网络前向与反向传播</title>
+    <title>Calculate Forward Propagation and Back Propagation in Neural Networks</title>
     <link href="https://stephen-smj.tech/2023/02/28/Forward%20Propagation%20and%20Back%20Propagation/"/>
     <id>https://stephen-smj.tech/2023/02/28/Forward%20Propagation%20and%20Back%20Propagation/</id>
     <published>2023-02-28T10:02:21.000Z</published>
-    <updated>2024-07-07T08:55:54.000Z</updated>
+    <updated>2024-09-16T09:19:03.222Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="Forward-Propagation-and-Back-Propagation"><a href="#Forward-Propagation-and-Back-Propagation" class="headerlink" title="Forward Propagation and Back Propagation"></a>Forward Propagation and Back Propagation</h1><p><img src="https://gist.github.com/assets/67999981/c9633ffa-c700-49c3-a1dd-e96aabd1a802" alt="神经网络"></p>]]></content>
+    <content type="html"><![CDATA[<h1 id="Forward-Propagation-and-Back-Propagation"><a href="#Forward-Propagation-and-Back-Propagation" class="headerlink" title="Forward Propagation and Back Propagation"></a>Forward Propagation and Back Propagation</h1><p><img src="https://private-user-images.githubusercontent.com/67999981/346320748-c9633ffa-c700-49c3-a1dd-e96aabd1a802.jpg?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MjY0Nzg2MDAsIm5iZiI6MTcyNjQ3ODMwMCwicGF0aCI6Ii82Nzk5OTk4MS8zNDYzMjA3NDgtYzk2MzNmZmEtYzcwMC00OWMzLWExZGQtZTk2YWFiZDFhODAyLmpwZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDA5MTYlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwOTE2VDA5MTgyMFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTY2NDQ3OTAwNzYxMjI2M2Y2Yjk0NDYzNmM4YTMwNGY3OTdkYTc2Nzc3ZjVlYjQzNTE4N2Q4NmYxOTZlODQ0YWUmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.du0VdaR06E-3hemJgzmVf-6BrwZq37NncpDRH238g1c" alt="神经网络"></p>]]></content>
     
     
       
