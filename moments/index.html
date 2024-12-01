@@ -49,8 +49,8 @@
 <meta property="og:image" content="https://stephen-smj.tech/moments/pics/IMG_20240725_161443.jpg">
 <meta property="og:image" content="https://stephen-smj.tech/moments/pics/retouch_2023021415014649.jpg">
 <meta property="og:image" content="https://stephen-smj.tech/moments/pics/retouch_2023021416192695.jpg">
-<meta property="article:published_time" content="2024-09-30T08:57:26.208Z">
-<meta property="article:modified_time" content="2024-09-30T08:57:26.208Z">
+<meta property="article:published_time" content="2024-12-01T07:56:30.353Z">
+<meta property="article:modified_time" content="2024-12-01T07:56:30.353Z">
 <meta property="article:author" content="Sun Maojun">
 <meta property="article:tag" content="Blog">
 <meta name="twitter:card" content="summary">
@@ -624,6 +624,20 @@
             }
             modal.style.display = "none";
         }
+      var imgElement = document.createElement("img");
+      imgElement.src = "https://github-production-user-asset-6210df.s3.amazonaws.com/67999981/391314103-2de39d3b-ff60-449e-b3a9-9de2c6358172.gif?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20241201%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20241201T075328Z&X-Amz-Expires=300&X-Amz-Signature=403cb41db1cc78f0da5fa2f47505b9b0c37ca9dbc0744fc9d7fc8dba1d8c9e8d&X-Amz-SignedHeaders=host"
+      var parentElement = document.querySelectorAll(".slimContent")[2]; 
+      var firstChildElement = parentElement.firstChild;
+      // console.log(parentElement)
+      parentElement.insertBefore(imgElement, firstChildElement);
+      //https://github-production-user-asset-6210df.s3.amazonaws.com/67999981/391314103-2de39d3b-ff60-449e-b3a9-9de2c6358172.gif?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20241201%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20241201T075328Z&X-Amz-Expires=300&X-Amz-Signature=403cb41db1cc78f0da5fa2f47505b9b0c37ca9dbc0744fc9d7fc8dba1d8c9e8d&X-Amz-SignedHeaders=host
+      var visitor_dom = document.createElement("a");
+      visitor_dom.href = "https://info.flagcounter.com/cV14";
+      var visitor = document.createElement("img");
+      visitor.src = "https://s11.flagcounter.com/map/cV14/size_s/txt_000000/border_FFFFFF/pageviews_1/viewers_0/flags_0/";
+      visitor.style.border = "0";
+      visitor_dom.appendChild(visitor);
+      parentElement.appendChild(visitor_dom);
     </script>
 </body>
   </div>
