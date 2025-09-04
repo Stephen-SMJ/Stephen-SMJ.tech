@@ -30,8 +30,8 @@
 <meta property="og:image" content="https://s2.loli.net/2024/11/29/bzBoHLN6ESAWxKh.png">
 <meta property="og:image" content="https://s2.loli.net/2024/11/29/nEJidjPyrYsIDf6.png">
 <meta property="og:image" content="https://s11.flagcounter.com/map/cV14/size_s/txt_FF1900/border_FFFFFF/pageviews_1/viewers_0/flags_0/">
-<meta property="article:published_time" content="2025-08-31T16:21:05.436Z">
-<meta property="article:modified_time" content="2025-08-31T16:21:05.436Z">
+<meta property="article:published_time" content="2025-09-04T06:21:56.060Z">
+<meta property="article:modified_time" content="2025-09-04T06:21:56.060Z">
 <meta property="article:author" content="Sun Maojun">
 <meta property="article:tag" content="Blog">
 <meta name="twitter:card" content="summary">
@@ -395,25 +395,28 @@
   </header>
   <div class="article-body">
     <style>
-  /* .article-header{
+/* .article-header{
 
-    font-family: Times New Roman
-  } */
-  h1[itemprop="title"]{
+  font-family: Times New Roman
+} */
+h1[itemprop="title"] {
     font-weight: bolder;
-    border-bottom: none;  /* 1像素宽的灰色实线 */
-    
-  }
-  h1{
+    border-bottom: none; /* 1像素宽的灰色实线 */
+
+}
+
+h1 {
     font-weight: normal;
     /* margin-top: 30px; */
-    border-bottom: 1px solid #ddd;  /* 1像素宽的灰色实线 */
+    border-bottom: 1px solid #ddd; /* 1像素宽的灰色实线 */
     padding-bottom: 6px;
-  }
-  h1:not(:first-of-type) {
+}
+
+h1:not(:first-of-type) {
     margin-top: 35px;
-  }
-  .translate{
+}
+
+.translate {
     position: absolute;
     right: 10px;
     font-size: 18px;
@@ -424,50 +427,59 @@
     border: 1px solid lightgray;
     border-radius: 4px;
     padding: 1.5px 8px;
-  }
-  .main div {
+}
+
+.main div {
     font-size: 17px;
     /* font-family: Times New Roman */
-  }
+}
 
-  .main a, .slimContent a {
+.main a, .slimContent a {
     color: #3d89ea;
-  }
+}
 
-  .ie_block{
-    display: flex; 
+.ie_block {
+    display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-  .ie_title{
-    font-size: 19px; 
+}
+
+.ie_title {
+    font-size: 19px;
     font-weight: bolder;
-  }
-  .ie_title a{
+}
+
+.ie_title a {
     color: black;
-  }
-  .ie_position{
+}
+
+.ie_position {
     flex-grow: 1;
     text-align: center;
-  }
-  .ie_time{
+}
+
+.ie_time {
     text-align: right;
     float: right;
-    font-style:italic
-  }
-  .ie_ptitle{
+    font-style: italic
+}
+
+.ie_ptitle {
     margin-bottom: 6px;
-  }
-  .ie_ptitle strong{
+}
+
+.ie_ptitle strong {
     font-size: 17px;
-  }
-  .awards{
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-  }
-  /* style for papers */
-  .paper {
+}
+
+.awards {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* style for papers */
+.paper {
     margin-bottom: 20px;
     display: flex; /* 默认使用 Flex 布局 */
     /*align-items: flex-start; !* 确保内容顶部对齐 *!*/
@@ -475,12 +487,13 @@
     padding-left: 25px;
     position: relative;
 
-  }
-  .paper strong{
+}
+
+.paper strong {
     font-size: 18px
-  }
-  
-  .paper .fig {
+}
+
+.paper .fig {
     flex: 0 0 25%; /* 默认占用20%的宽度 */
     margin-right: 15px;
     display: flex; /* 使用 Flex 布局 */
@@ -488,89 +501,161 @@
     align-items: center; /* 垂直居中 */
     position: relative; /* 关键：作为 label-box 的定位参考 */
     display: inline-block; /* 可选，确保与图片大小匹配 */
-  }
-  
-  .paper .fig img {
-      max-width: 100%; /* 确保图片宽度适应容器 */
-      height: auto; /* 保持图片比例 */
-  }
+}
 
-  .label-box {
-      position: absolute;
-      top: 5px;   /* 适当调整以靠近图片边缘 */
-      left: -10px;
-      background-color: #004c99;
-      color: white;
-      padding: 2px 6px;
-      font-weight: bold;
-      border-radius: 3px;
-      font-size: 16px !important;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      font-family: sans-serif;
-      z-index: 2; /* 确保覆盖在图片上面 */
-  }
-  
-  .paper .txt {
-      flex: 1; /* 默认占用剩余宽度 */
-      text-align: left; /* 确保文字左对齐 */
-      border-bottom: 1px solid #ddd;  /* 1像素宽的灰色实线 */
-      padding-bottom: 10px;
-  }
-  .paper .author{
+.paper .fig img {
+    max-width: 100%; /* 确保图片宽度适应容器 */
+    height: auto; /* 保持图片比例 */
+}
+
+.label-box {
+    position: absolute;
+    top: 5px; /* 适当调整以靠近图片边缘 */
+    left: -10px;
+    background-color: #004c99;
+    color: white;
+    padding: 2px 6px;
+    font-weight: bold;
+    border-radius: 3px;
+    font-size: 16px !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    font-family: sans-serif;
+    z-index: 2; /* 确保覆盖在图片上面 */
+}
+
+.paper .txt {
+    flex: 1; /* 默认占用剩余宽度 */
+    text-align: left; /* 确保文字左对齐 */
+    border-bottom: 1px solid #ddd; /* 1像素宽的灰色实线 */
+    padding-bottom: 10px;
+}
+
+.paper .author {
     font-family: Didot, serif;
-  }
-  
-  .paper .first {
-      font-weight: bold;
-      text-decoration: underline;
-  }
+}
 
-  .paper:last-of-type {
+.paper .first {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.paper:last-of-type {
     margin-bottom: 50px !important; /* 调整间距大小 */
-  }
-  
-  .btn {
-      background-color: white;
-      color: black !important;
-      border: 1.5px solid lightgray;
-      padding: 2px 6px;
-      font-family: Didot, serif;
-      font-weight: bold;
-      font-size: 15px;
-      border-radius: 4px;
-      margin: 4px auto;
-      display: inline-block;
-      text-align: center;
-  }
-  
-  .doi {
-      font-family: Didot, serif;
-      font-style: italic;
-  }
-  
-  /* 响应式布局：当屏幕宽度小于768px（例如手机屏幕）时 */
-  @media (max-width: 768px) {
-      .paper {
-          flex-direction: column; /* 改为垂直排列 */
-      }
-  
-      .paper .fig {
-          flex: 0 0 auto; /* 去除固定宽度 */
-          margin: 15px 0 0 0; /* 在文字下面添加间距 */
-          /*text-align: center; !* 让图片居中 *!*/
-      }
-  
-      .paper .fig img {
-          max-width: 50%; /* 缩小图片宽度到70% */
-          height: auto; /* 保持比例 */
-      }
-  
-      .paper .txt {
-          flex: 0 0 auto; /* 内容宽度自适应 */
-          margin-bottom: 10px; /* 增加文字与图片的间距 */
-          text-align: left; /* 保持左对齐 */
-      }
+}
+
+.btn {
+    background-color: white;
+    color: black !important;
+    border: 1.5px solid lightgray;
+    padding: 2px 6px;
+    font-family: Didot, serif;
+    font-weight: bold;
+    font-size: 15px;
+    border-radius: 4px;
+    margin: 4px auto;
+    display: inline-block;
+    text-align: center;
+}
+
+.doi {
+    font-family: Didot, serif;
+    font-style: italic;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 700px;
+    border-radius: 8px;
+    position: relative;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.citation-text {
+    background-color: #f5f5f5;
+    padding: 15px;
+    border-radius: 5px;
+    font-family: monospace;
+    white-space: pre-wrap;
+    overflow-x: auto;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.copy-btn {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #004c99;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.copy-btn:hover {
+    background-color: #003366;
+}
+
+/* 响应式布局：当屏幕宽度小于768px（例如手机屏幕）时 */
+@media (max-width: 768px) {
+    .paper {
+        flex-direction: column; /* 改为垂直排列 */
     }
+
+    .paper .fig {
+        flex: 0 0 auto; /* 去除固定宽度 */
+        margin: 15px 0 0 0; /* 在文字下面添加间距 */
+        /*text-align: center; !* 让图片居中 *!*/
+    }
+
+    .paper .fig img {
+        max-width: 50%; /* 缩小图片宽度到70% */
+        height: auto; /* 保持比例 */
+    }
+
+    .paper .txt {
+        flex: 0 0 auto; /* 内容宽度自适应 */
+        margin-bottom: 10px; /* 增加文字与图片的间距 */
+        text-align: left; /* 保持左对齐 */
+    }
+
+    .modal-content {
+        width: 90%;
+        margin: 20% auto;
+    }
+
+}
 
 </style>
 
@@ -600,13 +685,13 @@
 <li>I am happy to announce that I will pursue a PhD degree at Hong Kong Polytechnic University in September 2024. My research interests include Large Language Model, Multi-agent Collaboration, Diffusion Model, etc. Welcome like-minded friends for discussions 😃. <span class="ie_time">May 16, 2024</span></li>
 <li>My fans exceed 1000 on <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44785351?type=blog">CSDN</a> 🔥. <span class="ie_time">December, 2023</span></li>
 </ul>
-<h1 id="Papers-amp-Manuscripts📰"><a href="#Papers-amp-Manuscripts📰" class="headerlink" title="Papers &amp; Manuscripts📰"></a>Papers &amp; Manuscripts📰</h1><div class="paper"><div class="fig"><a target="_blank" rel="noopener" href="https://www.tandfonline.com/doi/full/10.1080/01621459.2025.2510000"><img src="lambda.gif" alt=""></a><div class="label-box">JASA</div></div> <div class="txt"><strong>LAMBDA: A Large Model Based Data Agent</strong> <div class="author"> <span class="first">Maojun Sun</span>, Ruijian Han, Binyan Jiang, Houduo Qi, Defeng Sun, Yancheng Yuan*, and Jian Huang*. </div><span class="doi">Accepted. Journal of the American Statistical Association, 2025. (Top Journal)</span> <br><a target="_blank" rel="noopener" href="https://doi.org/10.1080/01621459.2025.2510000" class="btn">Paper</a> <a target="_blank" rel="noopener" href="https://www.polyu.edu.hk/ama/cmfai/lambda.html" class="btn">Page</a> <a target="_blank" rel="noopener" href="https://github.com/Stephen-SMJ/LAMBDA" class="btn">Code</a> <a target="_blank" rel="noopener" href="https://ama-cmfai.github.io/LAMBDA-Docs/#/" class="btn">Docs</a></div></div>
+<h1 id="Papers-amp-Manuscripts📰"><a href="#Papers-amp-Manuscripts📰" class="headerlink" title="Papers &amp; Manuscripts📰"></a>Papers &amp; Manuscripts📰</h1><div class="paper"><div class="fig"><a target="_blank" rel="noopener" href="https://www.tandfonline.com/doi/full/10.1080/01621459.2025.2510000"><img src="lambda.gif" alt=""></a><div class="label-box">JASA</div></div> <div class="txt"><strong>LAMBDA: A Large Model Based Data Agent</strong> <div class="author"> <span class="first">Maojun Sun</span>, Ruijian Han, Binyan Jiang, Houduo Qi, Defeng Sun, Yancheng Yuan*, and Jian Huang*. </div><span class="doi">Accepted. Journal of the American Statistical Association, 2025. (Top Journal)</span> <br><a target="_blank" rel="noopener" href="https://doi.org/10.1080/01621459.2025.2510000" class="btn">Paper</a> <a target="_blank" rel="noopener" href="https://www.polyu.edu.hk/ama/cmfai/lambda.html" class="btn">Page</a> <a target="_blank" rel="noopener" href="https://github.com/Stephen-SMJ/LAMBDA" class="btn">Code</a> <a target="_blank" rel="noopener" href="https://ama-cmfai.github.io/LAMBDA-Docs/#/" class="btn">Docs</a><button class="btn citation-btn" data-paper="lambda">Cite</button></div></div>
 
-<div class="paper"><div class="fig"><a href="https://arxiv.org/abs/2412.14222" target="_blank"><img src="https://s2.loli.net/2025/06/16/xZME7sPSmGktQIp.png" ></a><div class="label-box">TAS</div></div> <div class="txt"><strong>A Survey on Large Language Model-based Agents for Statistics and Data Science</strong><div class="author"><span class="first">Maojun Sun</span>, Ruijian Han, Binyan Jiang, Houduo Qi, Defeng Sun, Yancheng Yuan*, and Jian Huang*.</div><span class="doi">Accepted. The American Statistician, 2025. (JCR Q1)</span> <br><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2412.14222" class="btn">Paper</a> <a target="_blank" rel="noopener" href="https://github.com/Stephen-SMJ/Reading-List-of-LLM-Based-Data-Science-Agent" class="btn">Repository</a></div></div>
+<div class="paper"><div class="fig"><a href="https://arxiv.org/abs/2412.14222" target="_blank"><img src="https://s2.loli.net/2025/06/16/xZME7sPSmGktQIp.png" ></a><div class="label-box">TAS</div></div> <div class="txt"><strong>A Survey on Large Language Model-based Agents for Statistics and Data Science</strong><div class="author"><span class="first">Maojun Sun</span>, Ruijian Han, Binyan Jiang, Houduo Qi, Defeng Sun, Yancheng Yuan*, and Jian Huang*.</div><span class="doi">Accepted. The American Statistician, 2025. (JCR Q1)</span> <br><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2412.14222" class="btn">Paper</a> <a target="_blank" rel="noopener" href="https://github.com/Stephen-SMJ/Reading-List-of-LLM-Based-Data-Science-Agent" class="btn">Repository</a><button class="btn citation-btn" data-paper="survey">Cite</button></div></div>
 
-<div class="paper"><div class="fig"><a href="https://arxiv.org/abs/2406.02350" target="_blank"><img src="https://s2.loli.net/2024/11/29/bzBoHLN6ESAWxKh.png" ></a></div> <div class="txt"><strong>LlamaCare: A Large Medical Language Model for Enhancing Healthcare Knowledge Sharing</strong> <div class="author"> <span class="first">Maojun Sun</span>. </div> <span class="doi">Technical Report. arXiv preprint arXiv:2406.02350, 2024.</span> <br><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2406.02350" class="btn">Paper</a> <a target="_blank" rel="noopener" href="https://github.com/Stephen-SMJ/LLamaCare" class="btn">Code</a> <a target="_blank" rel="noopener" href="https://huggingface.co/Stephen-smj/LlamaCare" class="btn">HuggingFace</a></div></div>
+<div class="paper"><div class="fig"><a href="https://arxiv.org/abs/2406.02350" target="_blank"><img src="https://s2.loli.net/2024/11/29/bzBoHLN6ESAWxKh.png" ></a></div> <div class="txt"><strong>LlamaCare: A Large Medical Language Model for Enhancing Healthcare Knowledge Sharing</strong> <div class="author"> <span class="first">Maojun Sun</span>. </div> <span class="doi">Technical Report. arXiv preprint arXiv:2406.02350, 2024.</span> <br><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2406.02350" class="btn">Paper</a> <a target="_blank" rel="noopener" href="https://github.com/Stephen-SMJ/LLamaCare" class="btn">Code</a> <a target="_blank" rel="noopener" href="https://huggingface.co/Stephen-smj/LlamaCare" class="btn">HuggingFace</a><button class="btn citation-btn" data-paper="llamacare">Cite</button></div></div>
 
-<div class="paper"><div class="fig"><a href="https://ieeexplore.ieee.org/abstract/document/9797518" target="_blank"><img src="https://s2.loli.net/2024/11/29/nEJidjPyrYsIDf6.png" ></a></div> <div class="txt"><strong>Data Enhancement for Melanoma Classification</strong>  <div class="author"><span class="first">Maojun Sun</span>, Anxing Jiang, and Zixiong Li.</div><span class="doi">2021 2nd International Conference on Artificial Intelligence and Computer Engineering.</span> <br><a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/abstract/document/9797518" class="btn">Paper</a> <a target="_blank" rel="noopener" href="https://github.com/Stephen-SMJ/Melanoma_Classification" class="btn">Code</a></div></div>
+<div class="paper"><div class="fig"><a href="https://ieeexplore.ieee.org/abstract/document/9797518" target="_blank"><img src="https://s2.loli.net/2024/11/29/nEJidjPyrYsIDf6.png" ></a></div> <div class="txt"><strong>Data Enhancement for Melanoma Classification</strong>  <div class="author"><span class="first">Maojun Sun</span>, Anxing Jiang, and Zixiong Li.</div><span class="doi">2021 2nd International Conference on Artificial Intelligence and Computer Engineering.</span> <br><a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/abstract/document/9797518" class="btn">Paper</a> <a target="_blank" rel="noopener" href="https://github.com/Stephen-SMJ/Melanoma_Classification" class="btn">Code</a><button class="btn citation-btn" data-paper="melanoma">Cite</button></div></div>
 
 <h1 id="Research-amp-Industry-Experiences🚀"><a href="#Research-amp-Industry-Experiences🚀" class="headerlink" title="Research &amp; Industry Experiences🚀"></a>Research &amp; Industry Experiences🚀</h1><ul>
 <li><div class="ie_block">
@@ -739,8 +824,8 @@
 </div></li>
 </ul>
 <h1 id="Teaching-Services👨‍🏫"><a href="#Teaching-Services👨‍🏫" class="headerlink" title="Teaching Services👨‍🏫"></a>Teaching Services👨‍🏫</h1><ul>
-<li>Teaching Assistant of DSAI5101, STATISTICAL DATA MINING. <span class="ie_time"> 25/26 Semester 1</span></li>
-<li>Teaching Assistant of <a target="_blank" rel="noopener" href="https://www.polyu.edu.hk/ama/study/mathematics-learning-support-centre/">Mathematics Learning Support Centre</a>, Regular Help Session. <span class="ie_time">24/25 Semester 1</span></li>
+<li>DSAI5101 Statistical Data Mining, Teaching Assistant. <span class="ie_time"> 25/26 Semester 1</span></li>
+<li><a target="_blank" rel="noopener" href="https://www.polyu.edu.hk/ama/study/mathematics-learning-support-centre/">Mathematics Learning Support Centre</a>, Regular Help Session, Teaching Assistant. <span class="ie_time">24/25 Semester 1</span></li>
 </ul>
 <h1 id="Talks📚"><a href="#Talks📚" class="headerlink" title="Talks📚"></a>Talks📚</h1><ul>
 <li>LAMBDA: A Large Model Based Data Agent @ <a target="_blank" rel="noopener" href="http://tianyuan.amss.ac.cn/ztyt/info/2024/145320.html">Seminar of Mathematical Foundations of AI</a>, Tianyuan Mathematics Research Center, Kunming, Yunan. <span class="ie_time">Sep 27, 2024</span></li>
@@ -756,34 +841,145 @@
 <li>Understanding of components of <strong>big data</strong> framework such as Hadoop, Hive, Spark and Flink; understanding of ETL process, data warehousing, and common data analysis tools such as Tableau. </li>
 </ul>
 <h1 id="Others💌"><a href="#Others💌" class="headerlink" title="Others💌"></a>Others💌</h1><ul>
-<li>🎓 Research interests please contact me by <a href="mailto:&#x6d;&#x6a;&#x2e;&#x73;&#x75;&#x6e;&#64;&#99;&#x6f;&#x6e;&#110;&#x65;&#x63;&#x74;&#x2e;&#x70;&#111;&#x6c;&#121;&#x75;&#46;&#x68;&#x6b;">&#x6d;&#x6a;&#x2e;&#x73;&#x75;&#x6e;&#64;&#99;&#x6f;&#x6e;&#110;&#x65;&#x63;&#x74;&#x2e;&#x70;&#111;&#x6c;&#121;&#x75;&#46;&#x68;&#x6b;</a></li>
+<li>🎓 Research interests please contact me by <a href="mailto:&#x6d;&#106;&#x2e;&#115;&#x75;&#x6e;&#x40;&#99;&#111;&#x6e;&#x6e;&#x65;&#x63;&#116;&#x2e;&#x70;&#x6f;&#108;&#121;&#x75;&#x2e;&#x68;&#x6b;">&#x6d;&#106;&#x2e;&#115;&#x75;&#x6e;&#x40;&#99;&#111;&#x6e;&#x6e;&#x65;&#x63;&#116;&#x2e;&#x70;&#x6f;&#108;&#121;&#x75;&#x2e;&#x68;&#x6b;</a></li>
 </ul>
 <!-- <a target="_blank" rel="noopener" href="https://info.flagcounter.com/cV14"><img src="https://s11.flagcounter.com/map/cV14/size_s/txt_FF1900/border_FFFFFF/pageviews_1/viewers_0/flags_0/" alt="Flag Counter" border="0"></a> -->
+<div id="citationModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>BibTeX Citation</h3>
+            <div class="citation-text" id="citationText"></div>
+            <button class="copy-btn" id="copyBtn">Copy to Clipboard</button>
+        </div>
+</div>
+
 
 
 <script>
-  var imgElement = document.createElement("img");
-  imgElement.src = "personal.jpeg"  //"image.jpg";
-  var parentElement = document.querySelectorAll(".slimContent")[2]; 
-  var firstChildElement = parentElement.firstChild;
-  // console.log(parentElement)
-  parentElement.insertBefore(imgElement, firstChildElement);
-  //https://github-production-user-asset-6210df.s3.amazonaws.com/67999981/391314103-2de39d3b-ff60-449e-b3a9-9de2c6358172.gif?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20241201%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20241201T075328Z&X-Amz-Expires=300&X-Amz-Signature=403cb41db1cc78f0da5fa2f47505b9b0c37ca9dbc0744fc9d7fc8dba1d8c9e8d&X-Amz-SignedHeaders=host
+  const citations = {
+    lambda: `@article{sun2024lambda,
+        author = {Maojun Sun and Ruijian Han and Binyan Jiang and Houduo Qi and Defeng Sun and Yancheng Yuan and Jian Huang and},
+        title = {LAMBDA: A Large Model Based Data Agent},
+        journal = {Journal of the American Statistical Association},
+        volume = {0},
+        number = {ja},
+        pages = {1--20},
+        year = {2025},
+        publisher = {ASA Website},
+        doi = {10.1080/01621459.2025.2510000},
+        URL = {https://doi.org/10.1080/01621459.2025.2510000},
+        eprint = {https://doi.org/10.1080/01621459.2025.2510000}
+}`,
+    survey: `@article{sun2024survey,
+  title={A Survey on Large Language Model-based Agents for Statistics and Data Science},
+  author={Sun, Maojun and Han, Ruijian and Jiang, Binyan and Qi, Houduo and Sun, Defeng and Yuan, Yancheng and Huang, Jian},
+  journal={arXiv preprint arXiv:2412.14222},
+  year={2024}
+}`,
+    llamacare: `@article{sun2024llamacare,
+  title={Llamacare: A large medical language model for enhancing healthcare knowledge sharing},
+  author={Sun, Maojun},
+  journal={arXiv preprint arXiv:2406.02350},
+  year={2024}
+}`,
+    melanoma: `@inproceedings{sun2021data,
+  title={Data enhancement for melanoma classification},
+  author={Sun, Maojun and Jiang, Anxing and Li, Zixiong},
+  booktitle={2021 2nd International Conference on Artificial Intelligence and Computer Engineering (ICAICE)},
+  pages={149--155},
+  year={2021},
+  organization={IEEE}
+}`
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+            // 获取弹窗元素
+            const modal = document.getElementById("citationModal");
+            const citationText = document.getElementById("citationText");
+            const copyBtn = document.getElementById("copyBtn");
+            
+            // 为所有Citation按钮添加点击事件
+            document.querySelectorAll('.citation-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const paperId = this.getAttribute('data-paper');
+                    if (citations[paperId]) {
+                        citationText.textContent = citations[paperId];
+                        modal.style.display = "block";
+                        // 添加动画类
+                        setTimeout(() => {
+                            modal.classList.add('show');
+                        }, 10);
+                    }
+                });
+            });
+            // 关闭弹窗函数
+            function closeModal() {
+                modal.classList.remove('show');
+                setTimeout(() => {
+                    modal.style.display = "none";
+                    copyBtn.classList.remove('copied');
+                    copyBtn.textContent = "Copy to Clipboard";
+                }, 300);
+            }
+
+            // 关闭按钮事件
+            document.querySelector('.close').addEventListener('click', closeModal);
+
+            // 点击弹窗外部关闭
+            modal.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // 复制到剪贴板功能
+            copyBtn.addEventListener('click', function() {
+                navigator.clipboard.writeText(citationText.textContent)
+                    .then(() => {
+                        copyBtn.textContent = "Copied!";
+                        copyBtn.classList.add('copied');
+                        setTimeout(() => {
+                            copyBtn.textContent = "Copy to Clipboard";
+                            copyBtn.classList.remove('copied');
+                        }, 2000);
+                    })
+                    .catch(err => {
+                        console.error('Failed to copy: ', err);
+                        alert('Failed to copy text. Please try again.');
+                    });
+            });
+
+            // ESC键关闭弹窗
+            document.addEventListener('keydown', function(event) {
+                if (event.key === "Escape" && modal.style.display === "block") {
+                    closeModal();
+                }
+            });
+        });
 
 
-  var visitor_dom = document.createElement("a");
-  visitor_dom.href = "https://info.flagcounter.com/cV14";
+var imgElement = document.createElement("img");
+imgElement.src = "personal.jpeg"  //"image.jpg";
+var parentElement = document.querySelectorAll(".slimContent")[2];
+var firstChildElement = parentElement.firstChild;
+// console.log(parentElement)
+parentElement.insertBefore(imgElement, firstChildElement);
+//https://github-production-user-asset-6210df.s3.amazonaws.com/67999981/391314103-2de39d3b-ff60-449e-b3a9-9de2c6358172.gif?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20241201%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20241201T075328Z&X-Amz-Expires=300&X-Amz-Signature=403cb41db1cc78f0da5fa2f47505b9b0c37ca9dbc0744fc9d7fc8dba1d8c9e8d&X-Amz-SignedHeaders=host
 
-  var visitor = document.createElement("img");
-  visitor.src = "https://s11.flagcounter.com/map/cV14/size_s/txt_000000/border_FFFFFF/pageviews_1/viewers_0/flags_0/";
 
-  // imgElement.width = 256;
-  // imgElement.height = 128;
-  // imgElement.alt = "Map";
-  visitor.style.border = "0";
+var visitor_dom = document.createElement("a");
+visitor_dom.href = "https://info.flagcounter.com/cV14";
 
-  visitor_dom.appendChild(visitor);
-  parentElement.appendChild(visitor_dom);
+var visitor = document.createElement("img");
+visitor.src = "https://s11.flagcounter.com/map/cV14/size_s/txt_000000/border_FFFFFF/pageviews_1/viewers_0/flags_0/";
+
+// imgElement.width = 256;
+// imgElement.height = 128;
+// imgElement.alt = "Map";
+visitor.style.border = "0";
+
+visitor_dom.appendChild(visitor);
+parentElement.appendChild(visitor_dom);
   
   
   
