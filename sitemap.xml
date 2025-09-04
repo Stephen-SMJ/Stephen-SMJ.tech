@@ -524,25 +524,16 @@
   </url>
   
   <url>
-    <loc>https://stephen-smj.tech/experience/index.html</loc>
-    
-    <lastmod>2024-07-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://stephen-smj.tech/group/index.html</loc>
-    
-    <lastmod>2024-07-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://stephen-smj.tech/categories/index.html</loc>
+    
+    <lastmod>2024-07-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://stephen-smj.tech/experience/index.html</loc>
     
     <lastmod>2024-07-05</lastmod>
     
@@ -560,7 +551,7 @@
   </url>
   
   <url>
-    <loc>https://stephen-smj.tech/tags/index.html</loc>
+    <loc>https://stephen-smj.tech/group/index.html</loc>
     
     <lastmod>2024-07-05</lastmod>
     
@@ -570,6 +561,15 @@
   
   <url>
     <loc>https://stephen-smj.tech/join/index.html</loc>
+    
+    <lastmod>2024-07-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://stephen-smj.tech/tags/index.html</loc>
     
     <lastmod>2024-07-05</lastmod>
     
