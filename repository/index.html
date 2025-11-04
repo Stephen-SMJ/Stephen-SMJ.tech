@@ -362,6 +362,195 @@
 <script type="text/template" id="error-template">
   <h3>加载失败</h3><p>请刷新或稍后再试...</p>
 </script>
+
+<!-- 合并并渲染 repos.json 到主题已有列表的脚本（替换旧脚本） -->
+<script>
+(function () {
+  const DATA_URL = '/repos.json';
+
+  function escapeHtml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function renderTemplate(tpl, data) {
+    return tpl.replace(/\{\%\=([\s\S]+?)\%\}/g, function (m, key) {
+      key = key.trim();
+      const val = (key in data) ? data[key] : '';
+      return escapeHtml(val);
+    });
+  }
+
+  function formatDate(isoStr) {
+    if (!isoStr) return '';
+    const d = new Date(isoStr);
+    if (isNaN(d)) return escapeHtml(isoStr);
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  }
+
+  // 从现有列表 li 提取 star / html / raw html
+  function readExistingItems() {
+    const result = [];
+    const ul = document.querySelector('.repo-list');
+    if (!ul) return { ul: null, items: [] };
+    const lis = Array.from(ul.children).filter(n => n.tagName && n.tagName.toLowerCase() === 'li');
+    lis.forEach(li => {
+      // try to extract stars number from .meta-star text
+      let stars = 0;
+      const starEl = li.querySelector('.meta-star');
+      if (starEl) {
+        const t = starEl.textContent || '';
+        const m = t.match(/(\d+)/);
+        if (m) stars = parseInt(m[1], 10);
+      }
+      // try to extract full_name from anchor text if exists
+      const a = li.querySelector('.repo-title a') || li.querySelector('a');
+      const full = a ? (a.textContent || '').trim() : '';
+      result.push({
+        source: 'existing',
+        stars: stars,
+        full_name: full,
+        html: li.outerHTML
+      });
+    });
+    return { ul: ul, items: result };
+  }
+
+  // 根据 list-template 生成新的 li HTML
+  function makeLiFromRepo(tpl, repo) {
+    const item = {
+      name: repo.name || repo.full_name || '',
+      clone_url: repo.clone_url || repo.html_url || '#',
+      full_name: repo.full_name || (repo.owner && repo.owner.login ? `${repo.owner.login}/${repo.name}` : repo.name) || repo.name || '',
+      description: repo.description || '',
+      language: repo.language || '',
+      stargazers_count: (typeof repo.stargazers_count === 'number') ? String(repo.stargazers_count) : (repo.stars ? String(repo.stars) : '0'),
+      forks_count: (typeof repo.forks_count === 'number') ? String(repo.forks_count) : (repo.forks ? String(repo.forks) : '0'),
+      updated_at: formatDate(repo.updated_at || repo.pushed_at || '')
+    };
+    return renderTemplate(tpl, item);
+  }
+
+  async function loadAndMerge() {
+    let res;
+    try {
+      res = await fetch(DATA_URL, { cache: 'no-cache' });
+    } catch (err) {
+      return; // 网络或 fetch 不可用，不干扰主题原逻辑
+    }
+    if (!res || !res.ok) return;
+
+    let repos;
+    try {
+      repos = await res.json();
+    } catch (err) {
+      console.error('[repo-merge] parse repos.json failed', err);
+      return;
+    }
+    if (!Array.isArray(repos) || repos.length === 0) return;
+
+    // 取得模板与现有列表
+    const tplEl = document.getElementById('list-template');
+    const tpl = tplEl ? tplEl.innerHTML : null;
+    if (!tpl) return;
+
+    const existing = readExistingItems();
+    const ul = existing.ul || (function createUl() {
+      const u = document.createElement('ul');
+      u.className = 'row repo-list';
+      const container = document.querySelector('.repo-content');
+      if (container) {
+        container.innerHTML = ''; // 清空 blankslate
+        container.appendChild(u);
+      }
+      return u;
+    })();
+
+    // 构造 newItems 列表（包含现有与新的），每项 {key, stars, html, full_name}
+    const newItems = [];
+
+    // push existing items preserving original html
+    existing.items.forEach(it => {
+      newItems.push({
+        key: it.full_name || ('existing-' + Math.random().toString(36).slice(2,8)),
+        stars: (typeof it.stars === 'number' ? it.stars : parseInt(it.stars) || 0),
+        html: it.html,
+        source: 'existing',
+        full_name: it.full_name || ''
+      });
+    });
+
+    // push repos.json items (avoid duplicates by full_name)
+    const seen = new Set(newItems.map(i => i.full_name));
+    repos.forEach(r => {
+      const full = r.full_name || (r.owner && r.owner.login ? `${r.owner.login}/${r.name}` : r.name) || r.name;
+      if (seen.has(full)) return;
+      const liHtml = makeLiFromRepo(tpl, r);
+      const stars = typeof r.stargazers_count === 'number' ? r.stargazers_count : (parseInt(r.stargazers_count) || 0);
+      newItems.push({
+        key: full || ('repo-' + Math.random().toString(36).slice(2,8)),
+        stars: stars,
+        html: liHtml,
+        source: 'repos.json',
+        full_name: full || ''
+      });
+      seen.add(full);
+    });
+
+    // 合并排序（按 stars desc；你可以改成按 updated_at）
+    newItems.sort((a,b) => (b.stars - a.stars) || (a.key > b.key ? 1 : -1));
+
+    // 重建 ul 内容（以保证样式一致且两类项混合）
+    const frag = document.createDocumentFragment();
+    newItems.forEach(it => {
+      // parse HTML string into element
+      const tmp = document.createElement('div');
+      tmp.innerHTML = it.html.trim();
+      const li = tmp.firstElementChild;
+      if (li) frag.appendChild(li);
+    });
+
+    // replace existing list content
+    ul.innerHTML = '';
+    ul.appendChild(frag);
+
+    // 更新计数显示（顶部）
+    const countEl = document.getElementById('repo-count');
+    if (countEl) countEl.textContent = String(newItems.length);
+
+    // 初始化 geopattern（如果有）
+    try {
+      if (typeof GeoPattern !== 'undefined') {
+        document.querySelectorAll('.repo-image.geopattern').forEach(el => {
+          const pid = el.getAttribute('data-pattern-id') || Math.random().toString(36).slice(2, 8);
+          const pattern = GeoPattern.generate(pid);
+          el.style.backgroundImage = pattern.toDataUrl();
+        });
+      }
+    } catch (e) {}
+
+    // 触发事件以便主题其他脚本可响应
+    try {
+      window.dispatchEvent(new CustomEvent('reposMerged', { detail: { count: newItems.length } }));
+    } catch (e) {}
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadAndMerge);
+  } else {
+    loadAndMerge();
+  }
+})();
+</script>
+
 </main>
 
   <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
