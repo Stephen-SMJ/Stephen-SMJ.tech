@@ -5657,7 +5657,7 @@ pre code {
 }
 
 .sidebar .slimContent {
-  padding: 20px;
+  padding: 0px;
 }
 
 .main {
@@ -8136,8 +8136,8 @@ body.okayNav-loaded {
   }
 
   .sidebar .slimContent {
-    padding-right: 25px;
-    padding-left: 25px;
+    padding-right: 0px;
+    padding-left: 0px;
   }
 
   .main {
@@ -8485,8 +8485,8 @@ body.okayNav-loaded {
   }
 
   .sidebar .slimContent {
-    padding-right: 30px;
-    padding-left: 30px;
+    padding-right: 0px;
+    padding-left: 0px;
   }
 
   .main {
