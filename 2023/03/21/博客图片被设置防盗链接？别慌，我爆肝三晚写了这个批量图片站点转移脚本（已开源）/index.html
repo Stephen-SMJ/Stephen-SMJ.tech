@@ -21,7 +21,7 @@
   <meta name="description" content="我个人经常在CSDN上进行写作，前一段时间我选择自己建站，为了省事，我直接使用了CSDN上的图片地址，当你在CSDN上写作时你上传的图片会存储在CSDN的服务器中，可以直接在网页上输入URL访问。但是上周CSDN开始对图片施加防盗链接了，我个人网站上的所有图片全都看不到了，并附上一句话：源站可能有防盗链机制,建议将图片保存下来直接上传。  我最近也把博客地址放到简历里了，一想到hr打开我的网站看到">
 <meta property="og:type" content="article">
 <meta property="og:title" content="博客图片被设置防盗链接？我爆肝三晚写了这个批量图片站点转移脚本（已开源）">
-<meta property="og:url" content="https://stephen-smj.tech/2023/03/21/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87%E8%A2%AB%E8%AE%BE%E7%BD%AE%E9%98%B2%E7%9B%97%E9%93%BE%E6%8E%A5%EF%BC%9F%E5%88%AB%E6%85%8C%EF%BC%8C%E6%88%91%E7%88%86%E8%82%9D%E4%B8%89%E6%99%9A%E5%86%99%E4%BA%86%E8%BF%99%E4%B8%AA%E6%89%B9%E9%87%8F%E5%9B%BE%E7%89%87%E7%AB%99%E7%82%B9%E8%BD%AC%E7%A7%BB%E8%84%9A%E6%9C%AC%EF%BC%88%E5%B7%B2%E5%BC%80%E6%BA%90%EF%BC%89/index.html">
+<meta property="og:url" content="https://blog.stephen-smj.tech/2023/03/21/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87%E8%A2%AB%E8%AE%BE%E7%BD%AE%E9%98%B2%E7%9B%97%E9%93%BE%E6%8E%A5%EF%BC%9F%E5%88%AB%E6%85%8C%EF%BC%8C%E6%88%91%E7%88%86%E8%82%9D%E4%B8%89%E6%99%9A%E5%86%99%E4%BA%86%E8%BF%99%E4%B8%AA%E6%89%B9%E9%87%8F%E5%9B%BE%E7%89%87%E7%AB%99%E7%82%B9%E8%BD%AC%E7%A7%BB%E8%84%9A%E6%9C%AC%EF%BC%88%E5%B7%B2%E5%BC%80%E6%BA%90%EF%BC%89/index.html">
 <meta property="og:site_name" content="小孙不够睡的博客">
 <meta property="og:description" content="我个人经常在CSDN上进行写作，前一段时间我选择自己建站，为了省事，我直接使用了CSDN上的图片地址，当你在CSDN上写作时你上传的图片会存储在CSDN的服务器中，可以直接在网页上输入URL访问。但是上周CSDN开始对图片施加防盗链接了，我个人网站上的所有图片全都看不到了，并附上一句话：源站可能有防盗链机制,建议将图片保存下来直接上传。  我最近也把博客地址放到简历里了，一想到hr打开我的网站看到">
 <meta property="og:locale" content="en_US">
@@ -35,7 +35,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://user-images.githubusercontent.com/67999981/226625933-810ee45f-d662-4b7c-a5c5-55519dae2a83.png">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://stephen-smj.tech/2023/03/21/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87%E8%A2%AB%E8%AE%BE%E7%BD%AE%E9%98%B2%E7%9B%97%E9%93%BE%E6%8E%A5%EF%BC%9F%E5%88%AB%E6%85%8C%EF%BC%8C%E6%88%91%E7%88%86%E8%82%9D%E4%B8%89%E6%99%9A%E5%86%99%E4%BA%86%E8%BF%99%E4%B8%AA%E6%89%B9%E9%87%8F%E5%9B%BE%E7%89%87%E7%AB%99%E7%82%B9%E8%BD%AC%E7%A7%BB%E8%84%9A%E6%9C%AC%EF%BC%88%E5%B7%B2%E5%BC%80%E6%BA%90%EF%BC%89/index.html">
+  <link rel="canonical" href="https://blog.stephen-smj.tech/2023/03/21/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87%E8%A2%AB%E8%AE%BE%E7%BD%AE%E9%98%B2%E7%9B%97%E9%93%BE%E6%8E%A5%EF%BC%9F%E5%88%AB%E6%85%8C%EF%BC%8C%E6%88%91%E7%88%86%E8%82%9D%E4%B8%89%E6%99%9A%E5%86%99%E4%BA%86%E8%BF%99%E4%B8%AA%E6%89%B9%E9%87%8F%E5%9B%BE%E7%89%87%E7%AB%99%E7%82%B9%E8%BD%AC%E7%A7%BB%E8%84%9A%E6%9C%AC%EF%BC%88%E5%B7%B2%E5%BC%80%E6%BA%90%EF%BC%89/index.html">
   
     <link rel="alternate" href="/atom.xml" title="小孙不够睡的博客" type="application/atom+xml">
   
@@ -397,7 +397,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="https://stephen-smj.tech/2023/03/21/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87%E8%A2%AB%E8%AE%BE%E7%BD%AE%E9%98%B2%E7%9B%97%E9%93%BE%E6%8E%A5%EF%BC%9F%E5%88%AB%E6%85%8C%EF%BC%8C%E6%88%91%E7%88%86%E8%82%9D%E4%B8%89%E6%99%9A%E5%86%99%E4%BA%86%E8%BF%99%E4%B8%AA%E6%89%B9%E9%87%8F%E5%9B%BE%E7%89%87%E7%AB%99%E7%82%B9%E8%BD%AC%E7%A7%BB%E8%84%9A%E6%9C%AC%EF%BC%88%E5%B7%B2%E5%BC%80%E6%BA%90%EF%BC%89/" title="博客图片被设置防盗链接？我爆肝三晚写了这个批量图片站点转移脚本（已开源）" target="_blank" rel="external">https://stephen-smj.tech/2023/03/21/博客图片被设置防盗链接？别慌，我爆肝三晚写了这个批量图片站点转移脚本（已开源）/</a>
+      <a href="https://blog.stephen-smj.tech/2023/03/21/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87%E8%A2%AB%E8%AE%BE%E7%BD%AE%E9%98%B2%E7%9B%97%E9%93%BE%E6%8E%A5%EF%BC%9F%E5%88%AB%E6%85%8C%EF%BC%8C%E6%88%91%E7%88%86%E8%82%9D%E4%B8%89%E6%99%9A%E5%86%99%E4%BA%86%E8%BF%99%E4%B8%AA%E6%89%B9%E9%87%8F%E5%9B%BE%E7%89%87%E7%AB%99%E7%82%B9%E8%BD%AC%E7%A7%BB%E8%84%9A%E6%9C%AC%EF%BC%88%E5%B7%B2%E5%BC%80%E6%BA%90%EF%BC%89/" title="博客图片被设置防盗链接？我爆肝三晚写了这个批量图片站点转移脚本（已开源）" target="_blank" rel="external">https://blog.stephen-smj.tech/2023/03/21/博客图片被设置防盗链接？别慌，我爆肝三晚写了这个批量图片站点转移脚本（已开源）/</a>
     </li>
     
     <li class="post-copyright-license">

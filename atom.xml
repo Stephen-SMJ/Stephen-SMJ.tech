@@ -3,11 +3,11 @@
   <title>小孙不够睡的博客</title>
   
   <subtitle>MyBlog</subtitle>
-  <link href="https://stephen-smj.tech/atom.xml" rel="self"/>
+  <link href="https://blog.stephen-smj.tech/atom.xml" rel="self"/>
   
-  <link href="https://stephen-smj.tech/"/>
+  <link href="https://blog.stephen-smj.tech/"/>
   <updated>2024-09-16T15:31:59.785Z</updated>
-  <id>https://stephen-smj.tech/</id>
+  <id>https://blog.stephen-smj.tech/</id>
   
   <author>
     <name>Sun Maojun</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>Understanding Decoding Methods in Large Language Models (LLMs) and Key Parameters</title>
-    <link href="https://stephen-smj.tech/2024/08/05/Decode%20in%20LLM/"/>
-    <id>https://stephen-smj.tech/2024/08/05/Decode%20in%20LLM/</id>
+    <link href="https://blog.stephen-smj.tech/2024/08/05/Decode%20in%20LLM/"/>
+    <id>https://blog.stephen-smj.tech/2024/08/05/Decode%20in%20LLM/</id>
     <published>2024-08-05T12:07:34.000Z</published>
     <updated>2024-09-16T15:31:59.785Z</updated>
     
@@ -34,14 +34,14 @@
     
     
     
-    <category term="Large Language Model" scheme="https://stephen-smj.tech/tags/Large-Language-Model/"/>
+    <category term="Large Language Model" scheme="https://blog.stephen-smj.tech/tags/Large-Language-Model/"/>
     
   </entry>
   
   <entry>
     <title>What is an LLM Agent? A Guide to Large Language Model Agents</title>
-    <link href="https://stephen-smj.tech/2024/07/23/What%20is%20LLM%20Agent/"/>
-    <id>https://stephen-smj.tech/2024/07/23/What%20is%20LLM%20Agent/</id>
+    <link href="https://blog.stephen-smj.tech/2024/07/23/What%20is%20LLM%20Agent/"/>
+    <id>https://blog.stephen-smj.tech/2024/07/23/What%20is%20LLM%20Agent/</id>
     <published>2024-07-23T08:04:38.000Z</published>
     <updated>2024-09-16T15:26:33.288Z</updated>
     
@@ -56,14 +56,14 @@
     
     
     
-    <category term="Large Language Model" scheme="https://stephen-smj.tech/tags/Large-Language-Model/"/>
+    <category term="Large Language Model" scheme="https://blog.stephen-smj.tech/tags/Large-Language-Model/"/>
     
   </entry>
   
   <entry>
     <title>Introduction to Large Language Models (LLMs) and Their Principles</title>
-    <link href="https://stephen-smj.tech/2024/07/09/LLM%20Introduction/"/>
-    <id>https://stephen-smj.tech/2024/07/09/LLM%20Introduction/</id>
+    <link href="https://blog.stephen-smj.tech/2024/07/09/LLM%20Introduction/"/>
+    <id>https://blog.stephen-smj.tech/2024/07/09/LLM%20Introduction/</id>
     <published>2024-07-09T08:04:38.000Z</published>
     <updated>2024-09-16T15:40:37.512Z</updated>
     
@@ -78,14 +78,14 @@
     
     
     
-    <category term="Large Language Model" scheme="https://stephen-smj.tech/tags/Large-Language-Model/"/>
+    <category term="Large Language Model" scheme="https://blog.stephen-smj.tech/tags/Large-Language-Model/"/>
     
   </entry>
   
   <entry>
     <title>Essential PyTorch Syntax for Deep Learning - A Quick Guide</title>
-    <link href="https://stephen-smj.tech/2024/06/23/Pytorch/"/>
-    <id>https://stephen-smj.tech/2024/06/23/Pytorch/</id>
+    <link href="https://blog.stephen-smj.tech/2024/06/23/Pytorch/"/>
+    <id>https://blog.stephen-smj.tech/2024/06/23/Pytorch/</id>
     <published>2024-06-23T03:56:06.000Z</published>
     <updated>2024-09-16T15:40:18.569Z</updated>
     
@@ -100,14 +100,14 @@
     
     
     
-    <category term="Deep learning" scheme="https://stephen-smj.tech/tags/Deep-learning/"/>
+    <category term="Deep learning" scheme="https://blog.stephen-smj.tech/tags/Deep-learning/"/>
     
   </entry>
   
   <entry>
     <title>经验分享-应届生如何在秋招拿下年薪50w的offer</title>
-    <link href="https://stephen-smj.tech/2024/06/01/%E7%A7%8B%E6%8B%9B%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/"/>
-    <id>https://stephen-smj.tech/2024/06/01/%E7%A7%8B%E6%8B%9B%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/</id>
+    <link href="https://blog.stephen-smj.tech/2024/06/01/%E7%A7%8B%E6%8B%9B%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/"/>
+    <id>https://blog.stephen-smj.tech/2024/06/01/%E7%A7%8B%E6%8B%9B%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/</id>
     <published>2024-06-01T07:49:26.000Z</published>
     <updated>2024-12-13T06:34:28.398Z</updated>
     
@@ -123,14 +123,14 @@
     
     
     
-    <category term="Experience" scheme="https://stephen-smj.tech/tags/Experience/"/>
+    <category term="Experience" scheme="https://blog.stephen-smj.tech/tags/Experience/"/>
     
   </entry>
   
   <entry>
     <title>Mastering the Hugging Face Transformers Library - A Quick Introduction</title>
-    <link href="https://stephen-smj.tech/2024/05/25/Transformers/"/>
-    <id>https://stephen-smj.tech/2024/05/25/Transformers/</id>
+    <link href="https://blog.stephen-smj.tech/2024/05/25/Transformers/"/>
+    <id>https://blog.stephen-smj.tech/2024/05/25/Transformers/</id>
     <published>2024-05-25T15:09:34.000Z</published>
     <updated>2024-09-16T15:40:12.095Z</updated>
     
@@ -145,14 +145,14 @@
     
     
     
-    <category term="Deep learning" scheme="https://stephen-smj.tech/tags/Deep-learning/"/>
+    <category term="Deep learning" scheme="https://blog.stephen-smj.tech/tags/Deep-learning/"/>
     
   </entry>
   
   <entry>
     <title>Getting Started with LangChain - A Beginner’s Guide</title>
-    <link href="https://stephen-smj.tech/2024/05/01/Start%20with%20LangChain/"/>
-    <id>https://stephen-smj.tech/2024/05/01/Start%20with%20LangChain/</id>
+    <link href="https://blog.stephen-smj.tech/2024/05/01/Start%20with%20LangChain/"/>
+    <id>https://blog.stephen-smj.tech/2024/05/01/Start%20with%20LangChain/</id>
     <published>2024-05-01T15:09:34.000Z</published>
     <updated>2024-09-16T15:38:26.207Z</updated>
     
@@ -167,14 +167,14 @@
     
     
     
-    <category term="Large Language Model" scheme="https://stephen-smj.tech/tags/Large-Language-Model/"/>
+    <category term="Large Language Model" scheme="https://blog.stephen-smj.tech/tags/Large-Language-Model/"/>
     
   </entry>
   
   <entry>
     <title>Achieve Function Calling and Tool Use in Large Language Models</title>
-    <link href="https://stephen-smj.tech/2024/04/24/Function%20Calling%20in%20LLMs/"/>
-    <id>https://stephen-smj.tech/2024/04/24/Function%20Calling%20in%20LLMs/</id>
+    <link href="https://blog.stephen-smj.tech/2024/04/24/Function%20Calling%20in%20LLMs/"/>
+    <id>https://blog.stephen-smj.tech/2024/04/24/Function%20Calling%20in%20LLMs/</id>
     <published>2024-04-24T10:02:21.000Z</published>
     <updated>2024-07-26T09:40:18.158Z</updated>
     
@@ -189,14 +189,14 @@
     
     
     
-    <category term="Deep learning" scheme="https://stephen-smj.tech/tags/Deep-learning/"/>
+    <category term="Deep learning" scheme="https://blog.stephen-smj.tech/tags/Deep-learning/"/>
     
   </entry>
   
   <entry>
     <title>Introduction to Prompt Engineering in Large Language Models (LLMs)</title>
-    <link href="https://stephen-smj.tech/2024/03/05/Prompt%20engineering/"/>
-    <id>https://stephen-smj.tech/2024/03/05/Prompt%20engineering/</id>
+    <link href="https://blog.stephen-smj.tech/2024/03/05/Prompt%20engineering/"/>
+    <id>https://blog.stephen-smj.tech/2024/03/05/Prompt%20engineering/</id>
     <published>2024-03-05T05:08:34.000Z</published>
     <updated>2024-09-16T15:38:43.844Z</updated>
     
@@ -211,14 +211,14 @@
     
     
     
-    <category term="Large Language Model" scheme="https://stephen-smj.tech/tags/Large-Language-Model/"/>
+    <category term="Large Language Model" scheme="https://blog.stephen-smj.tech/tags/Large-Language-Model/"/>
     
   </entry>
   
   <entry>
     <title>博客图片被设置防盗链接？我爆肝三晚写了这个批量图片站点转移脚本（已开源）</title>
-    <link href="https://stephen-smj.tech/2023/03/21/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87%E8%A2%AB%E8%AE%BE%E7%BD%AE%E9%98%B2%E7%9B%97%E9%93%BE%E6%8E%A5%EF%BC%9F%E5%88%AB%E6%85%8C%EF%BC%8C%E6%88%91%E7%88%86%E8%82%9D%E4%B8%89%E6%99%9A%E5%86%99%E4%BA%86%E8%BF%99%E4%B8%AA%E6%89%B9%E9%87%8F%E5%9B%BE%E7%89%87%E7%AB%99%E7%82%B9%E8%BD%AC%E7%A7%BB%E8%84%9A%E6%9C%AC%EF%BC%88%E5%B7%B2%E5%BC%80%E6%BA%90%EF%BC%89/"/>
-    <id>https://stephen-smj.tech/2023/03/21/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87%E8%A2%AB%E8%AE%BE%E7%BD%AE%E9%98%B2%E7%9B%97%E9%93%BE%E6%8E%A5%EF%BC%9F%E5%88%AB%E6%85%8C%EF%BC%8C%E6%88%91%E7%88%86%E8%82%9D%E4%B8%89%E6%99%9A%E5%86%99%E4%BA%86%E8%BF%99%E4%B8%AA%E6%89%B9%E9%87%8F%E5%9B%BE%E7%89%87%E7%AB%99%E7%82%B9%E8%BD%AC%E7%A7%BB%E8%84%9A%E6%9C%AC%EF%BC%88%E5%B7%B2%E5%BC%80%E6%BA%90%EF%BC%89/</id>
+    <link href="https://blog.stephen-smj.tech/2023/03/21/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87%E8%A2%AB%E8%AE%BE%E7%BD%AE%E9%98%B2%E7%9B%97%E9%93%BE%E6%8E%A5%EF%BC%9F%E5%88%AB%E6%85%8C%EF%BC%8C%E6%88%91%E7%88%86%E8%82%9D%E4%B8%89%E6%99%9A%E5%86%99%E4%BA%86%E8%BF%99%E4%B8%AA%E6%89%B9%E9%87%8F%E5%9B%BE%E7%89%87%E7%AB%99%E7%82%B9%E8%BD%AC%E7%A7%BB%E8%84%9A%E6%9C%AC%EF%BC%88%E5%B7%B2%E5%BC%80%E6%BA%90%EF%BC%89/"/>
+    <id>https://blog.stephen-smj.tech/2023/03/21/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87%E8%A2%AB%E8%AE%BE%E7%BD%AE%E9%98%B2%E7%9B%97%E9%93%BE%E6%8E%A5%EF%BC%9F%E5%88%AB%E6%85%8C%EF%BC%8C%E6%88%91%E7%88%86%E8%82%9D%E4%B8%89%E6%99%9A%E5%86%99%E4%BA%86%E8%BF%99%E4%B8%AA%E6%89%B9%E9%87%8F%E5%9B%BE%E7%89%87%E7%AB%99%E7%82%B9%E8%BD%AC%E7%A7%BB%E8%84%9A%E6%9C%AC%EF%BC%88%E5%B7%B2%E5%BC%80%E6%BA%90%EF%BC%89/</id>
     <published>2023-03-21T01:28:01.000Z</published>
     <updated>2024-07-05T08:09:04.000Z</updated>
     
@@ -233,14 +233,14 @@
     
     
     
-    <category term="Python" scheme="https://stephen-smj.tech/tags/Python/"/>
+    <category term="Python" scheme="https://blog.stephen-smj.tech/tags/Python/"/>
     
   </entry>
   
   <entry>
     <title>Nginx反向代理中的坑</title>
-    <link href="https://stephen-smj.tech/2023/03/03/Nginx%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E4%B8%AD%E7%9A%84%E6%B7%B1%E5%9D%91/"/>
-    <id>https://stephen-smj.tech/2023/03/03/Nginx%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E4%B8%AD%E7%9A%84%E6%B7%B1%E5%9D%91/</id>
+    <link href="https://blog.stephen-smj.tech/2023/03/03/Nginx%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E4%B8%AD%E7%9A%84%E6%B7%B1%E5%9D%91/"/>
+    <id>https://blog.stephen-smj.tech/2023/03/03/Nginx%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E4%B8%AD%E7%9A%84%E6%B7%B1%E5%9D%91/</id>
     <published>2023-03-03T10:02:21.000Z</published>
     <updated>2024-07-05T08:09:04.000Z</updated>
     
@@ -255,14 +255,14 @@
     
     
     
-    <category term="Back-end" scheme="https://stephen-smj.tech/tags/Back-end/"/>
+    <category term="Back-end" scheme="https://blog.stephen-smj.tech/tags/Back-end/"/>
     
   </entry>
   
   <entry>
     <title>Git企业级分支提交流程</title>
-    <link href="https://stephen-smj.tech/2023/03/01/Git%20%E4%BC%81%E4%B8%9A%E7%BA%A7%E5%88%86%E6%94%AF%E6%8F%90%E4%BA%A4%E6%B5%81%E7%A8%8B/"/>
-    <id>https://stephen-smj.tech/2023/03/01/Git%20%E4%BC%81%E4%B8%9A%E7%BA%A7%E5%88%86%E6%94%AF%E6%8F%90%E4%BA%A4%E6%B5%81%E7%A8%8B/</id>
+    <link href="https://blog.stephen-smj.tech/2023/03/01/Git%20%E4%BC%81%E4%B8%9A%E7%BA%A7%E5%88%86%E6%94%AF%E6%8F%90%E4%BA%A4%E6%B5%81%E7%A8%8B/"/>
+    <id>https://blog.stephen-smj.tech/2023/03/01/Git%20%E4%BC%81%E4%B8%9A%E7%BA%A7%E5%88%86%E6%94%AF%E6%8F%90%E4%BA%A4%E6%B5%81%E7%A8%8B/</id>
     <published>2023-03-01T10:02:21.000Z</published>
     <updated>2024-09-17T04:06:57.243Z</updated>
     
@@ -279,14 +279,14 @@
     
     
     
-    <category term="Git" scheme="https://stephen-smj.tech/tags/Git/"/>
+    <category term="Git" scheme="https://blog.stephen-smj.tech/tags/Git/"/>
     
   </entry>
   
   <entry>
     <title>剑指offer：在排序数组中查找数字I的个数</title>
-    <link href="https://stephen-smj.tech/2023/03/01/%E5%9C%A8%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E6%9F%A5%E6%89%BE%E6%95%B0%E5%AD%97I%E7%9A%84%E4%B8%AA%E6%95%B0/"/>
-    <id>https://stephen-smj.tech/2023/03/01/%E5%9C%A8%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E6%9F%A5%E6%89%BE%E6%95%B0%E5%AD%97I%E7%9A%84%E4%B8%AA%E6%95%B0/</id>
+    <link href="https://blog.stephen-smj.tech/2023/03/01/%E5%9C%A8%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E6%9F%A5%E6%89%BE%E6%95%B0%E5%AD%97I%E7%9A%84%E4%B8%AA%E6%95%B0/"/>
+    <id>https://blog.stephen-smj.tech/2023/03/01/%E5%9C%A8%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E6%9F%A5%E6%89%BE%E6%95%B0%E5%AD%97I%E7%9A%84%E4%B8%AA%E6%95%B0/</id>
     <published>2023-03-01T10:02:21.000Z</published>
     <updated>2024-09-17T04:22:32.115Z</updated>
     
@@ -301,14 +301,14 @@
     
     
     
-    <category term="Algorithms" scheme="https://stephen-smj.tech/tags/Algorithms/"/>
+    <category term="Algorithms" scheme="https://blog.stephen-smj.tech/tags/Algorithms/"/>
     
   </entry>
   
   <entry>
     <title>Calculate Forward and Back Propagation in Neural Networks</title>
-    <link href="https://stephen-smj.tech/2023/02/28/Forward%20Propagation%20and%20Back%20Propagation/"/>
-    <id>https://stephen-smj.tech/2023/02/28/Forward%20Propagation%20and%20Back%20Propagation/</id>
+    <link href="https://blog.stephen-smj.tech/2023/02/28/Forward%20Propagation%20and%20Back%20Propagation/"/>
+    <id>https://blog.stephen-smj.tech/2023/02/28/Forward%20Propagation%20and%20Back%20Propagation/</id>
     <published>2023-02-28T10:02:21.000Z</published>
     <updated>2024-09-16T15:33:02.204Z</updated>
     
@@ -323,14 +323,14 @@
     
     
     
-    <category term="Deep learning" scheme="https://stephen-smj.tech/tags/Deep-learning/"/>
+    <category term="Deep learning" scheme="https://blog.stephen-smj.tech/tags/Deep-learning/"/>
     
   </entry>
   
   <entry>
     <title>Npm run serve &amp; build 错误-Error-error:0308010C:digital envelope routines unsupported</title>
-    <link href="https://stephen-smj.tech/2023/02/20/Npm%20run%20servebuild%20%E9%94%99%E8%AF%AF%EF%BC%9AError%20error0308010Cdigital%20envelope%20routinesunsupported/"/>
-    <id>https://stephen-smj.tech/2023/02/20/Npm%20run%20servebuild%20%E9%94%99%E8%AF%AF%EF%BC%9AError%20error0308010Cdigital%20envelope%20routinesunsupported/</id>
+    <link href="https://blog.stephen-smj.tech/2023/02/20/Npm%20run%20servebuild%20%E9%94%99%E8%AF%AF%EF%BC%9AError%20error0308010Cdigital%20envelope%20routinesunsupported/"/>
+    <id>https://blog.stephen-smj.tech/2023/02/20/Npm%20run%20servebuild%20%E9%94%99%E8%AF%AF%EF%BC%9AError%20error0308010Cdigital%20envelope%20routinesunsupported/</id>
     <published>2023-02-20T10:02:21.000Z</published>
     <updated>2024-07-05T08:09:04.000Z</updated>
     
@@ -347,14 +347,14 @@
     
     
     
-    <category term="Front-end" scheme="https://stephen-smj.tech/tags/Front-end/"/>
+    <category term="Front-end" scheme="https://blog.stephen-smj.tech/tags/Front-end/"/>
     
   </entry>
   
   <entry>
     <title>使用Git将项目上传到Github仓库流程</title>
-    <link href="https://stephen-smj.tech/2023/02/15/%E4%BD%BF%E7%94%A8Git%E5%B0%86%E6%96%B0%E9%A1%B9%E7%9B%AE%E4%B8%8A%E4%BC%A0%E5%88%B0github/"/>
-    <id>https://stephen-smj.tech/2023/02/15/%E4%BD%BF%E7%94%A8Git%E5%B0%86%E6%96%B0%E9%A1%B9%E7%9B%AE%E4%B8%8A%E4%BC%A0%E5%88%B0github/</id>
+    <link href="https://blog.stephen-smj.tech/2023/02/15/%E4%BD%BF%E7%94%A8Git%E5%B0%86%E6%96%B0%E9%A1%B9%E7%9B%AE%E4%B8%8A%E4%BC%A0%E5%88%B0github/"/>
+    <id>https://blog.stephen-smj.tech/2023/02/15/%E4%BD%BF%E7%94%A8Git%E5%B0%86%E6%96%B0%E9%A1%B9%E7%9B%AE%E4%B8%8A%E4%BC%A0%E5%88%B0github/</id>
     <published>2023-02-15T10:02:21.000Z</published>
     <updated>2024-07-05T08:09:04.000Z</updated>
     
@@ -371,14 +371,14 @@
     
     
     
-    <category term="Git" scheme="https://stephen-smj.tech/tags/Git/"/>
+    <category term="Git" scheme="https://blog.stephen-smj.tech/tags/Git/"/>
     
   </entry>
   
   <entry>
     <title>如何将你的前端项目上传到Github仓库并且部署到github pages</title>
-    <link href="https://stephen-smj.tech/2023/02/10/%E5%A6%82%E4%BD%95%E5%B0%86%E4%BD%A0%E7%9A%84%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE%E4%B8%8A%E4%BC%A0%E5%88%B0Github%E4%BB%93%E5%BA%93%E5%B9%B6%E4%B8%94%E9%83%A8%E7%BD%B2/"/>
-    <id>https://stephen-smj.tech/2023/02/10/%E5%A6%82%E4%BD%95%E5%B0%86%E4%BD%A0%E7%9A%84%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE%E4%B8%8A%E4%BC%A0%E5%88%B0Github%E4%BB%93%E5%BA%93%E5%B9%B6%E4%B8%94%E9%83%A8%E7%BD%B2/</id>
+    <link href="https://blog.stephen-smj.tech/2023/02/10/%E5%A6%82%E4%BD%95%E5%B0%86%E4%BD%A0%E7%9A%84%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE%E4%B8%8A%E4%BC%A0%E5%88%B0Github%E4%BB%93%E5%BA%93%E5%B9%B6%E4%B8%94%E9%83%A8%E7%BD%B2/"/>
+    <id>https://blog.stephen-smj.tech/2023/02/10/%E5%A6%82%E4%BD%95%E5%B0%86%E4%BD%A0%E7%9A%84%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE%E4%B8%8A%E4%BC%A0%E5%88%B0Github%E4%BB%93%E5%BA%93%E5%B9%B6%E4%B8%94%E9%83%A8%E7%BD%B2/</id>
     <published>2023-02-10T10:02:21.000Z</published>
     <updated>2024-07-07T08:43:00.000Z</updated>
     
@@ -393,14 +393,14 @@
     
     
     
-    <category term="Git" scheme="https://stephen-smj.tech/tags/Git/"/>
+    <category term="Git" scheme="https://blog.stephen-smj.tech/tags/Git/"/>
     
   </entry>
   
   <entry>
     <title>一道很考验数据结构与算法的功底的笔试题：用JAVA设计一个缓存结构</title>
-    <link href="https://stephen-smj.tech/2023/02/10/%E7%94%A8JAVA%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AA%E7%BC%93%E5%AD%98%E7%BB%93%E6%9E%84/"/>
-    <id>https://stephen-smj.tech/2023/02/10/%E7%94%A8JAVA%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AA%E7%BC%93%E5%AD%98%E7%BB%93%E6%9E%84/</id>
+    <link href="https://blog.stephen-smj.tech/2023/02/10/%E7%94%A8JAVA%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AA%E7%BC%93%E5%AD%98%E7%BB%93%E6%9E%84/"/>
+    <id>https://blog.stephen-smj.tech/2023/02/10/%E7%94%A8JAVA%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AA%E7%BC%93%E5%AD%98%E7%BB%93%E6%9E%84/</id>
     <published>2023-02-10T08:40:34.000Z</published>
     <updated>2024-07-05T08:09:04.000Z</updated>
     
@@ -416,14 +416,14 @@
     
     
     
-    <category term="JAVA" scheme="https://stephen-smj.tech/tags/JAVA/"/>
+    <category term="JAVA" scheme="https://blog.stephen-smj.tech/tags/JAVA/"/>
     
   </entry>
   
   <entry>
     <title>解决npm run build 之后生成的index.html页面打开为空</title>
-    <link href="https://stephen-smj.tech/2023/02/05/%E8%A7%A3%E5%86%B3npm%20run%20build%20%E4%B9%8B%E5%90%8E%E7%94%9F%E6%88%90%E7%9A%84index.html%E9%A1%B5%E9%9D%A2%E6%89%93%E5%BC%80%E4%B8%BA%E7%A9%BA/"/>
-    <id>https://stephen-smj.tech/2023/02/05/%E8%A7%A3%E5%86%B3npm%20run%20build%20%E4%B9%8B%E5%90%8E%E7%94%9F%E6%88%90%E7%9A%84index.html%E9%A1%B5%E9%9D%A2%E6%89%93%E5%BC%80%E4%B8%BA%E7%A9%BA/</id>
+    <link href="https://blog.stephen-smj.tech/2023/02/05/%E8%A7%A3%E5%86%B3npm%20run%20build%20%E4%B9%8B%E5%90%8E%E7%94%9F%E6%88%90%E7%9A%84index.html%E9%A1%B5%E9%9D%A2%E6%89%93%E5%BC%80%E4%B8%BA%E7%A9%BA/"/>
+    <id>https://blog.stephen-smj.tech/2023/02/05/%E8%A7%A3%E5%86%B3npm%20run%20build%20%E4%B9%8B%E5%90%8E%E7%94%9F%E6%88%90%E7%9A%84index.html%E9%A1%B5%E9%9D%A2%E6%89%93%E5%BC%80%E4%B8%BA%E7%A9%BA/</id>
     <published>2023-02-05T10:02:21.000Z</published>
     <updated>2024-07-07T08:33:58.000Z</updated>
     
@@ -439,14 +439,14 @@
     
     
     
-    <category term="Front-end" scheme="https://stephen-smj.tech/tags/Front-end/"/>
+    <category term="Front-end" scheme="https://blog.stephen-smj.tech/tags/Front-end/"/>
     
   </entry>
   
   <entry>
     <title>Java循环和Python循环的区别</title>
-    <link href="https://stephen-smj.tech/2023/02/01/JAVA%E5%BE%AA%E7%8E%AF%E5%92%8CPython%E5%BE%AA%E7%8E%AF%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
-    <id>https://stephen-smj.tech/2023/02/01/JAVA%E5%BE%AA%E7%8E%AF%E5%92%8CPython%E5%BE%AA%E7%8E%AF%E7%9A%84%E5%8C%BA%E5%88%AB/</id>
+    <link href="https://blog.stephen-smj.tech/2023/02/01/JAVA%E5%BE%AA%E7%8E%AF%E5%92%8CPython%E5%BE%AA%E7%8E%AF%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
+    <id>https://blog.stephen-smj.tech/2023/02/01/JAVA%E5%BE%AA%E7%8E%AF%E5%92%8CPython%E5%BE%AA%E7%8E%AF%E7%9A%84%E5%8C%BA%E5%88%AB/</id>
     <published>2023-02-01T10:27:52.000Z</published>
     <updated>2024-07-07T06:36:40.000Z</updated>
     
@@ -463,7 +463,7 @@
     
     
     
-    <category term="JAVA" scheme="https://stephen-smj.tech/tags/JAVA/"/>
+    <category term="JAVA" scheme="https://blog.stephen-smj.tech/tags/JAVA/"/>
     
   </entry>
   

@@ -21,7 +21,7 @@
   <meta name="description" content="今天在用npm构建前端项目之后发现生成dist文件夹中的页面是空的，于是F12看了一下发现有报错：  这个报错很显然是找不到文件，因此我猜可能是构建项目过程中路径出错了。打开index.html的源码来看，发现路径用的是’&#x2F;‘，但index.html文件和js文件夹是同级目录，如果从index.html进入到js文件夹内的文件，需要用’.&#x2F;‘。也就是说，对比dist文件夹结构可以看到资源路径的引入">
 <meta property="og:type" content="article">
 <meta property="og:title" content="解决npm run build 之后生成的index.html页面打开为空">
-<meta property="og:url" content="https://stephen-smj.tech/2023/02/05/%E8%A7%A3%E5%86%B3npm%20run%20build%20%E4%B9%8B%E5%90%8E%E7%94%9F%E6%88%90%E7%9A%84index.html%E9%A1%B5%E9%9D%A2%E6%89%93%E5%BC%80%E4%B8%BA%E7%A9%BA/index.html">
+<meta property="og:url" content="https://blog.stephen-smj.tech/2023/02/05/%E8%A7%A3%E5%86%B3npm%20run%20build%20%E4%B9%8B%E5%90%8E%E7%94%9F%E6%88%90%E7%9A%84index.html%E9%A1%B5%E9%9D%A2%E6%89%93%E5%BC%80%E4%B8%BA%E7%A9%BA/index.html">
 <meta property="og:site_name" content="小孙不够睡的博客">
 <meta property="og:description" content="今天在用npm构建前端项目之后发现生成dist文件夹中的页面是空的，于是F12看了一下发现有报错：  这个报错很显然是找不到文件，因此我猜可能是构建项目过程中路径出错了。打开index.html的源码来看，发现路径用的是’&#x2F;‘，但index.html文件和js文件夹是同级目录，如果从index.html进入到js文件夹内的文件，需要用’.&#x2F;‘。也就是说，对比dist文件夹结构可以看到资源路径的引入">
 <meta property="og:locale" content="en_US">
@@ -33,7 +33,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gist.github.com/assets/67999981/06d5fd9b-f79e-428b-828a-e56c69e3b5be">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://stephen-smj.tech/2023/02/05/%E8%A7%A3%E5%86%B3npm%20run%20build%20%E4%B9%8B%E5%90%8E%E7%94%9F%E6%88%90%E7%9A%84index.html%E9%A1%B5%E9%9D%A2%E6%89%93%E5%BC%80%E4%B8%BA%E7%A9%BA/index.html">
+  <link rel="canonical" href="https://blog.stephen-smj.tech/2023/02/05/%E8%A7%A3%E5%86%B3npm%20run%20build%20%E4%B9%8B%E5%90%8E%E7%94%9F%E6%88%90%E7%9A%84index.html%E9%A1%B5%E9%9D%A2%E6%89%93%E5%BC%80%E4%B8%BA%E7%A9%BA/index.html">
   
     <link rel="alternate" href="/atom.xml" title="小孙不够睡的博客" type="application/atom+xml">
   
@@ -391,7 +391,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="https://stephen-smj.tech/2023/02/05/%E8%A7%A3%E5%86%B3npm%20run%20build%20%E4%B9%8B%E5%90%8E%E7%94%9F%E6%88%90%E7%9A%84index.html%E9%A1%B5%E9%9D%A2%E6%89%93%E5%BC%80%E4%B8%BA%E7%A9%BA/" title="解决npm run build 之后生成的index.html页面打开为空" target="_blank" rel="external">https://stephen-smj.tech/2023/02/05/解决npm run build 之后生成的index.html页面打开为空/</a>
+      <a href="https://blog.stephen-smj.tech/2023/02/05/%E8%A7%A3%E5%86%B3npm%20run%20build%20%E4%B9%8B%E5%90%8E%E7%94%9F%E6%88%90%E7%9A%84index.html%E9%A1%B5%E9%9D%A2%E6%89%93%E5%BC%80%E4%B8%BA%E7%A9%BA/" title="解决npm run build 之后生成的index.html页面打开为空" target="_blank" rel="external">https://blog.stephen-smj.tech/2023/02/05/解决npm run build 之后生成的index.html页面打开为空/</a>
     </li>
     
     <li class="post-copyright-license">
